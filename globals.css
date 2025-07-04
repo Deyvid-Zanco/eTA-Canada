@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Custom Landing Page Styles */
+.m-jumbotron-image6 {
+  @apply bg-cover bg-center text-white flex flex-col justify-center items-center relative;
+  background-image: url('/hero.png');
+  min-height: 480px;
+}
+
+.m-jumbotron-image6::before {
+  content: "";
+  @apply absolute inset-0 bg-black/60;
+  z-index: 0;
+}
+
+.m-jumbotron-image6 > * {
+  @apply relative z-10;
+}
+
+.m-steps .step-number {
+  @apply bg-red-600 text-white rounded-full w-10 h-10 flex items-center justify-center mx-auto mb-4 font-bold;
+}
+
+.m-table-duotone {
+  @apply w-full border-collapse;
+}
+.m-table-duotone th,
+.m-table-duotone td {
+  @apply border border-gray-300 p-3;
+}
+
+.date-segment-input {
+  @apply w-16 border rounded p-2 text-center;
+}
+
+input[type="text"], input[type="email"], input[type="tel"], input[type="date"], select {
+  @apply w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition;
+}
+
+input[type="radio"], input[type="checkbox"] {
+  @apply accent-red-600;
+}
+
+label {
+  @apply text-sm font-medium text-gray-700;
+}
