@@ -2,7 +2,6 @@
 import Head from "next/head";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import DateInputGroup from "../components/DateInputGroup";
 import { useSearchParams } from "next/navigation";
 import { COUNTRIES } from "../../lib/countries"; // path from app folder
 import { useState, Suspense } from 'react';
@@ -163,7 +162,13 @@ function ApplyForm() {
         {/* Row 4 */}
         <div className="grid md:grid-cols-2 gap-6">
           <div>
-            <DateInputGroup label="DATE OF BIRTH *" name="dob" required />
+            <label className="block mb-1 font-medium">DATE OF BIRTH *</label>
+            <input
+              type="date"
+              name="dob"
+              required
+              className="w-full border rounded p-2"
+            />
           </div>
           <div>
             <label className="block mb-1 font-medium">GENDER *</label>
@@ -188,7 +193,11 @@ function ApplyForm() {
               className="w-full border rounded p-2"
             >
               <option value="">Select...</option>
-              {/* Add options */}
+              {COUNTRIES.map(c => (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              ))}
             </select>
           </div>
           <div>
@@ -205,17 +214,21 @@ function ApplyForm() {
         {/* Row 6 */}
         <div className="grid md:grid-cols-2 gap-6">
           <div>
-            <DateInputGroup
-              label="DATE OF ISSUE OF PASSPORT *"
+            <label className="block mb-1 font-medium">DATE OF ISSUE OF PASSPORT *</label>
+            <input
+              type="date"
               name="passport_issue_date"
               required
+              className="w-full border rounded p-2"
             />
           </div>
           <div>
-            <DateInputGroup
-              label="DATE OF EXPIRY OF PASSPORT *"
+            <label className="block mb-1 font-medium">DATE OF EXPIRY OF PASSPORT *</label>
+            <input
+              type="date"
               name="passport_expiry_date"
               required
+              className="w-full border rounded p-2"
             />
           </div>
         </div>
@@ -317,6 +330,11 @@ function ApplyForm() {
               className="w-full border rounded p-2"
             >
               <option value="">Select...</option>
+              {COUNTRIES.map(c => (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              ))}
             </select>
           </div>
           <div>
