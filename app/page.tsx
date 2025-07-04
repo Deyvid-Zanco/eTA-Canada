@@ -140,7 +140,7 @@ export default function LandingPage() {
         </section>
 
         {/* Final CTA */}
-        <section className="text-center py-12 bg-gray-50">
+        <section className="text-center py-12 bg-gray-70">
           <Link
             href="/apply"
             className="bg-red-600 hover:bg-red-700 text-white py-4 px-12 rounded-md text-xl font-semibold"
