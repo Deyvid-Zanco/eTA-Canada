@@ -238,12 +238,72 @@ function ApplyFormMultiStep() {
   });
   const { handleSubmit, formState, watch, register, reset, trigger } = methods;
   const nationality = watch('nationality');
-
-  // Conditional logic
+  const additional_nationality = watch('additional_nationality');
+  const do_you_know_travel_date = watch('do_you_know_travel_date');
   const showTaiwanID = nationality === 'Taiwan (holders of passports containing a personal identification number)';
   const showUSVisaFields = usVisaNationalities.includes(nationality);
   const showMexicoVisaImage = nationality === 'Mexico';
   const showArgentinaVisaImage = showUSVisaFields && nationality !== 'Mexico';
+
+  // Define step field arrays for validation
+  const stepFields: (keyof FormValues)[][] = [
+    [
+      'travel_document',
+      'nationality',
+      ...(showTaiwanID ? ['taiwan_id'] as (keyof FormValues)[] : []),
+      ...(showUSVisaFields ? [
+        'us_visa_number',
+        'us_visa_number_confirm',
+        'us_visa_expiry_month',
+        'us_visa_expiry_day',
+        'us_visa_expiry_year',
+      ] as (keyof FormValues)[] : []),
+      'passport_number',
+      'passport_number_confirm',
+      'surname',
+      'given_name',
+      'dob_month',
+      'dob_day',
+      'dob_year',
+      'gender',
+      'birth_country',
+      'birth_city',
+      'passport_issue_month',
+      'passport_issue_day',
+      'passport_issue_year',
+      'passport_expiry_month',
+      'passport_expiry_day',
+      'passport_expiry_year',
+    ],
+    [
+      'additional_nationality',
+      ...(additional_nationality === 'Yes' ? ['additional_nationality_details'] as (keyof FormValues)[] : []),
+      'marital_status',
+      'canada_visa_applied',
+      'occupation',
+      'job_description',
+      'employer_name',
+      'employment_country',
+      'apartment_number',
+      'street_number',
+      'street_name',
+      'city_town',
+      'district_region',
+      'address_country',
+      'email',
+      'email_confirm',
+      'phone',
+      'alt_phone',
+      'preferred_language',
+      'do_you_know_travel_date',
+      ...(do_you_know_travel_date === 'Yes' ? [
+        'travel_date_month',
+        'travel_date_day',
+        'travel_date_year',
+      ] as (keyof FormValues)[] : []),
+      'consent_declaration',
+    ],
+  ];
 
   const onSubmit = async () => {
     setSubmitStatus('idle');
@@ -931,7 +991,7 @@ function ApplyFormMultiStep() {
           )}
           {step < steps.length - 1 ? (
             <button type="button" className="bg-red-600 hover:bg-red-700 text-white py-2 px-12 rounded-md text-lg font-semibold" onClick={async () => {
-              const valid = await trigger();
+              const valid = await trigger(stepFields[step]);
               if (valid) setStep(step + 1);
             }}>
               Next
