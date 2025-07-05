@@ -8,6 +8,15 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Image from 'next/image';
 
+// Add this for TypeScript to recognize grecaptcha on window
+declare global {
+  interface Window {
+    grecaptcha: {
+      execute(siteKey: string, options: { action: string }): Promise<string>;
+    };
+  }
+}
+
 // 2. Define validation schema with conditional logic
 const usVisaNationalities = [
   'Mexico',
@@ -305,17 +314,42 @@ function ApplyFormMultiStep() {
     ],
   ];
 
-  const onSubmit = async () => {
+  const onSubmit = async (data: FormValues) => {
     setSubmitStatus('idle');
     setErrorMessage('');
     try {
-      // Add reCAPTCHA and POST logic as before
-      // ...
+      // 1. Run reCAPTCHA v3 (assume site key is set in env or config)
+      let recaptchaToken = '';
+      if (typeof window !== 'undefined' && window.grecaptcha) {
+        recaptchaToken = await window.grecaptcha.execute(
+          process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!,
+          { action: 'submit' }
+        );
+      } else {
+        throw new Error('reCAPTCHA not loaded');
+      }
+
+      // 2. POST to /api/apply with form data and recaptcha token
+      const response = await fetch('/api/apply', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...data, recaptchaToken }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || 'Failed to submit application');
+      }
+
       setSubmitStatus('success');
       reset();
-    } catch {
+    } catch (err: unknown) {
       setSubmitStatus('error');
-      setErrorMessage('Submission failed. Please try again.');
+      if (err instanceof Error) {
+        setErrorMessage(err.message || 'Submission failed. Please try again.');
+      } else {
+        setErrorMessage('Submission failed. Please try again.');
+      }
     }
   };
 
