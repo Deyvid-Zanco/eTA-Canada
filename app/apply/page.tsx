@@ -2,33 +2,11 @@
 import Head from "next/head";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { useSearchParams } from "next/navigation";
-import { COUNTRIES } from "../../lib/countries"; // path from app folder
 import { useState, Suspense } from 'react';
-import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
-import { useForm, FormProvider, useFormContext } from 'react-hook-form';
+import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { useEffect } from 'react';
-//add somthing for new commit
-// 1. Define all field names and validation schema
-const travelDocumentOptions = [
-  'Passport - ordinary/regular',
-  'Passport - diplomatic',
-  'Passport - official',
-  'Passport - service',
-  'Emergency/temporary travel document',
-  'Refugee travel document',
-  'Alien passport/travel document issued for non-citizens',
-  'Permit to re-enter the United States (I-327)',
-  'U.S. Refugee travel document (I-571)',
-];
-
-const nationalityOptions = [
-  // ... (copy all options from JotForm nationality dropdown)
-  'Andorra', 'Antigua and Barbuda', 'Argentina', 'Australia', 'Austria', 'Bahamas', 'Barbados', 'Belgium', 'Brazil', 'Bulgaria', 'Brunei Darussalam', 'Chile', 'China (Hong Kong SAR)', 'Croatia', 'Costa Rica', 'Cyprus', 'Czech Republic', 'Denmark', 'Estonia', 'Finland', 'France', 'Germany', 'Greece', 'Hungary', 'Iceland', 'Ireland', 'Israel (holders of Israeli national passports)', 'Italy', 'Japan', 'Latvia', 'Liechtenstein', 'Lithuania', 'Luxembourg', 'Malta', 'Mexico', 'Monaco', 'Morocco', 'Norway', 'New Zealand', 'Netherlands', 'Panama', 'Papua New Guinea', 'Philippines', 'Poland', 'Portugal', 'Saint Kitts and Nevis', 'Saint Lucia', 'Saint Vincent and the Grenadines', 'Samoa', 'San Marino', 'Seychelles', 'Singapore', 'Slovakia', 'Slovenia', 'Solomon Islands', 'South Korea', 'Spain', 'Sweden', 'Switzerland', 'Thailand', 'Taiwan (holders of passports containing a personal identification number)', 'Trinidad and Tobago', 'United Arab Emirates', 'United Kingdom', 'Uruguay', 'Vatican (holders of a passport or travel document issued by the Vatican)', 'OTHER',
-];
-// ... (define all other options as per JotForm)
+import Image from 'next/image';
 
 // 2. Define validation schema with conditional logic
 const usVisaNationalities = [
@@ -188,11 +166,6 @@ const schema: yup.ObjectSchema<FormValues> = yup.object({
   // ... add other fields as needed
 });
 
-// 3. Multi-step logic
-const steps = [
-  // ... define step field groupings as per JotForm page breaks ...
-];
-
 function getYearOptions(start: number, end: number) {
   const years = [];
   for (let y = start; y <= end; y++) years.push(y);
@@ -272,7 +245,7 @@ function ApplyFormMultiStep() {
   const showMexicoVisaImage = nationality === 'Mexico';
   const showArgentinaVisaImage = showUSVisaFields && nationality !== 'Mexico';
 
-  const onSubmit = async (data: FormValues) => {
+  const onSubmit = async () => {
     setSubmitStatus('idle');
     setErrorMessage('');
     try {
@@ -280,7 +253,7 @@ function ApplyFormMultiStep() {
       // ...
       setSubmitStatus('success');
       reset();
-    } catch (error) {
+    } catch {
       setSubmitStatus('error');
       setErrorMessage('Submission failed. Please try again.');
     }
@@ -382,7 +355,7 @@ function ApplyFormMultiStep() {
           <option value="Vatican (holders of a passport or travel document issued by the Vatican)">Vatican (holders of a passport or travel document issued by the Vatican)</option>
           <option value="OTHER">OTHER</option>
         </select>
-        <span className="text-xs text-gray-500">On your passport, look for a field named "Code", Issuing country", "Authority" or "Country code".</span>
+        <span className="text-xs text-gray-500">On your passport, look for a field named &quot;Code&quot;, Issuing country&quot;, &quot;Authority&quot; or &quot;Country code&quot;.</span>
         {formState.errors.nationality && <p className="text-red-600 text-sm">This field is required</p>}
       </div>
       {/* Taiwan National Identification Number (conditional) */}
@@ -426,10 +399,10 @@ function ApplyFormMultiStep() {
           {/* Example image for US visa */}
           <div className="mb-6 flex justify-center">
             {showMexicoVisaImage && (
-              <img src="https://www.jotform.com/uploads/deyvidzancocontato/form_files/passaporte-mexico.66997689e89017.31889204.png" alt="US Visa Example - Mexico" className="max-w-xs rounded shadow" />
+              <Image src="https://www.jotform.com/uploads/deyvidzancocontato/form_files/passaporte-mexico.66997689e89017.31889204.png" alt="US Visa Example - Mexico" width={320} height={200} className="max-w-xs rounded shadow" />
             )}
             {showArgentinaVisaImage && (
-              <img src="https://www.jotform.com/uploads/deyvidzancocontato/form_files/argentina.66996712cc7e16.63038575.jpg" alt="US Visa Example - Other" className="max-w-xs rounded shadow" />
+              <Image src="https://www.jotform.com/uploads/deyvidzancocontato/form_files/argentina.66996712cc7e16.63038575.jpg" alt="US Visa Example - Other" width={320} height={200} className="max-w-xs rounded shadow" />
             )}
           </div>
         </>
@@ -544,7 +517,7 @@ function ApplyFormMultiStep() {
           <option value="Congo">Congo</option>
           <option value="Cook Islands">Cook Islands</option>
           <option value="Costa Rica">Costa Rica</option>
-          <option value="Cote d'Ivoire">Cote d'Ivoire</option>
+          <option value="Cote d'Ivoire">Cote d&apos;Ivoire</option>
           <option value="Croatia">Croatia</option>
           <option value="Cuba">Cuba</option>
           <option value="Cyprus">Cyprus</option>
@@ -746,7 +719,7 @@ function ApplyFormMultiStep() {
           <option value="Congo">Congo</option>
           <option value="Cook Islands">Cook Islands</option>
           <option value="Costa Rica">Costa Rica</option>
-          <option value="Cote d'Ivoire">Cote d'Ivoire</option>
+          <option value="Cote d'Ivoire">Cote d&apos;Ivoire</option>
           <option value="Croatia">Croatia</option>
           <option value="Cuba">Cuba</option>
           <option value="Cyprus">Cyprus</option>
@@ -845,7 +818,7 @@ function ApplyFormMultiStep() {
           <option value="Congo">Congo</option>
           <option value="Cook Islands">Cook Islands</option>
           <option value="Costa Rica">Costa Rica</option>
-          <option value="Cote d'Ivoire">Cote d'Ivoire</option>
+          <option value="Cote d'Ivoire">Cote d&apos;Ivoire</option>
           <option value="Croatia">Croatia</option>
           <option value="Cuba">Cuba</option>
           <option value="Cyprus">Cyprus</option>
