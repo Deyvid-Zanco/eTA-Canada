@@ -8,6 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Image from 'next/image';
 import React from 'react'; // Added for useEffect
+import { loadStripe } from '@stripe/stripe-js';
 
 // Add this for TypeScript to recognize grecaptcha on window
 declare global {
@@ -212,6 +213,7 @@ function ApplyFormMultiStep() {
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
   const [hasSubmitted, setHasSubmitted] = useState(false);
+  const [paymentError, setPaymentError] = useState('');
   const methods = useForm<FormValues>({
     resolver: yupResolver(schema),
     mode: 'onTouched',
@@ -347,6 +349,7 @@ function ApplyFormMultiStep() {
   const onSubmit = async (data: FormValues) => {
     setSubmitStatus('idle');
     setErrorMessage('');
+    setPaymentError('');
     try {
       // 1. Run reCAPTCHA v3 (assume site key is set in env or config)
       let recaptchaToken = '';
@@ -371,15 +374,40 @@ function ApplyFormMultiStep() {
         throw new Error(errorData.message || 'Failed to submit application');
       }
 
-        setSubmitStatus('success');
+      // 3. Create Stripe Checkout session
+      const checkoutRes = await fetch('/api/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: data.email,
+          name: data.given_name + ' ' + data.surname,
+        }),
+      });
+      if (!checkoutRes.ok) {
+        const errorData = await checkoutRes.json().catch(() => ({}));
+        throw new Error(errorData.error || 'Failed to initiate payment');
+      }
+      const { sessionId } = await checkoutRes.json();
+      if (!sessionId) throw new Error('No sessionId returned from payment API');
+
+      // 4. Redirect to Stripe Checkout
+      const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
+      if (!stripe) throw new Error('Stripe.js failed to load');
+      const { error } = await stripe.redirectToCheckout({ sessionId });
+      if (error) throw new Error(error.message);
+
+      // If redirect fails, show error
+      setSubmitStatus('success');
       setHasSubmitted(true);
       reset();
     } catch (err: unknown) {
       setSubmitStatus('error');
       if (err instanceof Error) {
         setErrorMessage(err.message || 'Submission failed. Please try again.');
+        setPaymentError(err.message || 'Payment initiation failed.');
       } else {
         setErrorMessage('Submission failed. Please try again.');
+        setPaymentError('Payment initiation failed.');
       }
     }
   };
@@ -767,7 +795,7 @@ function ApplyFormMultiStep() {
             {formState.errors.previous_visa_number && <p className="text-red-600 text-sm">{formState.errors.previous_visa_number.message}</p>}
           </div>
         )}
-      </div>
+        </div>
         {/* Occupation */}
       <div className="mb-6">
         <label className="block mb-1 font-medium">Occupation <span className="text-red-600">*</span></label>
@@ -805,7 +833,7 @@ function ApplyFormMultiStep() {
           <label className="block mb-1 font-medium">Name of employer or school, as appropriate <span className="text-red-600">*</span></label>
           <input type="text" {...register('employer_name')} className="w-full border rounded p-2" required />
           {formState.errors.employer_name && <p className="text-red-600 text-sm">{formState.errors.employer_name.message}</p>}
-        </div>
+          </div>
       )}
       {/* Since when do you work at this location? (MM/YYYY) */}
       {!hideJobFields && (
@@ -813,7 +841,7 @@ function ApplyFormMultiStep() {
           <label className="block mb-1 font-medium">Since when do you work at this location? (MM/YYYY) <span className="text-red-600">*</span></label>
           <input type="text" {...register('employment_start_date')} className="w-full border rounded p-2" placeholder="MM/YYYY" required />
           {formState.errors.employment_start_date && <p className="text-red-600 text-sm">{formState.errors.employment_start_date.message}</p>}
-        </div>
+          </div>
       )}
       {/* COUNTRY/TERRITORY */}
       <div className="mb-6">
@@ -1087,13 +1115,13 @@ function ApplyFormMultiStep() {
               Next
             </button>
           ) : (
-            <button
-              type="submit"
+          <button
+            type="submit"
               className="bg-red-600 hover:bg-red-700 text-white py-2 px-12 rounded-md text-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
               disabled={formState.isSubmitting || hasSubmitted}
-            >
+          >
               Submit Application
-            </button>
+          </button>
           )}
         </div>
         {submitStatus === 'success' && (
@@ -1104,6 +1132,11 @@ function ApplyFormMultiStep() {
         {submitStatus === 'error' && (
           <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg">
             <p className="text-red-800 font-medium">❌ Error: {errorMessage}</p>
+          </div>
+        )}
+        {paymentError && (
+          <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+            <p className="text-red-800 font-medium">❌ Payment Error: {paymentError}</p>
           </div>
         )}
       </form>

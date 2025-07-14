@@ -55,13 +55,33 @@ export async function POST(req: NextRequest) {
       }
     });
 
-    // Send email via Resend
+    // Send email via Resend (admin)
     await resend.emails.send({
       from: 'eTA Application <noreply@immicenter-online.com>', // Replace with your verified domain
       to: process.env.ADMIN_EMAIL || 'admin@yourdomain.com',
       subject: `New eTA Application - ${data.given_name || ''} ${data.surname || ''}`,
       html: emailHtml,
     });
+
+    // Send confirmation email to applicant
+    if (data.email) {
+      await resend.emails.send({
+        from: 'IMMI CENTER <noreply@immicenter-online.com>',
+        to: data.email,
+        subject: 'We have received your response for CANADA ETA PERMIT AUTHORIZATION',
+        html: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+            <p>Hello!</p>
+            <p>Your Canada eTA application has been successfully received!</p>
+            <p>Once your payment has been processed, your application will begin.</p>
+            <p>Processing time may take a few minutes or up to 72 hours.</p>
+            <p><strong>Important information!!</strong></p>
+            <p>We suggest that you keep an eye on your email inbox and also your SPAM folder, as indicated during the application process, for future communications and updates regarding your application.</p>
+            <p>If you have any questions or concerns, please do not hesitate to contact us by replying to this email.</p>
+          </div>
+        `,
+      });
+    }
 
     return NextResponse.json({ success: true, message: 'Application submitted successfully' });
 
