@@ -187,11 +187,15 @@ const schema: yup.ObjectSchema<FormValues> = yup.object({
     then: (schema) => schema.required('Please enter your previous Canadian visa/permit/ETA number'),
     otherwise: (schema) => schema.notRequired().nullable(),
   }),
-  employment_start_date: yup.string().default('').when('occupation', {
-    is: (val: string) => !['Unemployed', 'Homemaker', 'Retired', 'Military/armed forces'].includes(val),
-    then: (schema) => schema.required('Start date is required'),
-    otherwise: (schema) => schema.notRequired(),
-  }),
+  employment_start_date: yup.string()
+    .default('')
+    .when('occupation', {
+      is: (val: string) => !['Unemployed', 'Homemaker', 'Retired', 'Military/armed forces'].includes(val),
+      then: (schema) => schema
+        .required('Start date is required')
+        .matches(/^(0[1-9]|1[0-2])\/(19|20)\d{2}$/, 'Date must be in MM/YYYY format (MM between 01-12)'),
+      otherwise: (schema) => schema.notRequired(),
+    }),
 });
 
 function getYearOptions(start: number, end: number) {
