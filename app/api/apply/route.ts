@@ -70,15 +70,27 @@ export async function POST(req: NextRequest) {
         to: data.email,
         subject: 'We have received your response for CANADA ETA PERMIT AUTHORIZATION',
         html: `
-          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-            <p>Hello!</p>
-            <p>Your Canada eTA application has been successfully received!</p>
-            <p>Once your payment has been processed, your application will begin.</p>
-            <p>Processing time may take a few minutes or up to 72 hours.</p>
-            <p><strong>Important information!!</strong></p>
-            <p>We suggest that you keep an eye on your email inbox and also your SPAM folder, as indicated during the application process, for future communications and updates regarding your application.</p>
-            <p>If you have any questions or concerns, please do not hesitate to contact us by replying to this email.</p>
-          </div>
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f7;padding:0;margin:0;">
+  <tr>
+    <td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.04);margin:40px 0;">
+        <tr>
+          <td style="padding:40px 32px 32px 32px;text-align:center;">
+            <h1 style="color:#34A853;font-size:24px;margin-bottom:16px;">We have received your response for CANADA ETA PERMIT AUTHORIZATION</h1>
+            <p style="font-size:16px;color:#222;margin-bottom:16px;">Hello!</p>
+            <p style="font-size:16px;color:#222;margin-bottom:16px;">Your Canada eTA application has been successfully received!</p>
+            <p style="font-size:16px;color:#222;margin-bottom:16px;">Once your payment has been processed, your application will begin.</p>
+            <p style="font-size:16px;color:#222;margin-bottom:16px;">Processing time may take a few minutes or up to 72 hours.</p>
+            <p style="font-size:16px;color:#222;margin-bottom:16px;"><strong>Important information!!</strong></p>
+            <p style="font-size:16px;color:#222;margin-bottom:16px;">We suggest that you keep an eye on your email inbox and also your SPAM folder, as indicated during the application process, for future communications and updates regarding your application.</p>
+            <p style="font-size:16px;color:#222;margin-bottom:16px;">If you have any questions or concerns, please do not hesitate to contact us by replying to this email.</p>
+            <p style="font-size:13px;color:#888;margin-top:32px;">&copy; IMMI CENTER</p>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
         `,
       });
     }
