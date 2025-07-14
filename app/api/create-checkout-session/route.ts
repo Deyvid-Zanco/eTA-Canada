@@ -15,7 +15,7 @@ export async function POST(req: Request) {
       payment_method_types: ['card'],
       line_items: [
         {
-          price: 'price_1R9AEB04B98GMnQHPn08mr5L', // Your fixed price ID
+          price: 'price_1R4UTH04B98GMnQHfaG0N7T8', // Updated test price ID
           quantity: 1,
         },
       ],
