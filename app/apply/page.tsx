@@ -90,6 +90,8 @@ type FormValues = {
   travel_date_year?: string | null | undefined;
   consent_declaration?: boolean;
   previous_visa_number?: string;
+  employment_start_date: string;
+  employment_end_date: string;
 };
 
 const schema: yup.ObjectSchema<FormValues> = yup.object({
@@ -186,6 +188,16 @@ const schema: yup.ObjectSchema<FormValues> = yup.object({
     then: (schema) => schema.required('Please enter your previous Canadian visa/permit/ETA number'),
     otherwise: (schema) => schema.notRequired().nullable(),
   }),
+  employment_start_date: yup.string().default('').when('occupation', {
+    is: (val: string) => !['Unemployed', 'Homemaker', 'Retired', 'Military/armed forces'].includes(val),
+    then: (schema) => schema.required('Start date is required'),
+    otherwise: (schema) => schema.notRequired(),
+  }),
+  employment_end_date: yup.string().default('').when('occupation', {
+    is: (val: string) => !['Unemployed', 'Homemaker', 'Retired', 'Military/armed forces'].includes(val),
+    then: (schema) => schema.required('End date is required'),
+    otherwise: (schema) => schema.notRequired(),
+  }),
 });
 
 function getYearOptions(start: number, end: number) {
@@ -258,6 +270,8 @@ function ApplyFormMultiStep() {
       travel_date_year: null,
       consent_declaration: false,
       previous_visa_number: '',
+      employment_start_date: '',
+      employment_end_date: '',
     },
   });
   const { handleSubmit, formState, watch, register, reset, trigger } = methods;
@@ -794,6 +808,22 @@ function ApplyFormMultiStep() {
           <label className="block mb-1 font-medium">Name of employer or school, as appropriate <span className="text-red-600">*</span></label>
           <input type="text" {...register('employer_name')} className="w-full border rounded p-2" required />
           {formState.errors.employer_name && <p className="text-red-600 text-sm">{formState.errors.employer_name.message}</p>}
+        </div>
+      )}
+      {/* Employment start date */}
+      {!hideJobFields && (
+        <div className="mb-6">
+          <label className="block mb-1 font-medium">Employment start date <span className="text-red-600">*</span></label>
+          <input type="text" {...register('employment_start_date')} className="w-full border rounded p-2" placeholder="MM/YYYY" required />
+          {formState.errors.employment_start_date && <p className="text-red-600 text-sm">{formState.errors.employment_start_date.message}</p>}
+        </div>
+      )}
+      {/* Employment end date */}
+      {!hideJobFields && (
+        <div className="mb-6">
+          <label className="block mb-1 font-medium">Employment end date <span className="text-red-600">*</span></label>
+          <input type="text" {...register('employment_end_date')} className="w-full border rounded p-2" placeholder="MM/YYYY" required />
+          {formState.errors.employment_end_date && <p className="text-red-600 text-sm">{formState.errors.employment_end_date.message}</p>}
         </div>
       )}
       {/* COUNTRY/TERRITORY */}
