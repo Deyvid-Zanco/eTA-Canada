@@ -7,6 +7,7 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Image from 'next/image';
+import React from 'react'; // Added for useEffect
 
 // Add this for TypeScript to recognize grecaptcha on window
 declare global {
@@ -200,6 +201,7 @@ function ApplyFormMultiStep() {
   const [step, setStep] = useState(0);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
+  const [hasSubmitted, setHasSubmitted] = useState(false);
   const methods = useForm<FormValues>({
     resolver: yupResolver(schema),
     mode: 'onTouched',
@@ -359,6 +361,7 @@ function ApplyFormMultiStep() {
       }
 
         setSubmitStatus('success');
+      setHasSubmitted(true);
       reset();
     } catch (err: unknown) {
       setSubmitStatus('error');
@@ -369,6 +372,12 @@ function ApplyFormMultiStep() {
       }
     }
   };
+
+  // Reset hasSubmitted if the user changes any field
+  const isDirty = formState.isDirty;
+  React.useEffect(() => {
+    if (isDirty) setHasSubmitted(false);
+  }, [isDirty]);
 
   // Step content definitions
   const steps = [
@@ -1059,9 +1068,13 @@ function ApplyFormMultiStep() {
               Next
             </button>
           ) : (
-            <button type="submit" className="bg-red-600 hover:bg-red-700 text-white py-2 px-12 rounded-md text-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed">
+            <button
+              type="submit"
+              className="bg-red-600 hover:bg-red-700 text-white py-2 px-12 rounded-md text-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={formState.isSubmitting || hasSubmitted}
+            >
               Submit Application
-          </button>
+            </button>
           )}
         </div>
         {submitStatus === 'success' && (
