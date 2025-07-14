@@ -88,7 +88,7 @@ type FormValues = {
   travel_date_day?: string | null | undefined;
   travel_date_year?: string | null | undefined;
   consent_declaration?: boolean;
-  // ... add other fields as needed
+  previous_visa_number?: string;
 };
 
 const schema: yup.ObjectSchema<FormValues> = yup.object({
@@ -141,8 +141,16 @@ const schema: yup.ObjectSchema<FormValues> = yup.object({
   marital_status: yup.string().nullable().notRequired(),
   canada_visa_applied: yup.string().nullable().notRequired(),
   occupation: yup.string().required('This field is required'),
-  job_description: yup.string().required('This field is required'),
-  employer_name: yup.string().required('This field is required'),
+  job_description: yup.string().default('').when('occupation', {
+    is: (val: string) => !['Unemployed', 'Homemaker', 'Retired', 'Military/armed forces'].includes(val),
+    then: (schema) => schema.required('This field is required'),
+    otherwise: (schema) => schema.notRequired(),
+  }),
+  employer_name: yup.string().default('').when('occupation', {
+    is: (val: string) => !['Unemployed', 'Homemaker', 'Retired', 'Military/armed forces'].includes(val),
+    then: (schema) => schema.required('This field is required'),
+    otherwise: (schema) => schema.notRequired(),
+  }),
   employment_country: yup.string().required('This field is required'),
   apartment_number: yup.string().nullable().notRequired(),
   street_number: yup.string().required('This field is required'),
@@ -172,7 +180,11 @@ const schema: yup.ObjectSchema<FormValues> = yup.object({
     otherwise: (schema) => schema.notRequired().nullable(),
   }),
   consent_declaration: yup.boolean().oneOf([true], 'You must agree to the declaration').required('You must agree to the declaration'),
-  // ... add other fields as needed
+  previous_visa_number: yup.string().when('canada_visa_applied', {
+    is: 'Yes',
+    then: (schema) => schema.required('Please enter your previous Canadian visa/permit/ETA number'),
+    otherwise: (schema) => schema.notRequired().nullable(),
+  }),
 });
 
 function getYearOptions(start: number, end: number) {
@@ -243,6 +255,7 @@ function ApplyFormMultiStep() {
       travel_date_day: null,
       travel_date_year: null,
       consent_declaration: false,
+      previous_visa_number: '',
     },
   });
   const { handleSubmit, formState, watch, register, reset, trigger } = methods;
@@ -253,6 +266,9 @@ function ApplyFormMultiStep() {
   const showUSVisaFields = usVisaNationalities.includes(nationality);
   const showMexicoVisaImage = nationality === 'Mexico';
   const showArgentinaVisaImage = showUSVisaFields && nationality !== 'Mexico';
+  const occupation = watch('occupation');
+  const canadaVisaApplied = watch('canada_visa_applied');
+  const hideJobFields = ['Unemployed', 'Homemaker', 'Retired', 'Military/armed forces'].includes(occupation);
 
   // Define step field arrays for validation
   const stepFields: (keyof FormValues)[][] = [
@@ -311,6 +327,7 @@ function ApplyFormMultiStep() {
         'travel_date_year',
       ] as (keyof FormValues)[] : []),
       'consent_declaration',
+      'previous_visa_number',
     ],
   ];
 
@@ -341,7 +358,7 @@ function ApplyFormMultiStep() {
         throw new Error(errorData.message || 'Failed to submit application');
       }
 
-      setSubmitStatus('success');
+        setSubmitStatus('success');
       reset();
     } catch (err: unknown) {
       setSubmitStatus('error');
@@ -451,7 +468,7 @@ function ApplyFormMultiStep() {
         </select>
         <span className="text-xs text-gray-500">On your passport, look for a field named &quot;Code&quot;, Issuing country&quot;, &quot;Authority&quot; or &quot;Country code&quot;.</span>
         {formState.errors.nationality && <p className="text-red-600 text-sm">This field is required</p>}
-      </div>
+        </div>
       {/* Taiwan National Identification Number (conditional) */}
       {showTaiwanID && (
         <div className="mb-6">
@@ -488,7 +505,7 @@ function ApplyFormMultiStep() {
                 <option value="">YYYY</option>
                 {getYearOptions(currentYear, currentYear + 20).map(y => <option key={y} value={y}>{y}</option>)}
               </select>
-            </div>
+        </div>
           </div>
           {/* Example image for US visa */}
           <div className="mb-6 flex justify-center">
@@ -507,27 +524,27 @@ function ApplyFormMultiStep() {
         <input type="text" {...register('passport_number')} className="w-full border rounded p-2" required />
         <span className="text-xs text-gray-500">Enter the passport number exactly as it appears on the passport information page.</span>
         {formState.errors.passport_number && <p className="text-red-600 text-sm">{formState.errors.passport_number.message}</p>}
-      </div>
+        </div>
       {/* PASSPORT NUMBER (RE-ENTER) */}
       <div className="mb-6">
         <label className="block mb-1 font-medium">PASSPORT NUMBER (RE-ENTER) <span className="text-red-600">*</span></label>
         <input type="text" {...register('passport_number_confirm')} className="w-full border rounded p-2" required />
         {formState.errors.passport_number_confirm && <p className="text-red-600 text-sm">{formState.errors.passport_number_confirm.message}</p>}
-      </div>
+          </div>
       {/* SURNAME(S) / LAST NAME(S) */}
       <div className="mb-6">
         <label className="block mb-1 font-medium">SURNAME(S) / LAST NAME(S) <span className="text-red-600">*</span></label>
         <input type="text" {...register('surname')} className="w-full border rounded p-2" required />
         <span className="text-xs text-gray-500">Please enter exactly as shown on your passport or identity document.</span>
         {formState.errors.surname && <p className="text-red-600 text-sm">This field is required</p>}
-      </div>
+          </div>
       {/* GIVEN NAME(S) / FIRST NAME(S) */}
       <div className="mb-6">
         <label className="block mb-1 font-medium">GIVEN NAME(S) / FIRST NAME(S) <span className="text-red-600">*</span></label>
         <input type="text" {...register('given_name')} className="w-full border rounded p-2" required />
         <span className="text-xs text-gray-500">Please enter exactly as shown on your passport or identity document.</span>
         {formState.errors.given_name && <p className="text-red-600 text-sm">This field is required</p>}
-      </div>
+        </div>
       {/* DATE OF BIRTH */}
       <div className="mb-6">
         <label className="block mb-1 font-medium">DATE OF BIRTH <span className="text-red-600">*</span></label>
@@ -543,9 +560,9 @@ function ApplyFormMultiStep() {
           <select {...register('dob_year')} className="w-24 border rounded p-2" required>
             <option value="">YYYY</option>
             {getYearOptions(1900, currentYear).map(y => <option key={y} value={y}>{y}</option>)}
-          </select>
+            </select>
+          </div>
         </div>
-      </div>
       {/* GENDER */}
       <div className="mb-6">
         <label className="block mb-1 font-medium">GENDER <span className="text-red-600">*</span></label>
@@ -625,16 +642,16 @@ function ApplyFormMultiStep() {
           <option value="Egypt">Egypt</option>
           <option value="El Salvador">El Salvador</option>
           {/* ... more options ... */}
-        </select>
+            </select>
         {formState.errors.birth_country && <p className="text-red-600 text-sm">This field is required</p>}
-      </div>
+          </div>
       {/* CITY/TOWN OF BIRTH */}
       <div className="mb-6">
         <label className="block mb-1 font-medium">CITY/TOWN OF BIRTH <span className="text-red-600">*</span></label>
         <input type="text" {...register('birth_city')} className="w-full border rounded p-2" required />
         <span className="text-xs text-gray-500">If there is no city/town/village on your passport, enter the name of the city/town/village where you were born.</span>
         {formState.errors.birth_city && <p className="text-red-600 text-sm">This field is required</p>}
-      </div>
+          </div>
       {/* DATE OF ISSUE OF PASSPORT */}
       <div className="mb-6">
         <label className="block mb-1 font-medium">DATE OF ISSUE OF PASSPORT <span className="text-red-600">*</span></label>
@@ -652,7 +669,7 @@ function ApplyFormMultiStep() {
             {getYearOptions(currentYear - 20, currentYear).map(y => <option key={y} value={y}>{y}</option>)}
           </select>
         </div>
-      </div>
+          </div>
       {/* DATE OF EXPIRY OF PASSPORT */}
       <div className="mb-6">
         <label className="block mb-1 font-medium">DATE OF EXPIRY OF PASSPORT <span className="text-red-600">*</span></label>
@@ -678,14 +695,14 @@ function ApplyFormMultiStep() {
       {/* ARE YOU A CITIZEN OF ANY ADDITIONAL NATIONALITIES? */}
       <div className="mb-6">
         <label className="block mb-1 font-medium">ARE YOU A CITIZEN OF ANY ADDITIONAL NATIONALITIES? <span className="text-red-600">*</span></label>
-        <div className="flex gap-6">
-          <label className="inline-flex items-center gap-2">
+          <div className="flex gap-6">
+            <label className="inline-flex items-center gap-2">
             <input type="radio" value="No" {...register('additional_nationality')} required /> No
-          </label>
-          <label className="inline-flex items-center gap-2">
+            </label>
+            <label className="inline-flex items-center gap-2">
             <input type="radio" value="Yes" {...register('additional_nationality')} required /> Yes
-          </label>
-        </div>
+            </label>
+          </div>
         {formState.errors.additional_nationality && <p className="text-red-600 text-sm">This field is required</p>}
       </div>
       {/* INDICATE WHICH COUNTRIES/TERRITORIES YOU ARE CITIZEN OF: (conditional) */}
@@ -696,7 +713,7 @@ function ApplyFormMultiStep() {
           {formState.errors.additional_nationality_details && <p className="text-red-600 text-sm">This field is required</p>}
         </div>
       )}
-      {/* Marital status */}
+        {/* Marital status */}
       <div className="mb-6">
         <label className="block mb-1 font-medium">Marital status <span className="text-red-600">*</span></label>
         <select {...register('marital_status')} className="w-full border rounded p-2" required>
@@ -708,23 +725,30 @@ function ApplyFormMultiStep() {
           <option value="Widowed">Widowed</option>
           <option value="Common-Law">Common-Law</option>
           <option value="Never Married/Single">Never Married/Single</option>
-        </select>
+          </select>
         {formState.errors.marital_status && <p className="text-red-600 text-sm">This field is required</p>}
-      </div>
+        </div>
       {/* HAVE YOU EVER APPLIED FOR OR OBTAINED A VISA, AN ETA OR A PERMIT TO VISIT, LIVE, WORK OR STUDY IN CANADA? */}
       <div className="mb-6">
         <label className="block mb-1 font-medium">HAVE YOU EVER APPLIED FOR OR OBTAINED A VISA, AN ETA OR A PERMIT TO VISIT, LIVE, WORK OR STUDY IN CANADA? <span className="text-red-600">*</span></label>
-        <div className="flex gap-6">
-          <label className="inline-flex items-center gap-2">
+          <div className="flex gap-6">
+            <label className="inline-flex items-center gap-2">
             <input type="radio" value="No" {...register('canada_visa_applied')} required /> No
-          </label>
-          <label className="inline-flex items-center gap-2">
+            </label>
+            <label className="inline-flex items-center gap-2">
             <input type="radio" value="Yes" {...register('canada_visa_applied')} required /> Yes
-          </label>
+            </label>
         </div>
         {formState.errors.canada_visa_applied && <p className="text-red-600 text-sm">This field is required</p>}
+        {canadaVisaApplied === 'Yes' && (
+          <div className="mt-4">
+            <label className="block mb-1 font-medium">Please enter your previous Canadian visa/permit/ETA number <span className="text-red-600">*</span></label>
+            <input type="text" {...register('previous_visa_number')} className="w-full border rounded p-2" required />
+            {formState.errors.previous_visa_number && <p className="text-red-600 text-sm">{formState.errors.previous_visa_number.message}</p>}
+          </div>
+        )}
       </div>
-      {/* Occupation */}
+        {/* Occupation */}
       <div className="mb-6">
         <label className="block mb-1 font-medium">Occupation <span className="text-red-600">*</span></label>
         <select {...register('occupation')} className="w-full border rounded p-2" required>
@@ -744,21 +768,25 @@ function ApplyFormMultiStep() {
           <option value="Student">Student</option>
           <option value="Trades, transport and equipment operators and related occupations">Trades, transport and equipment operators and related occupations</option>
           <option value="Unemployed">Unemployed</option>
-        </select>
+          </select>
         {formState.errors.occupation && <p className="text-red-600 text-sm">{formState.errors.occupation.message}</p>}
-      </div>
+        </div>
       {/* Describe a bit more about your job */}
-      <div className="mb-6">
-        <label className="block mb-1 font-medium">Describe a bit more about your job <span className="text-red-600">*</span></label>
-        <input type="text" {...register('job_description')} className="w-full border rounded p-2" required />
-        {formState.errors.job_description && <p className="text-red-600 text-sm">{formState.errors.job_description.message}</p>}
-      </div>
+      {!hideJobFields && (
+        <div className="mb-6">
+          <label className="block mb-1 font-medium">Describe a bit more about your job <span className="text-red-600">*</span></label>
+          <input type="text" {...register('job_description')} className="w-full border rounded p-2" required />
+          {formState.errors.job_description && <p className="text-red-600 text-sm">{formState.errors.job_description.message}</p>}
+        </div>
+      )}
       {/* Name of employer or school, as appropriate */}
-      <div className="mb-6">
-        <label className="block mb-1 font-medium">Name of employer or school, as appropriate <span className="text-red-600">*</span></label>
-        <input type="text" {...register('employer_name')} className="w-full border rounded p-2" required />
-        {formState.errors.employer_name && <p className="text-red-600 text-sm">{formState.errors.employer_name.message}</p>}
-      </div>
+      {!hideJobFields && (
+        <div className="mb-6">
+          <label className="block mb-1 font-medium">Name of employer or school, as appropriate <span className="text-red-600">*</span></label>
+          <input type="text" {...register('employer_name')} className="w-full border rounded p-2" required />
+          {formState.errors.employer_name && <p className="text-red-600 text-sm">{formState.errors.employer_name.message}</p>}
+        </div>
+      )}
       {/* COUNTRY/TERRITORY */}
       <div className="mb-6">
         <label className="block mb-1 font-medium">COUNTRY/TERRITORY <span className="text-red-600">*</span></label>
@@ -829,35 +857,35 @@ function ApplyFormMultiStep() {
           {/* ... more options ... */}
         </select>
         {formState.errors.employment_country && <p className="text-red-600 text-sm">{formState.errors.employment_country.message}</p>}
-      </div>
+          </div>
       {/* Apartment number */}
       <div className="mb-6">
         <label className="block mb-1 font-medium">APARTMENT NUMBER</label>
         <input type="text" {...register('apartment_number')} className="w-full border rounded p-2" />
-      </div>
+        </div>
       {/* Street number */}
       <div className="mb-6">
         <label className="block mb-1 font-medium">STREET NUMBER <span className="text-red-600">*</span></label>
         <input type="text" {...register('street_number')} className="w-full border rounded p-2" required />
         {formState.errors.street_number && <p className="text-red-600 text-sm">{formState.errors.street_number.message}</p>}
-      </div>
+          </div>
       {/* Street name */}
       <div className="mb-6">
         <label className="block mb-1 font-medium">STREET NAME <span className="text-red-600">*</span></label>
         <input type="text" {...register('street_name')} className="w-full border rounded p-2" required />
         {formState.errors.street_name && <p className="text-red-600 text-sm">{formState.errors.street_name.message}</p>}
-      </div>
+          </div>
       {/* City/town */}
       <div className="mb-6">
         <label className="block mb-1 font-medium">CITY/TOWN <span className="text-red-600">*</span></label>
         <input type="text" {...register('city_town')} className="w-full border rounded p-2" required />
         {formState.errors.city_town && <p className="text-red-600 text-sm">{formState.errors.city_town.message}</p>}
-      </div>
+          </div>
       {/* District/region */}
       <div className="mb-6">
         <label className="block mb-1 font-medium">DISTRICT/REGION</label>
         <input type="text" {...register('district_region')} className="w-full border rounded p-2" />
-      </div>
+        </div>
       {/* Country/territory */}
       <div className="mb-6">
         <label className="block mb-1 font-medium">COUNTRY/TERRITORY <span className="text-red-600">*</span></label>
@@ -926,7 +954,7 @@ function ApplyFormMultiStep() {
           <option value="Egypt">Egypt</option>
           <option value="El Salvador">El Salvador</option>
           {/* ... more options ... */}
-        </select>
+            </select>
         {formState.errors.address_country && <p className="text-red-600 text-sm">{formState.errors.address_country.message}</p>}
       </div>
       {/* Email */}
@@ -940,18 +968,18 @@ function ApplyFormMultiStep() {
         <label className="block mb-1 font-medium">Confirm email address <span className="text-red-600">*</span></label>
         <input type="email" {...register('email_confirm')} className="w-full border rounded p-2" required />
         {formState.errors.email_confirm && <p className="text-red-600 text-sm">{formState.errors.email_confirm.message}</p>}
-      </div>
+          </div>
       {/* Phone */}
       <div className="mb-6">
         <label className="block mb-1 font-medium">Phone number <span className="text-red-600">*</span></label>
         <input type="text" {...register('phone')} className="w-full border rounded p-2" required />
         {formState.errors.phone && <p className="text-red-600 text-sm">{formState.errors.phone.message}</p>}
-      </div>
+          </div>
       {/* Alternative phone */}
       <div className="mb-6">
         <label className="block mb-1 font-medium">Alternative phone number</label>
         <input type="text" {...register('alt_phone')} className="w-full border rounded p-2" />
-      </div>
+        </div>
       {/* Preferred language */}
       <div className="mb-6">
         <label className="block mb-1 font-medium">Preferred language of correspondence <span className="text-red-600">*</span></label>
@@ -961,18 +989,18 @@ function ApplyFormMultiStep() {
           <option value="French">French</option>
         </select>
         {formState.errors.preferred_language && <p className="text-red-600 text-sm">{formState.errors.preferred_language.message}</p>}
-      </div>
+          </div>
       {/* Do you know when you will travel? */}
       <div className="mb-6">
         <label className="block mb-1 font-medium">DO YOU KNOW WHEN YOU WILL TRAVEL TO CANADA? <span className="text-red-600">*</span></label>
-        <div className="flex gap-6">
-          <label className="inline-flex items-center gap-2">
+            <div className="flex gap-6">
+              <label className="inline-flex items-center gap-2">
             <input type="radio" value="No" {...register('do_you_know_travel_date')} required /> No
-          </label>
-          <label className="inline-flex items-center gap-2">
+              </label>
+              <label className="inline-flex items-center gap-2">
             <input type="radio" value="Yes" {...register('do_you_know_travel_date')} required /> Yes
-          </label>
-        </div>
+              </label>
+            </div>
         {formState.errors.do_you_know_travel_date && <p className="text-red-600 text-sm">{formState.errors.do_you_know_travel_date.message}</p>}
       </div>
       {/* If Yes, show date pickers */}
@@ -1033,7 +1061,7 @@ function ApplyFormMultiStep() {
           ) : (
             <button type="submit" className="bg-red-600 hover:bg-red-700 text-white py-2 px-12 rounded-md text-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed">
               Submit Application
-            </button>
+          </button>
           )}
         </div>
         {submitStatus === 'success' && (
