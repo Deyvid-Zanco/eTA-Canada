@@ -287,13 +287,19 @@ function ApplyFormMultiStep() {
 
   // Add a ref for the form
   const formRef = React.useRef<HTMLFormElement>(null);
+  // Track if component has mounted to avoid scroll on initial load
+  const didMountRef = React.useRef(false);
 
-  // Scroll to top of form when step changes
+  // Scroll to top of form when step changes, but not on initial mount
   React.useEffect(() => {
-    if (formRef.current) {
-      formRef.current.scrollIntoView({ behavior: 'smooth' });
-    } else if (typeof window !== 'undefined') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (didMountRef.current) {
+      if (formRef.current) {
+        formRef.current.scrollIntoView({ behavior: 'smooth' });
+      } else if (typeof window !== 'undefined') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    } else {
+      didMountRef.current = true;
     }
   }, [step]);
 
