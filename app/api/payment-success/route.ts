@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Use session.customer_email or session.metadata
-    const email = session.customer_email;
+    const email = session.customer_email || session.customer_details?.email || session.metadata?.email;
 
     if (!email) {
       return NextResponse.json({ error: 'No email found for this session' }, { status: 400 });
