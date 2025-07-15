@@ -436,6 +436,17 @@ function ApplyFormMultiStep() {
     }
   }, [step]);
 
+  // Scroll to top when errors appear on the second step
+  React.useEffect(() => {
+    if (step === 1 && Object.keys(formState.errors).length > 0) {
+      if (formRef.current) {
+        formRef.current.scrollIntoView({ behavior: 'smooth' });
+      } else if (typeof window !== 'undefined') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+  }, [step, formState.errors]);
+
   // Step content definitions
   const steps = [
     // Step 0: Passport and personal details (combine previous steps 0 and 1)
@@ -1128,12 +1139,6 @@ function ApplyFormMultiStep() {
           {step < steps.length - 1 ? (
             <button type="button" className="bg-red-600 hover:bg-red-700 text-white py-2 px-12 rounded-md text-lg font-semibold" onClick={async () => {
               const valid = await trigger(stepFields[step]);
-              // Always scroll to top of form after clicking Next
-              if (formRef.current) {
-                formRef.current.scrollIntoView({ behavior: 'smooth' });
-              } else if (typeof window !== 'undefined') {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }
               if (valid) {
                 setStep(step + 1);
               }
