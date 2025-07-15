@@ -418,6 +418,24 @@ function ApplyFormMultiStep() {
     if (isDirty) setHasSubmitted(false);
   }, [isDirty]);
 
+  // Add a ref for the form
+  const formRef = React.useRef<HTMLFormElement>(null);
+  // Track if component has mounted to avoid scroll on initial load
+  const didMountRef = React.useRef(false);
+
+  // Scroll to top of form when step changes, but not on initial mount
+  React.useEffect(() => {
+    if (didMountRef.current) {
+      if (formRef.current) {
+        formRef.current.scrollIntoView({ behavior: 'smooth' });
+      } else if (typeof window !== 'undefined') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    } else {
+      didMountRef.current = true;
+    }
+  }, [step]);
+
   // Step content definitions
   const steps = [
     // Step 0: Passport and personal details (combine previous steps 0 and 1)
@@ -1099,7 +1117,7 @@ function ApplyFormMultiStep() {
 
   return (
     <FormProvider {...methods}>
-      <form className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-8 space-y-8" onSubmit={handleSubmit(onSubmit)}>
+      <form ref={formRef} className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-8 space-y-8" onSubmit={handleSubmit(onSubmit)}>
         {steps[step]}
         <div className="text-center flex justify-between mt-8">
           {step > 0 && (
@@ -1112,9 +1130,6 @@ function ApplyFormMultiStep() {
               const valid = await trigger(stepFields[step]);
               if (valid) {
                 setStep(step + 1);
-                if (typeof window !== 'undefined') {
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }
               }
             }}>
               Next
