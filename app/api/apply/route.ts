@@ -78,12 +78,15 @@ export async function POST(req: NextRequest) {
           <td style="padding:40px 32px 32px 32px;text-align:center;">
             <h1 style="color:#34A853;font-size:24px;margin-bottom:16px;">We have received your response for CANADA ETA PERMIT AUTHORIZATION</h1>
             <p style="font-size:16px;color:#222;margin-bottom:16px;">Hello!</p>
-            <p style="font-size:16px;color:#222;margin-bottom:16px;">Your Canada eTA application has been successfully received!</p>
-            <p style="font-size:16px;color:#222;margin-bottom:16px;">Once your payment has been processed, your application will begin.</p>
-            <p style="font-size:16px;color:#222;margin-bottom:16px;">Processing time may take a few minutes or up to 72 hours.</p>
-            <p style="font-size:16px;color:#222;margin-bottom:16px;"><strong>Important information!!</strong></p>
-            <p style="font-size:16px;color:#222;margin-bottom:16px;">We suggest that you keep an eye on your email inbox and also your SPAM folder, as indicated during the application process, for future communications and updates regarding your application.</p>
-            <p style="font-size:16px;color:#222;margin-bottom:16px;">If you have any questions or concerns, please do not hesitate to contact us by replying to this email.</p>
+            <p style="font-size:16px;color:#222;margin-bottom:16px;">We have received your request for the issuance of the Electronic Travel Authorization (eTA) for Canada.</p>
+            <p style="font-size:16px;color:#222;margin-bottom:16px;">Your application will be processed shortly.<br/>
+              <span style="font-weight:600;">Processing time may take a few minutes or up to 72 hours.</span>
+            </p>
+            <p style="font-size:20px;color:#222;font-weight:700;margin-bottom:8px;">IMPORTANT INFORMATION:</p>
+            <p style="font-size:16px;color:#222;margin-bottom:16px;">
+              We suggest keeping an eye on your email inbox as <span style="font-weight:bold;">well as your SPAM folder</span>, as mentioned during the application process, for future communications and updates regarding your application.
+            </p>
+            <p style="font-size:16px;color:#222;margin-bottom:16px;">Best regards,<br/>Applicant Support – eTA Canada Support</p>
             <p style="font-size:13px;color:#888;margin-top:32px;">&copy; IMMI CENTER</p>
           </td>
         </tr>

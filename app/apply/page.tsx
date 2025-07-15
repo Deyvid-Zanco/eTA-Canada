@@ -397,7 +397,7 @@ function ApplyFormMultiStep() {
       if (error) throw new Error(error.message);
 
       // If redirect fails, show error
-      setSubmitStatus('success');
+        setSubmitStatus('success');
       setHasSubmitted(true);
       reset();
     } catch (err: unknown) {
@@ -1110,7 +1110,12 @@ function ApplyFormMultiStep() {
           {step < steps.length - 1 ? (
             <button type="button" className="bg-red-600 hover:bg-red-700 text-white py-2 px-12 rounded-md text-lg font-semibold" onClick={async () => {
               const valid = await trigger(stepFields[step]);
-              if (valid) setStep(step + 1);
+              if (valid) {
+                setStep(step + 1);
+                if (typeof window !== 'undefined') {
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+              }
             }}>
               Next
             </button>
