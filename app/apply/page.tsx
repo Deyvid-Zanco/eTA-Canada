@@ -424,13 +424,18 @@ function ApplyFormMultiStep() {
   const didMountRef = React.useRef(false);
 
   // Scroll to top of form when step changes, but not on initial mount
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     if (didMountRef.current) {
-      if (formRef.current) {
-        formRef.current.scrollIntoView({ behavior: 'smooth' });
-      } else if (typeof window !== 'undefined') {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
+      // Use setTimeout to ensure DOM is fully updated
+      const timeoutId = setTimeout(() => {
+        if (formRef.current) {
+          formRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else if (typeof window !== 'undefined') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }, 100);
+      
+      return () => clearTimeout(timeoutId);
     } else {
       didMountRef.current = true;
     }
