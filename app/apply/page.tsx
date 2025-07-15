@@ -285,24 +285,6 @@ function ApplyFormMultiStep() {
   const canadaVisaApplied = watch('canada_visa_applied');
   const hideJobFields = ['Unemployed', 'Homemaker', 'Retired', 'Military/armed forces'].includes(occupation);
 
-  // Add a ref for the form
-  const formRef = React.useRef<HTMLFormElement>(null);
-  // Track if component has mounted to avoid scroll on initial load
-  const didMountRef = React.useRef(false);
-
-  // Scroll to top of form when step changes, but not on initial mount
-  React.useEffect(() => {
-    if (didMountRef.current) {
-      if (formRef.current) {
-        formRef.current.scrollIntoView({ behavior: 'smooth' });
-      } else if (typeof window !== 'undefined') {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-    } else {
-      didMountRef.current = true;
-    }
-  }, [step]);
-
   // Define step field arrays for validation
   const stepFields: (keyof FormValues)[][] = [
     [
@@ -435,6 +417,24 @@ function ApplyFormMultiStep() {
   React.useEffect(() => {
     if (isDirty) setHasSubmitted(false);
   }, [isDirty]);
+
+  // Add a ref for the form
+  const formRef = React.useRef<HTMLFormElement>(null);
+  // Track if component has mounted to avoid scroll on initial load
+  const didMountRef = React.useRef(false);
+
+  // Scroll to top of form when step changes, but not on initial mount
+  React.useEffect(() => {
+    if (didMountRef.current) {
+      if (formRef.current) {
+        formRef.current.scrollIntoView({ behavior: 'smooth' });
+      } else if (typeof window !== 'undefined') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    } else {
+      didMountRef.current = true;
+    }
+  }, [step]);
 
   // Step content definitions
   const steps = [
@@ -1117,7 +1117,7 @@ function ApplyFormMultiStep() {
 
   return (
     <FormProvider {...methods}>
-      <form ref={formRef} className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-8 space-y-8" onSubmit={handleSubmit(onSubmit)}>
+      <form className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-8 space-y-8" onSubmit={handleSubmit(onSubmit)} ref={formRef}>
         {steps[step]}
         <div className="text-center flex justify-between mt-8">
           {step > 0 && (
@@ -1128,11 +1128,14 @@ function ApplyFormMultiStep() {
           {step < steps.length - 1 ? (
             <button type="button" className="bg-red-600 hover:bg-red-700 text-white py-2 px-12 rounded-md text-lg font-semibold" onClick={async () => {
               const valid = await trigger(stepFields[step]);
+              // Always scroll to top of form after clicking Next
+              if (formRef.current) {
+                formRef.current.scrollIntoView({ behavior: 'smooth' });
+              } else if (typeof window !== 'undefined') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }
               if (valid) {
                 setStep(step + 1);
-                if (typeof window !== 'undefined') {
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }
               }
             }}>
               Next
@@ -1143,17 +1146,7 @@ function ApplyFormMultiStep() {
               className="bg-red-600 hover:bg-red-700 text-white py-2 px-12 rounded-md text-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
               disabled={formState.isSubmitting || hasSubmitted}
           >
-              {formState.isSubmitting || hasSubmitted ? (
-                <>
-                  <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
-                  Processing...
-                </>
-              ) : (
-                'Submit Application'
-              )}
+              Submit Application
           </button>
           )}
         </div>
