@@ -36,11 +36,12 @@ export async function POST(req: NextRequest) {
     }
 
     // Send payment success email
-    await resend.emails.send({
-      from: 'IMMI CENTER <noreply@immicenter-online.com>',
-      to: email,
-      subject: 'Payment Received for CANADA ETA PERMIT AUTHORIZATION',
-      html: `
+    try {
+      const emailResult = await resend.emails.send({
+        from: 'IMMI CENTER <noreply@immicenter-online.com>',
+        to: email,
+        subject: 'Payment Received for CANADA ETA PERMIT AUTHORIZATION',
+        html: `
 <table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f7;padding:0;margin:0;">
   <tr>
     <td align="center">
@@ -65,8 +66,14 @@ export async function POST(req: NextRequest) {
     </td>
   </tr>
 </table>
-      `,
-    });
+        `,
+      });
+      
+      console.log('Payment success email sent:', { email, result: emailResult });
+    } catch (emailError) {
+      console.error('Failed to send payment success email:', emailError);
+      return NextResponse.json({ error: 'Failed to send payment confirmation email' }, { status: 500 });
+    }
 
     // Optionally, update the session metadata to mark email as sent (requires Stripe API write access)
     try {
