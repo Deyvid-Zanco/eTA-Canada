@@ -1188,6 +1188,10 @@ export default function ApplyPage() {
       </Head>
       <Header />
       <main className="container mx-auto py-12 px-4">
+        {/* Disclaimer for Google Ads compliance */}
+        <div className="mb-8 p-4 border-l-4 border-yellow-500 bg-yellow-50 text-yellow-900 rounded">
+          <strong>Disclaimer:</strong> IMMI CENTER is <b>not affiliated with any government agency or department</b>. This website is not affiliated with the Canadian Government. We are a private travel consultancy provider. Our service fee is <b>42 USD</b>, which includes the 7 CAD government fee. You can apply directly for a Canada eTA at a lower cost via the official <a href="https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eta/apply.html" target="_blank" rel="noopener noreferrer" className="underline font-semibold">Canada Government Portal</a>.
+        </div>
         <h1 className="text-3xl font-bold mb-8 text-center">
           CANADA ETA PERMIT AUTHORIZATION
         </h1>
