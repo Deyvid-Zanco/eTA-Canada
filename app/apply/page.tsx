@@ -205,7 +205,11 @@ function getYearOptions(start: number, end: number) {
   return years;
 }
 const currentYear = new Date().getFullYear();
-const months = Array.from({ length: 12 }, (_, i) => String(i + 1).padStart(2, '0'));
+const months = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December'
+];
+const monthNumbers = Array.from({ length: 12 }, (_, i) => String(i + 1).padStart(2, '0'));
 const days = Array.from({ length: 31 }, (_, i) => String(i + 1).padStart(2, '0'));
 
 function ApplyFormMultiStep() {
@@ -564,9 +568,9 @@ function ApplyFormMultiStep() {
           <div className="mb-6">
             <label className="block mb-1 font-medium">DATE OF EXPIRY <span className="text-red-600">*</span></label>
             <div className="flex gap-2">
-              <select {...register('us_visa_expiry_month')} className="w-16 border rounded p-2" required>
-                <option value="">MM</option>
-                {months.map(m => <option key={m} value={m}>{m}</option>)}
+              <select {...register('us_visa_expiry_month')} className="w-32 border rounded p-2" required>
+                <option value="">Month</option>
+                {months.map((month, index) => <option key={month} value={monthNumbers[index]}>{month}</option>)}
               </select>
               <select {...register('us_visa_expiry_day')} className="w-16 border rounded p-2" required>
                 <option value="">DD</option>
@@ -620,9 +624,9 @@ function ApplyFormMultiStep() {
       <div className="mb-6">
         <label className="block mb-1 font-medium">DATE OF BIRTH <span className="text-red-600">*</span></label>
         <div className="flex gap-2">
-          <select {...register('dob_month')} className="w-16 border rounded p-2" required>
-            <option value="">MM</option>
-            {months.map(m => <option key={m} value={m}>{m}</option>)}
+          <select {...register('dob_month')} className="w-32 border rounded p-2" required>
+            <option value="">Month</option>
+            {months.map((month, index) => <option key={month} value={monthNumbers[index]}>{month}</option>)}
           </select>
           <select {...register('dob_day')} className="w-16 border rounded p-2" required>
             <option value="">DD</option>
@@ -727,9 +731,9 @@ function ApplyFormMultiStep() {
       <div className="mb-6">
         <label className="block mb-1 font-medium">DATE OF ISSUE OF PASSPORT <span className="text-red-600">*</span></label>
         <div className="flex gap-2">
-          <select {...register('passport_issue_month')} className="w-16 border rounded p-2" required>
-            <option value="">MM</option>
-            {months.map(m => <option key={m} value={m}>{m}</option>)}
+          <select {...register('passport_issue_month')} className="w-32 border rounded p-2" required>
+            <option value="">Month</option>
+            {months.map((month, index) => <option key={month} value={monthNumbers[index]}>{month}</option>)}
           </select>
           <select {...register('passport_issue_day')} className="w-16 border rounded p-2" required>
             <option value="">DD</option>
@@ -745,9 +749,9 @@ function ApplyFormMultiStep() {
       <div className="mb-6">
         <label className="block mb-1 font-medium">DATE OF EXPIRY OF PASSPORT <span className="text-red-600">*</span></label>
         <div className="flex gap-2">
-          <select {...register('passport_expiry_month')} className="w-16 border rounded p-2" required>
-            <option value="">MM</option>
-            {months.map(m => <option key={m} value={m}>{m}</option>)}
+          <select {...register('passport_expiry_month')} className="w-32 border rounded p-2" required>
+            <option value="">Month</option>
+            {months.map((month, index) => <option key={month} value={monthNumbers[index]}>{month}</option>)}
           </select>
           <select {...register('passport_expiry_day')} className="w-16 border rounded p-2" required>
             <option value="">DD</option>
@@ -1087,9 +1091,9 @@ function ApplyFormMultiStep() {
         <div className="mb-6">
           <label className="block mb-1 font-medium">WHEN DO YOU PLAN TO TRAVEL TO CANADA? <span className="text-red-600">*</span></label>
           <div className="flex gap-2">
-            <select {...register('travel_date_month')} className="w-16 border rounded p-2" required>
-              <option value="">MM</option>
-              {months.map(m => <option key={m} value={m}>{m}</option>)}
+            <select {...register('travel_date_month')} className="w-32 border rounded p-2" required>
+              <option value="">Month</option>
+              {months.map((month, index) => <option key={month} value={monthNumbers[index]}>{month}</option>)}
             </select>
             <select {...register('travel_date_day')} className="w-16 border rounded p-2" required>
               <option value="">DD</option>
