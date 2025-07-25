@@ -205,10 +205,7 @@ function getYearOptions(start: number, end: number) {
   return years;
 }
 const currentYear = new Date().getFullYear();
-const monthNames = [
-  'January', 'February', 'March', 'April', 'May', 'June',
-  'July', 'August', 'September', 'October', 'November', 'December'
-];
+const months = Array.from({ length: 12 }, (_, i) => String(i + 1).padStart(2, '0'));
 const days = Array.from({ length: 31 }, (_, i) => String(i + 1).padStart(2, '0'));
 
 function ApplyFormMultiStep() {
@@ -569,7 +566,7 @@ function ApplyFormMultiStep() {
             <div className="flex gap-2">
               <select {...register('us_visa_expiry_month')} className="w-16 border rounded p-2" required>
                 <option value="">MM</option>
-                {monthNames.map((m, idx) => <option key={m} value={String(idx + 1).padStart(2, '0')}>{m}</option>)}
+                {months.map(m => <option key={m} value={m}>{m}</option>)}
               </select>
               <select {...register('us_visa_expiry_day')} className="w-16 border rounded p-2" required>
                 <option value="">DD</option>
@@ -625,7 +622,7 @@ function ApplyFormMultiStep() {
         <div className="flex gap-2">
           <select {...register('dob_month')} className="w-16 border rounded p-2" required>
             <option value="">MM</option>
-            {monthNames.map((m, idx) => <option key={m} value={String(idx + 1).padStart(2, '0')}>{m}</option>)}
+            {months.map(m => <option key={m} value={m}>{m}</option>)}
           </select>
           <select {...register('dob_day')} className="w-16 border rounded p-2" required>
             <option value="">DD</option>
@@ -732,7 +729,7 @@ function ApplyFormMultiStep() {
         <div className="flex gap-2">
           <select {...register('passport_issue_month')} className="w-16 border rounded p-2" required>
             <option value="">MM</option>
-            {monthNames.map((m, idx) => <option key={m} value={String(idx + 1).padStart(2, '0')}>{m}</option>)}
+            {months.map(m => <option key={m} value={m}>{m}</option>)}
           </select>
           <select {...register('passport_issue_day')} className="w-16 border rounded p-2" required>
             <option value="">DD</option>
@@ -750,7 +747,7 @@ function ApplyFormMultiStep() {
         <div className="flex gap-2">
           <select {...register('passport_expiry_month')} className="w-16 border rounded p-2" required>
             <option value="">MM</option>
-            {monthNames.map((m, idx) => <option key={m} value={String(idx + 1).padStart(2, '0')}>{m}</option>)}
+            {months.map(m => <option key={m} value={m}>{m}</option>)}
           </select>
           <select {...register('passport_expiry_day')} className="w-16 border rounded p-2" required>
             <option value="">DD</option>
@@ -1092,7 +1089,7 @@ function ApplyFormMultiStep() {
           <div className="flex gap-2">
             <select {...register('travel_date_month')} className="w-16 border rounded p-2" required>
               <option value="">MM</option>
-              {monthNames.map((m, idx) => <option key={m} value={String(idx + 1).padStart(2, '0')}>{m}</option>)}
+              {months.map(m => <option key={m} value={m}>{m}</option>)}
             </select>
             <select {...register('travel_date_day')} className="w-16 border rounded p-2" required>
               <option value="">DD</option>
@@ -1183,6 +1180,12 @@ function ApplyFormMultiStep() {
 }
 
 export default function ApplyPage() {
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, []);
+
   return (
     <>
       <Head>
@@ -1192,9 +1195,7 @@ export default function ApplyPage() {
       <Header />
       <main className="container mx-auto py-12 px-4">
         {/* Disclaimer for Google Ads compliance */}
-        <div className="mb-8 p-4 border-l-4 border-yellow-500 bg-yellow-50 text-yellow-900 rounded">
-          <strong>Disclaimer:</strong> IMMI CENTER is <b>not affiliated with any government agency or department</b>. This website is not affiliated with the Canadian Government. We are a private travel consultancy provider. Our service fee is <b>42 USD</b>, which includes the 7 CAD government fee. You can apply directly for a Canada eTA at a lower cost via the official <a href="https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eta/apply.html" target="_blank" rel="noopener noreferrer" className="underline font-semibold">Canada Government Portal</a>.
-        </div>
+       
         <h1 className="text-3xl font-bold mb-8 text-center">
           CANADA ETA PERMIT AUTHORIZATION
         </h1>
