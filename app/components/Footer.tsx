@@ -9,12 +9,12 @@ export default function Footer() {
           <div className="flex-1 flex flex-col gap-4">
             <Image
               src="/eta-canada-immi-center-logo-1024x339.png"
-              alt="Visa eTa Canada"
+              alt="Canada eTA Service"
               width={160}
               height={40}
             />
             <p className="text-gray-600 text-xs leading-relaxed break-words">
-              Disclaimer: IMMI CENTER is not affiliated with any government agency or department. Costs for consulting services DO NOT include any government solicitation, medical examination, or biometric fees. We are a private travel consultancy provider. You can apply directly for visas on the Embassy or Consulate websites. IMMI CENTER is authorized by the Ministry of Tourism through Cadastur to operate with the activity of obtaining and legalizing documents for travelers in accordance with Law 11.771/08 – Art. 27 § 4º I which can be verified at:&nbsp;
+              Disclaimer: IMMI CENTER is not affiliated with any government agency or department. Costs for consulting services DO NOT include any government solicitation, medical examination, or biometric fees. We are a private travel consultancy provider. You can apply directly for an eTA on the official Government of Canada website or at the Embassy or Consulate. IMMI CENTER is authorized by the Ministry of Tourism through Cadastur to operate with the activity of obtaining and legalizing documents for travelers in accordance with Law 11.771/08 – Art. 27 § 4º I which can be verified at:&nbsp;
               <a href="https://cadastur.turismo.gov.br/cadastur/#!/public/qrcode/43274527000117" target="_blank" className="underline hover:text-red-700">Cadastur QR&nbsp;Code</a>.
               &nbsp;<b>IMMI WORLD</b> – CNPJ 43.274.527/0001-17 – HELIZA GIOVANA CONRADO DE ANDRADE CHACHA 21588576841.&nbsp;
               <Link href="/terms" className="underline hover:text-red-700">Terms of Use</Link> |&nbsp;

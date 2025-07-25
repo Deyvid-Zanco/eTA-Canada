@@ -36,7 +36,7 @@ export default function LandingPage() {
         {/* Hero Section */}
         <section className="m-jumbotron-image6 flex flex-col items-center justify-center text-center gap-6 px-4">
           <h1 className="text-3xl md:text-5xl font-bold max-w-3xl">
-            CANADA TRAVEL AUTHORIZATION SERVICE
+            Private Canada eTA Service
           </h1>
           <p className="max-w-2xl">
             An electronic Travel Authorization (eTA) is an entry requirement for
@@ -65,8 +65,8 @@ export default function LandingPage() {
             </div>
             <div>
               <span className="step-number">3</span>
-              <h3 className="font-semibold mb-2">Receive Approved eTA</h3>
-              <p>Your approved eTA is delivered directly to your inbox.</p>
+              <h3 className="font-semibold mb-2">Check Your Email</h3>
+              <p>You will receive a response regarding your eTA application by email.</p>
             </div>
           </div>
         </section>
@@ -78,9 +78,7 @@ export default function LandingPage() {
           </h2>
           <h3 className="text-xl font-semibold mb-4">eTA Conditions</h3>
           <p className="mb-6 max-w-3xl">
-            To qualify for an eTA you must hold a passport from an eligible
-            country, be visiting Canada for tourism or transit purposes, and
-            stay for no longer than six months.
+            To qualify for an eTA you must hold a travel document issued by an eligible country, be visiting Canada for tourism or transit purposes, and stay for no longer than six months.
           </p>
           <Link
             href="/apply"
@@ -138,11 +136,6 @@ export default function LandingPage() {
             </tbody>
           </table>
         </section>
-        {/* Disclaimer for Google Ads compliance */}
-        <div className="mb-8 p-4 border-l-4 border-yellow-500 bg-yellow-50 text-yellow-900 rounded max-w-2xl mx-auto">
-          <strong>Notice:</strong> This website is <b>not affiliated with the Canadian Government</b>. IMMI WORLD (CNPJ 43.274.527/0001-17, HELIZA GIOVANA CONRADO DE ANDRADE CHACHA 21588576841) is intended to help individuals and legal entities in their administrative travel paperwork to enter Canada for a short term stay. Our help and assistance are offered at a price of <b>42 USD</b> which includes the 7 CAD fee charged by Canadian immigration services. Should you wish to apply for your Canada ETA through the Canada Government Portal for a lower fee you may do so <a href="https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eta/apply.html" target="_blank" rel="noopener noreferrer" className="underline font-semibold">here</a>.<br />
-          <strong>Legal Disclaimer:</strong> IMMI WORLD (CNPJ 43.274.527/0001-17, HELIZA GIOVANA CONRADO DE ANDRADE CHACHA 21588576841) is not affiliated with the Canadian Government. &copy;
-        </div>
 
         {/* Final CTA */}
         <section className="text-center py-12 bg-gray-50">
