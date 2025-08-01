@@ -3,6 +3,7 @@ import Link from "next/link";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import CountrySearchGrid from "./components/CountrySearchGrid";
+import Script from "next/script";
 
 export default function LandingPage() {
   return (
@@ -31,6 +32,20 @@ export default function LandingPage() {
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
+      {/* Google tag (gtag.js) */}
+      <Script
+        async
+        src="https://www.googletagmanager.com/gtag/js?id=AW-16512154233"
+      />
+      <Script id="google-analytics">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'AW-16512154233');
+        `}
+      </Script>
       <Header />
       <main className="flex flex-col">
         {/* Hero Section */}

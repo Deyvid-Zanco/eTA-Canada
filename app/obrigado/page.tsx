@@ -49,6 +49,16 @@ export default function ObrigadoPage() {
           gtag('config', 'AW-16512154233');
         `}
       </Script>
+      <Script id="conversion-event">
+        {`
+          gtag('event', 'conversion', {
+              'send_to': 'AW-16512154233/tQOZCLmLoaAZEPn0zcE9',
+              'value': 1.0,
+              'currency': 'BRL',
+              'transaction_id': ''
+          });
+        `}
+      </Script>
       <div className="flex flex-col items-center justify-center min-h-screen bg-white px-4 py-12">
         <div className="bg-white rounded-lg shadow-md p-8 max-w-xl w-full text-center">
           <div className="flex justify-center mb-4">
