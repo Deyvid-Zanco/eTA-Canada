@@ -51,7 +51,7 @@ export default function LandingPage() {
         {/* Hero Section */}
         <section className="m-jumbotron-image6 flex flex-col items-center justify-center text-center gap-6 px-4">
           <h1 className="text-3xl md:text-5xl font-bold max-w-3xl">
-            Private Canada eTA Service
+            Canada eTA Service
           </h1>
           <p className="max-w-2xl">
             An electronic Travel Authorization (eTA) is an entry requirement for
