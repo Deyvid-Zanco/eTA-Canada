@@ -79,7 +79,7 @@ type FormValues = {
   street_name: string;
   city_town: string;
   district_region?: string | null | undefined;
-  zip_code: string;
+  zip_code?: string | null | undefined;
   address_country: string;
   email: string;
   email_confirm: string;
@@ -105,20 +105,20 @@ const schema: yup.ObjectSchema<FormValues> = yup.object({
   surname: yup.string().required('This field is required'),
   given_name: yup.string().required('This field is required'),
   dob: yup.string().nullable().notRequired(),
-  dob_month: yup.string().required('Month is required'),
-  dob_day: yup.string().required('Day is required'),
-  dob_year: yup.string().required('Year is required'),
+  dob_month: yup.string().nullable().notRequired(),
+  dob_day: yup.string().nullable().notRequired(),
+  dob_year: yup.string().nullable().notRequired(),
   gender: yup.string().required('This field is required'),
   birth_country: yup.string().required('This field is required'),
-  birth_city: yup.string().required('This field is required'),
+  birth_city: yup.string().nullable().notRequired(),
   passport_issue_date: yup.string().nullable().notRequired(),
   passport_expiry_date: yup.string().nullable().notRequired(),
-  passport_issue_month: yup.string().required('Month is required'),
-  passport_issue_day: yup.string().required('Day is required'),
-  passport_issue_year: yup.string().required('Year is required'),
-  passport_expiry_month: yup.string().required('Month is required'),
-  passport_expiry_day: yup.string().required('Day is required'),
-  passport_expiry_year: yup.string().required('Year is required'),
+  passport_issue_month: yup.string().nullable().notRequired(),
+  passport_issue_day: yup.string().nullable().notRequired(),
+  passport_issue_year: yup.string().nullable().notRequired(),
+  passport_expiry_month: yup.string().nullable().notRequired(),
+  passport_expiry_day: yup.string().nullable().notRequired(),
+  passport_expiry_year: yup.string().nullable().notRequired(),
   additional_nationality: yup.string().nullable().notRequired(),
   additional_nationality_details: yup.string().nullable().notRequired(),
   us_visa_number: yup.string()
@@ -161,7 +161,7 @@ const schema: yup.ObjectSchema<FormValues> = yup.object({
   street_name: yup.string().required('This field is required'),
   city_town: yup.string().required('This field is required'),
   district_region: yup.string().nullable().notRequired(),
-  zip_code: yup.string().required('This field is required'),
+  zip_code: yup.string().nullable().notRequired(),
   address_country: yup.string().required('This field is required'),
   email: yup.string().email('Invalid email').required('This field is required'),
   email_confirm: yup.string().oneOf([yup.ref('email')], 'Emails must match').required('This field is required'),
@@ -328,12 +328,10 @@ function ApplyFormMultiStep() {
       'marital_status',
       'canada_visa_applied',
       'occupation',
-      ...(!hideJobFields ? [
-        'job_description',
-        'employer_name',
-        'employment_start_date',
-      ] as (keyof FormValues)[] : []),
+      'job_description',
+      'employer_name',
       'employment_country',
+      'employment_start_date',
       'apartment_number',
       'street_number',
       'street_name',
@@ -353,46 +351,11 @@ function ApplyFormMultiStep() {
         'travel_date_year',
       ] as (keyof FormValues)[] : []),
       'consent_declaration',
-      ...(canadaVisaApplied === 'Yes' ? ['previous_visa_number'] as (keyof FormValues)[] : []),
+      'previous_visa_number',
     ],
   ];
 
   const onSubmit = async (data: FormValues) => {
-    console.log('Form submission started with data:', data);
-    
-    // Debug: Check for any empty required fields
-    const requiredFields = [
-      'travel_document', 'nationality', 'passport_number', 'passport_number_confirm',
-      'surname', 'given_name', 'dob_month', 'dob_day', 'dob_year', 'gender', 
-      'birth_country', 'birth_city', 'passport_issue_month', 'passport_issue_day', 
-      'passport_issue_year', 'passport_expiry_month', 'passport_expiry_day', 
-      'passport_expiry_year', 'occupation', 'employment_country',
-      'street_number', 'street_name', 'city_town', 'zip_code', 'address_country',
-      'email', 'email_confirm', 'phone', 'preferred_language', 'do_you_know_travel_date'
-    ];
-    
-    const emptyFields = requiredFields.filter(field => !data[field as keyof FormValues]);
-    if (emptyFields.length > 0) {
-      console.log('Empty required fields:', emptyFields);
-    }
-    
-    // Debug: Check conditional fields
-    if (data.occupation && !['Unemployed', 'Homemaker', 'Retired', 'Military/armed forces'].includes(data.occupation)) {
-      if (!data.job_description) console.log('Missing job_description');
-      if (!data.employer_name) console.log('Missing employer_name');
-      if (!data.employment_start_date) console.log('Missing employment_start_date');
-    }
-    
-    if (data.do_you_know_travel_date === 'Yes') {
-      if (!data.travel_date_month) console.log('Missing travel_date_month');
-      if (!data.travel_date_day) console.log('Missing travel_date_day');
-      if (!data.travel_date_year) console.log('Missing travel_date_year');
-    }
-    
-    if (data.canada_visa_applied === 'Yes' && !data.previous_visa_number) {
-      console.log('Missing previous_visa_number');
-    }
-    
     setSubmitStatus('idle');
     setErrorMessage('');
     setPaymentError('');
@@ -400,32 +363,26 @@ function ApplyFormMultiStep() {
       // 1. Run reCAPTCHA v3 (assume site key is set in env or config)
       let recaptchaToken = '';
       if (typeof window !== 'undefined' && window.grecaptcha) {
-        console.log('Getting reCAPTCHA token...');
         recaptchaToken = await window.grecaptcha.execute(
           process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!,
           { action: 'submit' }
         );
-        console.log('reCAPTCHA token received');
       } else {
         throw new Error('reCAPTCHA not loaded');
       }
 
       // 2. POST to /api/apply with form data and recaptcha token
-      console.log('Submitting to /api/apply...');
       const response = await fetch('/api/apply', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...data, recaptchaToken }),
       });
 
-      console.log('API response status:', response.status);
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        console.log('API error:', errorData);
         throw new Error(errorData.message || 'Failed to submit application');
       }
 
-      console.log('API submission successful, creating Stripe session...');
       // 3. Create Stripe Checkout session
       const checkoutRes = await fetch('/api/create-checkout-session', {
         method: 'POST',
@@ -435,30 +392,24 @@ function ApplyFormMultiStep() {
           name: data.given_name + ' ' + data.surname,
         }),
       });
-      console.log('Stripe response status:', checkoutRes.status);
       if (!checkoutRes.ok) {
         const errorData = await checkoutRes.json().catch(() => ({}));
-        console.log('Stripe error:', errorData);
         throw new Error(errorData.error || 'Failed to initiate payment');
       }
       const { sessionId } = await checkoutRes.json();
-      console.log('Stripe sessionId received:', sessionId);
       if (!sessionId) throw new Error('No sessionId returned from payment API');
 
       // 4. Redirect to Stripe Checkout
-      console.log('Loading Stripe and redirecting...');
       const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
       if (!stripe) throw new Error('Stripe.js failed to load');
       const { error } = await stripe.redirectToCheckout({ sessionId });
       if (error) throw new Error(error.message);
 
       // If we reach here, the redirect was successful
-      console.log('Stripe redirect successful');
       setSubmitStatus('success');
       setHasSubmitted(true);
       reset();
     } catch (err: unknown) {
-      console.error('Form submission error:', err);
       setSubmitStatus('error');
       if (err instanceof Error) {
         setErrorMessage(err.message || 'Submission failed. Please try again.');
