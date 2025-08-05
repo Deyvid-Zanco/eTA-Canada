@@ -51,15 +51,15 @@ type FormValues = {
   dob_year: string;
   gender: string;
   birth_country: string;
-  birth_city?: string | null;
+  birth_city: string;
   passport_issue_date?: string | null;
   passport_expiry_date?: string | null;
-  passport_issue_month?: string | null;
-  passport_issue_day?: string | null;
-  passport_issue_year?: string | null;
-  passport_expiry_month?: string | null;
-  passport_expiry_day?: string | null;
-  passport_expiry_year?: string | null;
+  passport_issue_month: string;
+  passport_issue_day: string;
+  passport_issue_year: string;
+  passport_expiry_month: string;
+  passport_expiry_day: string;
+  passport_expiry_year: string;
   additional_nationality?: string | null;
   additional_nationality_details?: string | null;
   us_visa_number?: string | null;
@@ -328,10 +328,12 @@ function ApplyFormMultiStep() {
       'marital_status',
       'canada_visa_applied',
       'occupation',
-      'job_description',
-      'employer_name',
+      ...(!hideJobFields ? [
+        'job_description',
+        'employer_name',
+        'employment_start_date',
+      ] as (keyof FormValues)[] : []),
       'employment_country',
-      'employment_start_date',
       'apartment_number',
       'street_number',
       'street_name',
@@ -351,7 +353,7 @@ function ApplyFormMultiStep() {
         'travel_date_year',
       ] as (keyof FormValues)[] : []),
       'consent_declaration',
-      'previous_visa_number',
+      ...(canadaVisaApplied === 'Yes' ? ['previous_visa_number'] as (keyof FormValues)[] : []),
     ],
   ];
 
