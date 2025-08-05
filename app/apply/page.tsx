@@ -328,8 +328,11 @@ function ApplyFormMultiStep() {
       'marital_status',
       'canada_visa_applied',
       'occupation',
-      'job_description',
-      'employer_name',
+      ...(!hideJobFields ? [
+        'job_description',
+        'employer_name',
+        'employment_start_date',
+      ] as (keyof FormValues)[] : []),
       'employment_country',
       'apartment_number',
       'street_number',
@@ -350,7 +353,7 @@ function ApplyFormMultiStep() {
         'travel_date_year',
       ] as (keyof FormValues)[] : []),
       'consent_declaration',
-      'previous_visa_number',
+      ...(canadaVisaApplied === 'Yes' ? ['previous_visa_number'] as (keyof FormValues)[] : []),
     ],
   ];
 
