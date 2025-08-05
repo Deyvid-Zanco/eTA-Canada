@@ -105,20 +105,20 @@ const schema: yup.ObjectSchema<FormValues> = yup.object({
   surname: yup.string().required('This field is required'),
   given_name: yup.string().required('This field is required'),
   dob: yup.string().nullable().notRequired(),
-  dob_month: yup.string().nullable().notRequired(),
-  dob_day: yup.string().nullable().notRequired(),
-  dob_year: yup.string().nullable().notRequired(),
+  dob_month: yup.string().required('Month is required'),
+  dob_day: yup.string().required('Day is required'),
+  dob_year: yup.string().required('Year is required'),
   gender: yup.string().required('This field is required'),
   birth_country: yup.string().required('This field is required'),
-  birth_city: yup.string().nullable().notRequired(),
+  birth_city: yup.string().required('This field is required'),
   passport_issue_date: yup.string().nullable().notRequired(),
   passport_expiry_date: yup.string().nullable().notRequired(),
-  passport_issue_month: yup.string().nullable().notRequired(),
-  passport_issue_day: yup.string().nullable().notRequired(),
-  passport_issue_year: yup.string().nullable().notRequired(),
-  passport_expiry_month: yup.string().nullable().notRequired(),
-  passport_expiry_day: yup.string().nullable().notRequired(),
-  passport_expiry_year: yup.string().nullable().notRequired(),
+  passport_issue_month: yup.string().required('Month is required'),
+  passport_issue_day: yup.string().required('Day is required'),
+  passport_issue_year: yup.string().required('Year is required'),
+  passport_expiry_month: yup.string().required('Month is required'),
+  passport_expiry_day: yup.string().required('Day is required'),
+  passport_expiry_year: yup.string().required('Year is required'),
   additional_nationality: yup.string().nullable().notRequired(),
   additional_nationality_details: yup.string().nullable().notRequired(),
   us_visa_number: yup.string()
@@ -359,6 +359,40 @@ function ApplyFormMultiStep() {
 
   const onSubmit = async (data: FormValues) => {
     console.log('Form submission started with data:', data);
+    
+    // Debug: Check for any empty required fields
+    const requiredFields = [
+      'travel_document', 'nationality', 'passport_number', 'passport_number_confirm',
+      'surname', 'given_name', 'dob_month', 'dob_day', 'dob_year', 'gender', 
+      'birth_country', 'birth_city', 'passport_issue_month', 'passport_issue_day', 
+      'passport_issue_year', 'passport_expiry_month', 'passport_expiry_day', 
+      'passport_expiry_year', 'occupation', 'employment_country',
+      'street_number', 'street_name', 'city_town', 'zip_code', 'address_country',
+      'email', 'email_confirm', 'phone', 'preferred_language', 'do_you_know_travel_date'
+    ];
+    
+    const emptyFields = requiredFields.filter(field => !data[field as keyof FormValues]);
+    if (emptyFields.length > 0) {
+      console.log('Empty required fields:', emptyFields);
+    }
+    
+    // Debug: Check conditional fields
+    if (data.occupation && !['Unemployed', 'Homemaker', 'Retired', 'Military/armed forces'].includes(data.occupation)) {
+      if (!data.job_description) console.log('Missing job_description');
+      if (!data.employer_name) console.log('Missing employer_name');
+      if (!data.employment_start_date) console.log('Missing employment_start_date');
+    }
+    
+    if (data.do_you_know_travel_date === 'Yes') {
+      if (!data.travel_date_month) console.log('Missing travel_date_month');
+      if (!data.travel_date_day) console.log('Missing travel_date_day');
+      if (!data.travel_date_year) console.log('Missing travel_date_year');
+    }
+    
+    if (data.canada_visa_applied === 'Yes' && !data.previous_visa_number) {
+      console.log('Missing previous_visa_number');
+    }
+    
     setSubmitStatus('idle');
     setErrorMessage('');
     setPaymentError('');
