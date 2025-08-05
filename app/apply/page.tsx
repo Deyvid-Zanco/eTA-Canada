@@ -358,6 +358,7 @@ function ApplyFormMultiStep() {
   ];
 
   const onSubmit = async (data: FormValues) => {
+    console.log('Form submission started with data:', data);
     setSubmitStatus('idle');
     setErrorMessage('');
     setPaymentError('');
@@ -365,26 +366,32 @@ function ApplyFormMultiStep() {
       // 1. Run reCAPTCHA v3 (assume site key is set in env or config)
       let recaptchaToken = '';
       if (typeof window !== 'undefined' && window.grecaptcha) {
+        console.log('Getting reCAPTCHA token...');
         recaptchaToken = await window.grecaptcha.execute(
           process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!,
           { action: 'submit' }
         );
+        console.log('reCAPTCHA token received');
       } else {
         throw new Error('reCAPTCHA not loaded');
       }
 
       // 2. POST to /api/apply with form data and recaptcha token
+      console.log('Submitting to /api/apply...');
       const response = await fetch('/api/apply', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...data, recaptchaToken }),
       });
 
+      console.log('API response status:', response.status);
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
+        console.log('API error:', errorData);
         throw new Error(errorData.message || 'Failed to submit application');
       }
 
+      console.log('API submission successful, creating Stripe session...');
       // 3. Create Stripe Checkout session
       const checkoutRes = await fetch('/api/create-checkout-session', {
         method: 'POST',
@@ -394,24 +401,30 @@ function ApplyFormMultiStep() {
           name: data.given_name + ' ' + data.surname,
         }),
       });
+      console.log('Stripe response status:', checkoutRes.status);
       if (!checkoutRes.ok) {
         const errorData = await checkoutRes.json().catch(() => ({}));
+        console.log('Stripe error:', errorData);
         throw new Error(errorData.error || 'Failed to initiate payment');
       }
       const { sessionId } = await checkoutRes.json();
+      console.log('Stripe sessionId received:', sessionId);
       if (!sessionId) throw new Error('No sessionId returned from payment API');
 
       // 4. Redirect to Stripe Checkout
+      console.log('Loading Stripe and redirecting...');
       const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
       if (!stripe) throw new Error('Stripe.js failed to load');
       const { error } = await stripe.redirectToCheckout({ sessionId });
       if (error) throw new Error(error.message);
 
-      // If redirect fails, show error
-        setSubmitStatus('success');
+      // If we reach here, the redirect was successful
+      console.log('Stripe redirect successful');
+      setSubmitStatus('success');
       setHasSubmitted(true);
       reset();
     } catch (err: unknown) {
+      console.error('Form submission error:', err);
       setSubmitStatus('error');
       if (err instanceof Error) {
         setErrorMessage(err.message || 'Submission failed. Please try again.');
