@@ -79,6 +79,7 @@ type FormValues = {
   street_name: string;
   city_town: string;
   district_region?: string | null | undefined;
+  zip_code: string;
   address_country: string;
   email: string;
   email_confirm: string;
@@ -160,6 +161,7 @@ const schema: yup.ObjectSchema<FormValues> = yup.object({
   street_name: yup.string().required('This field is required'),
   city_town: yup.string().required('This field is required'),
   district_region: yup.string().nullable().notRequired(),
+  zip_code: yup.string().required('This field is required'),
   address_country: yup.string().required('This field is required'),
   email: yup.string().email('Invalid email').required('This field is required'),
   email_confirm: yup.string().oneOf([yup.ref('email')], 'Emails must match').required('This field is required'),
@@ -262,6 +264,7 @@ function ApplyFormMultiStep() {
       street_name: '',
       city_town: '',
       district_region: '',
+      zip_code: '',
       address_country: '',
       email: '',
       email_confirm: '',
@@ -333,6 +336,7 @@ function ApplyFormMultiStep() {
       'street_name',
       'city_town',
       'district_region',
+      'zip_code',
       'address_country',
       'email',
       'email_confirm',
@@ -870,77 +874,6 @@ function ApplyFormMultiStep() {
           {formState.errors.employment_start_date && <p className="text-red-600 text-sm">{formState.errors.employment_start_date.message}</p>}
           </div>
       )}
-      {/* COUNTRY/TERRITORY */}
-      <div className="mb-6">
-        <label className="block mb-1 font-medium">COUNTRY/TERRITORY <span className="text-red-600">*</span></label>
-        <select {...register('employment_country')} className="w-full border rounded p-2" required>
-          <option value="">Please select</option>
-          {/* Add all country options as in previous country dropdowns */}
-          <option value="Afghanistan">Afghanistan</option>
-          <option value="Albania">Albania</option>
-          <option value="Algeria">Algeria</option>
-          <option value="American Samoa">American Samoa</option>
-          <option value="Andorra">Andorra</option>
-          <option value="Angola">Angola</option>
-          <option value="Anguilla">Anguilla</option>
-          <option value="Antigua and Barbuda">Antigua and Barbuda</option>
-          <option value="Argentina">Argentina</option>
-          <option value="Armenia">Armenia</option>
-          <option value="Aruba">Aruba</option>
-          <option value="Australia">Australia</option>
-          <option value="Austria">Austria</option>
-          <option value="Azerbaijan">Azerbaijan</option>
-          <option value="The Bahamas">The Bahamas</option>
-          <option value="Bahrain">Bahrain</option>
-          <option value="Bangladesh">Bangladesh</option>
-          <option value="Barbados">Barbados</option>
-          <option value="Belarus">Belarus</option>
-          <option value="Belgium">Belgium</option>
-          <option value="Belize">Belize</option>
-          <option value="Benin">Benin</option>
-          <option value="Bermuda">Bermuda</option>
-          <option value="Bhutan">Bhutan</option>
-          <option value="Bolivia">Bolivia</option>
-          <option value="Bosnia and Herzegovina">Bosnia and Herzegovina</option>
-          <option value="Botswana">Botswana</option>
-          <option value="Brazil">Brazil</option>
-          <option value="Brunei">Brunei</option>
-          <option value="Bulgaria">Bulgaria</option>
-          <option value="Burkina Faso">Burkina Faso</option>
-          <option value="Burundi">Burundi</option>
-          <option value="Cambodia">Cambodia</option>
-          <option value="Cameroon">Cameroon</option>
-          <option value="Canada">Canada</option>
-          <option value="Cape Verde">Cape Verde</option>
-          <option value="Cayman Islands">Cayman Islands</option>
-          <option value="Central African Republic">Central African Republic</option>
-          <option value="Chad">Chad</option>
-          <option value="Chile">Chile</option>
-          <option value="China">China</option>
-          <option value="Christmas Island">Christmas Island</option>
-          <option value="Cocos (Keeling) Islands">Cocos (Keeling) Islands</option>
-          <option value="Colombia">Colombia</option>
-          <option value="Comoros">Comoros</option>
-          <option value="Congo">Congo</option>
-          <option value="Cook Islands">Cook Islands</option>
-          <option value="Costa Rica">Costa Rica</option>
-          <option value="Cote d'Ivoire">Cote d&apos;Ivoire</option>
-          <option value="Croatia">Croatia</option>
-          <option value="Cuba">Cuba</option>
-          <option value="Cyprus">Cyprus</option>
-          <option value="Czech Republic">Czech Republic</option>
-          <option value="Democratic Republic of the Congo">Democratic Republic of the Congo</option>
-          <option value="Denmark">Denmark</option>
-          <option value="Djibouti">Djibouti</option>
-          <option value="Dominica">Dominica</option>
-          <option value="Dominican Republic">Dominican Republic</option>
-          <option value="Ecuador">Ecuador</option>
-          <option value="Egypt">Egypt</option>
-          <option value="El Salvador">El Salvador</option>
-          {/* ... more options ... */}
-        </select>
-        {formState.errors.employment_country && <p className="text-red-600 text-sm">{formState.errors.employment_country.message}</p>}
-          </div>
       {/* Apartment number */}
       <div className="mb-6">
         <label className="block mb-1 font-medium">APARTMENT NUMBER</label>
@@ -969,6 +902,12 @@ function ApplyFormMultiStep() {
         <label className="block mb-1 font-medium">DISTRICT/REGION</label>
         <input type="text" {...register('district_region')} className="w-full border rounded p-2" />
         </div>
+      {/* Zip Code */}
+      <div className="mb-6">
+        <label className="block mb-1 font-medium">ZIP CODE <span className="text-red-600">*</span></label>
+        <input type="text" {...register('zip_code')} className="w-full border rounded p-2" required />
+        {formState.errors.zip_code && <p className="text-red-600 text-sm">{formState.errors.zip_code.message}</p>}
+      </div>
       {/* Country/territory */}
       <div className="mb-6">
         <label className="block mb-1 font-medium">COUNTRY/TERRITORY <span className="text-red-600">*</span></label>
@@ -1037,7 +976,7 @@ function ApplyFormMultiStep() {
           <option value="Egypt">Egypt</option>
           <option value="El Salvador">El Salvador</option>
           {/* ... more options ... */}
-            </select>
+        </select>
         {formState.errors.address_country && <p className="text-red-600 text-sm">{formState.errors.address_country.message}</p>}
       </div>
       {/* Email */}
