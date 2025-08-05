@@ -45,7 +45,10 @@ type FormValues = {
   passport_number_confirm: string;
   surname: string;
   given_name: string;
-  dob?: string | null;
+  dob: string;
+  dob_month: string;
+  dob_day: string;
+  dob_year: string;
   gender: string;
   birth_country: string;
   birth_city?: string | null;
@@ -65,10 +68,7 @@ type FormValues = {
   us_visa_expiry_month?: string | null;
   us_visa_expiry_day?: string | null;
   us_visa_expiry_year?: string | null;
-  dob_month?: string | null;
-  dob_day?: string | null;
-  dob_year?: string | null;
-  marital_status?: string | null;
+  marital_status: string;
   canada_visa_applied?: string | null;
   occupation: string;
   job_description: string;
@@ -79,7 +79,7 @@ type FormValues = {
   street_name: string;
   city_town: string;
   district_region?: string | null | undefined;
-  zip_code?: string | null | undefined;
+  zip_code: string;
   address_country: string;
   email: string;
   email_confirm: string;
@@ -104,21 +104,21 @@ const schema: yup.ObjectSchema<FormValues> = yup.object({
     .oneOf([yup.ref('passport_number')], 'Passport numbers must match'),
   surname: yup.string().required('This field is required'),
   given_name: yup.string().required('This field is required'),
-  dob: yup.string().nullable().notRequired(),
-  dob_month: yup.string().nullable().notRequired(),
-  dob_day: yup.string().nullable().notRequired(),
-  dob_year: yup.string().nullable().notRequired(),
+  dob: yup.string().required('This field is required'),
+  dob_month: yup.string().required('Month is required'),
+  dob_day: yup.string().required('Day is required'),
+  dob_year: yup.string().required('Year is required'),
   gender: yup.string().required('This field is required'),
   birth_country: yup.string().required('This field is required'),
-  birth_city: yup.string().nullable().notRequired(),
+  birth_city: yup.string().required('This field is required'),
   passport_issue_date: yup.string().nullable().notRequired(),
   passport_expiry_date: yup.string().nullable().notRequired(),
-  passport_issue_month: yup.string().nullable().notRequired(),
-  passport_issue_day: yup.string().nullable().notRequired(),
-  passport_issue_year: yup.string().nullable().notRequired(),
-  passport_expiry_month: yup.string().nullable().notRequired(),
-  passport_expiry_day: yup.string().nullable().notRequired(),
-  passport_expiry_year: yup.string().nullable().notRequired(),
+  passport_issue_month: yup.string().required('Month is required'),
+  passport_issue_day: yup.string().required('Day is required'),
+  passport_issue_year: yup.string().required('Year is required'),
+  passport_expiry_month: yup.string().required('Month is required'),
+  passport_expiry_day: yup.string().required('Day is required'),
+  passport_expiry_year: yup.string().required('Year is required'),
   additional_nationality: yup.string().nullable().notRequired(),
   additional_nationality_details: yup.string().nullable().notRequired(),
   us_visa_number: yup.string()
@@ -142,7 +142,7 @@ const schema: yup.ObjectSchema<FormValues> = yup.object({
   us_visa_expiry_day: yup.string().nullable().notRequired(),
   us_visa_expiry_year: yup.string().nullable().notRequired(),
   taiwan_id: yup.string().nullable().notRequired(),
-  marital_status: yup.string().nullable().notRequired(),
+  marital_status: yup.string().required('This field is required'),
   canada_visa_applied: yup.string().nullable().notRequired(),
   occupation: yup.string().required('This field is required'),
   job_description: yup.string().default('').when('occupation', {
@@ -161,7 +161,7 @@ const schema: yup.ObjectSchema<FormValues> = yup.object({
   street_name: yup.string().required('This field is required'),
   city_town: yup.string().required('This field is required'),
   district_region: yup.string().nullable().notRequired(),
-  zip_code: yup.string().nullable().notRequired(),
+  zip_code: yup.string().required('This field is required'),
   address_country: yup.string().required('This field is required'),
   email: yup.string().email('Invalid email').required('This field is required'),
   email_confirm: yup.string().oneOf([yup.ref('email')], 'Emails must match').required('This field is required'),
