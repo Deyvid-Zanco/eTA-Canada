@@ -57,7 +57,7 @@ export async function POST(req: NextRequest) {
 
     // Send email via Resend (admin)
     await resend.emails.send({
-      from: 'eTA Application <noreply@immicenter-online.com>', // Replace with your verified domain
+      from: 'eTA Application 2 <noreply@immicenter-online.com>', // Replace with your verified domain
       to: process.env.ADMIN_EMAIL || 'admin@yourdomain.com',
       subject: `New eTA Application - ${data.given_name || ''} ${data.surname || ''}`,
       html: emailHtml,
