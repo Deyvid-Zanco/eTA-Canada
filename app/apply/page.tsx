@@ -80,7 +80,7 @@ type FormValues = {
   street_name: string;
   city_town: string;
   district_region?: string | null | undefined;
-  zip_code?: string | null | undefined;
+  zip_code: string;
   address_country: string;
   email: string;
   email_confirm: string;
@@ -332,9 +332,9 @@ function ApplyFormMultiStep() {
       ...(!hideJobFields ? [
         'job_description',
         'employer_name',
-        'employment_country', // Correctly placed inside conditional
         'employment_start_date',
       ] as (keyof FormValues)[] : []),
+      'employment_country',
       'apartment_number',
       'street_number',
       'street_name',
@@ -359,34 +359,54 @@ function ApplyFormMultiStep() {
   ];
 
   const onSubmit = async (data: FormValues) => {
+    console.log('🚀 Form submission started');
+    console.log('📋 Form data:', data);
+    console.log('🔍 Form validation state:', formState.errors);
+    
+    // Check if there are any validation errors
+    if (Object.keys(formState.errors).length > 0) {
+      console.log('❌ Validation errors found:', formState.errors);
+      setErrorMessage('Please fix all validation errors before submitting.');
+      setSubmitStatus('error');
+      return;
+    }
+    
     setSubmitStatus('idle');
     setErrorMessage('');
     setPaymentError('');
     try {
       // 1. Run reCAPTCHA v3
+      console.log('🔍 Starting reCAPTCHA verification...');
       let recaptchaToken = '';
       if (typeof window !== 'undefined' && window.grecaptcha) {
         recaptchaToken = await window.grecaptcha.execute(
           process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!,
           { action: 'submit' }
         );
+        console.log('✅ reCAPTCHA token obtained:', recaptchaToken ? 'Token received' : 'No token');
       } else {
         throw new Error('reCAPTCHA not loaded. Please ensure the reCAPTCHA script is on the page.');
       }
 
       // 2. POST to /api/apply with form data and recaptcha token
+      console.log('📤 Sending data to /api/apply...');
       const response = await fetch('/api/apply', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...data, recaptchaToken }),
       });
 
+      console.log('📥 API response status:', response.status);
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
+        console.log('❌ API error:', errorData);
         throw new Error(errorData.message || 'Failed to submit application');
       }
 
+      console.log('✅ API submission successful');
+
       // 3. Create Stripe Checkout session
+      console.log('💳 Creating Stripe checkout session...');
       const checkoutRes = await fetch('/api/create-checkout-session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -395,23 +415,29 @@ function ApplyFormMultiStep() {
           name: data.given_name + ' ' + data.surname,
         }),
       });
+      console.log('📥 Stripe response status:', checkoutRes.status);
       if (!checkoutRes.ok) {
         const errorData = await checkoutRes.json().catch(() => ({}));
+        console.log('❌ Stripe error:', errorData);
         throw new Error(errorData.error || 'Failed to initiate payment');
       }
       const { sessionId } = await checkoutRes.json();
+      console.log('✅ Stripe session created:', sessionId ? 'Session ID received' : 'No session ID');
       if (!sessionId) throw new Error('No sessionId returned from payment API');
 
       // 4. Redirect to Stripe Checkout
+      console.log('🔄 Redirecting to Stripe...');
       const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
       if (!stripe) throw new Error('Stripe.js failed to load');
       const { error } = await stripe.redirectToCheckout({ sessionId });
       if (error) throw new Error(error.message);
 
+      console.log('✅ Stripe redirect successful');
       setSubmitStatus('success');
       setHasSubmitted(true);
       reset();
     } catch (err: unknown) {
+      console.log('❌ Form submission error:', err);
       setSubmitStatus('error');
       if (err instanceof Error) {
         setErrorMessage(err.message || 'Submission failed. Please try again.');
@@ -893,11 +919,74 @@ function ApplyFormMultiStep() {
       <div className="mb-6">
         <label className="block mb-1 font-medium">COUNTRY/TERRITORY <span className="text-red-600">*</span></label>
         <select {...register('address_country')} className="w-full border rounded p-2">
-          <option value="">Please select</option>
-          <option value="Afghanistan">Afghanistan</option>
-          <option value="Albania">Albania</option>
-          <option value="Algeria">Algeria</option>
-          {/* ... more countries ... */}
+        <option value="">Please select</option>
+          <option value="Andorra">Andorra</option>
+          <option value="Antigua and Barbuda">Antigua and Barbuda</option>
+          <option value="Argentina">Argentina</option>
+          <option value="Australia">Australia</option>
+          <option value="Austria">Austria</option>
+          <option value="Bahamas">Bahamas</option>
+          <option value="Barbados">Barbados</option>
+          <option value="Belgium">Belgium</option>
+          <option value="Brazil">Brazil</option>
+          <option value="Bulgaria">Bulgaria</option>
+          <option value="Brunei Darussalam">Brunei Darussalam</option>
+          <option value="Chile">Chile</option>
+          <option value="China (Hong Kong SAR)">China (Hong Kong SAR)</option>
+          <option value="Croatia">Croatia</option>
+          <option value="Costa Rica">Costa Rica</option>
+          <option value="Cyprus">Cyprus</option>
+          <option value="Czech Republic">Czech Republic</option>
+          <option value="Denmark">Denmark</option>
+          <option value="Estonia">Estonia</option>
+          <option value="Finland">Finland</option>
+          <option value="France">France</option>
+          <option value="Germany">Germany</option>
+          <option value="Greece">Greece</option>
+          <option value="Hungary">Hungary</option>
+          <option value="Iceland">Iceland</option>
+          <option value="Ireland">Ireland</option>
+          <option value="Israel (holders of Israeli national passports)">Israel (holders of Israeli national passports)</option>
+          <option value="Italy">Italy</option>
+          <option value="Japan">Japan</option>
+          <option value="Latvia">Latvia</option>
+          <option value="Liechtenstein">Liechtenstein</option>
+          <option value="Lithuania">Lithuania</option>
+          <option value="Luxembourg">Luxembourg</option>
+          <option value="Malta">Malta</option>
+          <option value="Mexico">Mexico</option>
+          <option value="Monaco">Monaco</option>
+          <option value="Morocco">Morocco</option>
+          <option value="Norway">Norway</option>
+          <option value="New Zealand">New Zealand</option>
+          <option value="Netherlands">Netherlands</option>
+          <option value="Panama">Panama</option>
+          <option value="Papua New Guinea">Papua New Guinea</option>
+          <option value="Philippines">Philippines</option>
+          <option value="Poland">Poland</option>
+          <option value="Portugal">Portugal</option>
+          <option value="Saint Kitts and Nevis">Saint Kitts and Nevis</option>
+          <option value="Saint Lucia">Saint Lucia</option>
+          <option value="Saint Vincent and the Grenadines">Saint Vincent and the Grenadines</option>
+          <option value="Samoa">Samoa</option>
+          <option value="San Marino">San Marino</option>
+          <option value="Seychelles">Seychelles</option>
+          <option value="Singapore">Singapore</option>
+          <option value="Slovakia">Slovakia</option>
+          <option value="Slovenia">Slovenia</option>
+          <option value="Solomon Islands">Solomon Islands</option>
+          <option value="South Korea">South Korea</option>
+          <option value="Spain">Spain</option>
+          <option value="Sweden">Sweden</option>
+          <option value="Switzerland">Switzerland</option>
+          <option value="Thailand">Thailand</option>
+          <option value="Taiwan (holders of passports containing a personal identification number)">Taiwan (holders of passports containing a personal identification number)</option>
+          <option value="Trinidad and Tobago">Trinidad and Tobago</option>
+          <option value="United Arab Emirates">United Arab Emirates</option>
+          <option value="United Kingdom">United Kingdom</option>
+          <option value="Uruguay">Uruguay</option>
+          <option value="Vatican (holders of a passport or travel document issued by the Vatican)">Vatican (holders of a passport or travel document issued by the Vatican)</option>
+          <option value="OTHER">OTHER</option>
         </select>
         {formState.errors.address_country && <p className="text-red-600 text-sm">{formState.errors.address_country.message}</p>}
       </div>
