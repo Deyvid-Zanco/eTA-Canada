@@ -279,7 +279,7 @@ function ApplyFormMultiStep() {
       employment_start_date: undefined,
     },
   });
-  const { handleSubmit, formState, watch, register, reset, trigger } = methods;
+  const { handleSubmit, formState, watch, register, reset, trigger, setValue } = methods;
   const nationality = watch('nationality');
   const additional_nationality = watch('additional_nationality');
   const do_you_know_travel_date = watch('do_you_know_travel_date');
@@ -290,6 +290,15 @@ function ApplyFormMultiStep() {
   const occupation = watch('occupation');
   const canadaVisaApplied = watch('canada_visa_applied');
   const hideJobFields = ['Unemployed', 'Homemaker', 'Retired', 'Military/armed forces'].includes(occupation);
+
+  // Clear job fields when occupation changes to hide them
+  React.useEffect(() => {
+    if (hideJobFields) {
+      setValue('job_description', undefined);
+      setValue('employer_name', undefined);
+      setValue('employment_start_date', undefined);
+    }
+  }, [occupation, hideJobFields, setValue]);
 
   // **FIXED**: `stepFields` array now correctly groups `employment_country` inside the conditional block.
   const stepFields: (keyof FormValues)[][] = [
