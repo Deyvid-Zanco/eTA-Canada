@@ -146,15 +146,15 @@ const schema: yup.ObjectSchema<FormValues> = yup.object({
   marital_status: yup.string().nullable().notRequired(),
   canada_visa_applied: yup.string().nullable().notRequired(),
   occupation: yup.string().required('This field is required'),
-  job_description: yup.string().default('').when('occupation', {
+  job_description: yup.string().when('occupation', {
     is: (val: string) => !['Unemployed', 'Homemaker', 'Retired', 'Military/armed forces'].includes(val),
     then: (schema) => schema.required('This field is required'),
-    otherwise: (schema) => schema.notRequired(),
+    otherwise: (schema) => schema.optional().nullable(),
   }),
-  employer_name: yup.string().default('').when('occupation', {
+  employer_name: yup.string().when('occupation', {
     is: (val: string) => !['Unemployed', 'Homemaker', 'Retired', 'Military/armed forces'].includes(val),
     then: (schema) => schema.required('This field is required'),
-    otherwise: (schema) => schema.notRequired(),
+    otherwise: (schema) => schema.optional().nullable(),
   }),
   employment_country: yup.string().required('This field is required'),
   apartment_number: yup.string().nullable().notRequired(),
@@ -191,15 +191,13 @@ const schema: yup.ObjectSchema<FormValues> = yup.object({
     then: (schema) => schema.required('Please enter your previous Canadian visa/permit/ETA number'),
     otherwise: (schema) => schema.notRequired().nullable(),
   }),
-  employment_start_date: yup.string()
-    .default('')
-    .when('occupation', {
-      is: (val: string) => !['Unemployed', 'Homemaker', 'Retired', 'Military/armed forces'].includes(val),
-      then: (schema) => schema
-        .required('Start date is required')
-        .matches(/^(0[1-9]|1[0-2])\/(19|20)\d{2}$/, 'Date must be in MM/YYYY format (MM between 01-12)'),
-      otherwise: (schema) => schema.notRequired(),
-    }),
+  employment_start_date: yup.string().when('occupation', {
+    is: (val: string) => !['Unemployed', 'Homemaker', 'Retired', 'Military/armed forces'].includes(val),
+    then: (schema) => schema
+      .required('Start date is required')
+      .matches(/^(0[1-9]|1[0-2])\/(19|20)\d{2}$/, 'Date must be in MM/YYYY format (MM between 01-12)'),
+    otherwise: (schema) => schema.optional().nullable(),
+  }),
 });
 
 function getYearOptions(start: number, end: number) {
@@ -257,8 +255,8 @@ function ApplyFormMultiStep() {
       marital_status: '',
       canada_visa_applied: '',
       occupation: '',
-      job_description: '',
-      employer_name: '',
+      job_description: undefined,
+      employer_name: undefined,
       employment_country: '',
       apartment_number: '',
       street_number: '',
@@ -278,7 +276,7 @@ function ApplyFormMultiStep() {
       travel_date_year: null,
       consent_declaration: false,
       previous_visa_number: '',
-      employment_start_date: '',
+      employment_start_date: undefined,
     },
   });
   const { handleSubmit, formState, watch, register, reset, trigger } = methods;
