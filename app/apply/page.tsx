@@ -243,7 +243,7 @@ function ApplyFormMultiStep() {
       occupation: '',
       job_description: undefined,
       employer_name: undefined,
-      employment_country: '',
+      employment_country: undefined,
       apartment_number: '',
       street_number: '',
       street_name: '',
