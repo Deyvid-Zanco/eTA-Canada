@@ -72,8 +72,8 @@ type FormValues = {
   marital_status?: string | null;
   canada_visa_applied?: string | null;
   occupation: string;
-  job_description: string;
-  employer_name: string;
+  job_description?: string;
+  employer_name?: string;
   employment_country: string;
   apartment_number?: string | null | undefined;
   street_number: string;
@@ -93,7 +93,7 @@ type FormValues = {
   travel_date_year?: string | null | undefined;
   consent_declaration?: boolean;
   previous_visa_number?: string;
-  employment_start_date: string;
+  employment_start_date?: string;
 };
 
 const schema: yup.ObjectSchema<FormValues> = yup.object({
@@ -223,7 +223,7 @@ function ApplyFormMultiStep() {
   const [paymentError, setPaymentError] = useState('');
   const methods = useForm<FormValues>({
     resolver: yupResolver(schema),
-    mode: 'onTouched',
+    mode: 'onSubmit',
     defaultValues: {
       travel_document: '',
       nationality: '',
@@ -372,6 +372,8 @@ function ApplyFormMultiStep() {
     // Check if there are any validation errors
     if (Object.keys(formState.errors).length > 0) {
       console.log('❌ Validation errors found:', formState.errors);
+      console.log('🔍 Current occupation:', occupation);
+      console.log('🔍 hideJobFields:', hideJobFields);
       setErrorMessage('Please fix all validation errors before submitting.');
       setSubmitStatus('error');
       return;
