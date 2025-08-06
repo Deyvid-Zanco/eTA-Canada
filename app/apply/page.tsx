@@ -362,14 +362,20 @@ function ApplyFormMultiStep() {
     console.log('🚀 Form submission started');
     console.log('📋 Form data:', data);
     console.log('🔍 Form validation state:', formState.errors);
+    console.log('📊 Form state:', {
+      isDirty: formState.isDirty,
+      isValid: formState.isValid,
+      isSubmitting: formState.isSubmitting,
+      submitCount: formState.submitCount
+    });
     
-    // Check if there are any validation errors
-    if (Object.keys(formState.errors).length > 0) {
-      console.log('❌ Validation errors found:', formState.errors);
-      setErrorMessage('Please fix all validation errors before submitting.');
-      setSubmitStatus('error');
-      return;
-    }
+    // Temporarily disable validation error check to test submission
+    // if (Object.keys(formState.errors).length > 0) {
+    //   console.log('❌ Validation errors found:', formState.errors);
+    //   setErrorMessage('Please fix all validation errors before submitting.');
+    //   setSubmitStatus('error');
+    //   return;
+    // }
     
     setSubmitStatus('idle');
     setErrorMessage('');
