@@ -278,7 +278,7 @@ function ApplyFormMultiStep() {
       employment_start_date: '',
     },
   });
-  
+  //123
   const { handleSubmit, formState, watch, register, reset } = methods;
   const nationality = watch('nationality');
   const showTaiwanID = nationality === 'Taiwan (holders of passports containing a personal identification number)';
