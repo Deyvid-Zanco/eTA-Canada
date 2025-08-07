@@ -1430,7 +1430,11 @@ function ApplyFormMultiStep() {
 
   return (
     <FormProvider {...methods}>
-      <form ref={formRef} className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-8 space-y-8" onSubmit={handleSubmit(onSubmit)}>
+      <form ref={formRef} className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-8 space-y-8" onSubmit={handleSubmit(onSubmit, (errors) => {
+        console.error('❌ Form validation failed. See errors below:');
+        console.log(errors);
+        alert('Form has validation errors. Please check the console (F12) for details and review all fields.');
+      })}>
         {steps[step]}
         <div className="text-center flex justify-between mt-8">
           {step > 0 && (
