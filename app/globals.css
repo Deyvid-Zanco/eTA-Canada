@@ -69,3 +69,60 @@ input[type="radio"], input[type="checkbox"] {
 label {
   @apply text-sm font-medium text-gray-700;
 }
+
+/* Fix dropdown positioning issues */
+select {
+  position: relative;
+  z-index: 10;
+}
+
+/* Ensure dropdowns appear above other elements */
+select:focus {
+  z-index: 50;
+}
+
+/* Fix for mobile dropdown positioning */
+@media (max-width: 768px) {
+  select {
+    z-index: 100;
+  }
+}
+
+/* Ensure form containers have proper stacking context */
+.mb-6 {
+  position: relative;
+  z-index: 1;
+}
+
+/* Fix for form container positioning */
+form {
+  position: relative;
+  z-index: 1;
+  overflow: visible !important;
+}
+
+/* Ensure dropdown options appear correctly */
+select option {
+  position: relative;
+  z-index: 1000;
+}
+
+/* Fix for main container */
+main {
+  overflow: visible !important;
+}
+
+/* Fix for any parent containers that might clip dropdowns */
+.container {
+  overflow: visible !important;
+}
+
+/* Ensure proper positioning for all form elements */
+.max-w-4xl {
+  overflow: visible !important;
+}
+
+/* Fix for the form wrapper */
+.space-y-8 {
+  overflow: visible !important;
+}
