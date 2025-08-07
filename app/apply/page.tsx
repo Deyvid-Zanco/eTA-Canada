@@ -7,7 +7,7 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Image from 'next/image';
-import React from 'react'; // Added for useEffect
+import React from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { useLanguage } from "../../lib/contexts/LanguageContext";
 
@@ -20,7 +20,7 @@ declare global {
   }
 }
 
-// 2. Define validation schema with conditional logic
+// Define validation schema with conditional logic
 const usVisaNationalities = [
   'Mexico',
   'Brazil',
@@ -220,7 +220,7 @@ function ApplyFormMultiStep() {
   const { t } = useLanguage();
   const methods = useForm<FormValues>({
     resolver: yupResolver(schema),
-    mode: 'onTouched',
+    mode: 'onSubmit',
     defaultValues: {
       travel_document: '',
       nationality: '',
@@ -278,10 +278,9 @@ function ApplyFormMultiStep() {
       employment_start_date: '',
     },
   });
-  const { handleSubmit, formState, watch, register, reset, trigger, setValue, getValues } = methods;
+  
+  const { handleSubmit, formState, watch, register, reset } = methods;
   const nationality = watch('nationality');
-  const additional_nationality = watch('additional_nationality');
-  const do_you_know_travel_date = watch('do_you_know_travel_date');
   const showTaiwanID = nationality === 'Taiwan (holders of passports containing a personal identification number)';
   const showUSVisaFields = usVisaNationalities.includes(nationality);
   const showMexicoVisaImage = nationality === 'Mexico';
@@ -289,12 +288,7 @@ function ApplyFormMultiStep() {
   const occupation = watch('occupation');
   const canadaVisaApplied = watch('canada_visa_applied');
   const hideJobFields = ['Unemployed', 'Homemaker', 'Retired', 'Military/armed forces'].includes(occupation);
-
-  // Debug nationality value
-  React.useEffect(() => {
-    console.log('Nationality value changed:', nationality);
-  }, [nationality]);
-
+  
   // Create months array using translation keys
   const months = [
     t.common.january,
@@ -311,68 +305,6 @@ function ApplyFormMultiStep() {
     t.common.december,
   ];
 
-  // Define step field arrays for validation
-  const stepFields: (keyof FormValues)[][] = [
-    [
-      'travel_document',
-      'nationality',
-      ...(showTaiwanID ? ['taiwan_id'] as (keyof FormValues)[] : []),
-      ...(showUSVisaFields ? [
-        'us_visa_number',
-        'us_visa_number_confirm',
-        'us_visa_expiry_month',
-        'us_visa_expiry_day',
-        'us_visa_expiry_year',
-      ] as (keyof FormValues)[] : []),
-      'passport_number',
-      'passport_number_confirm',
-      'surname',
-      'given_name',
-      'dob_month',
-      'dob_day',
-      'dob_year',
-      'gender',
-      'birth_country',
-      'birth_city',
-      'passport_issue_month',
-      'passport_issue_day',
-      'passport_issue_year',
-      'passport_expiry_month',
-      'passport_expiry_day',
-      'passport_expiry_year',
-    ],
-    [
-      'additional_nationality',
-      ...(additional_nationality === 'Yes' ? ['additional_nationality_details'] as (keyof FormValues)[] : []),
-      'marital_status',
-      'canada_visa_applied',
-      'occupation',
-      'job_description',
-      'employer_name',
-      'employment_country',
-      'apartment_number',
-      'street_number',
-      'street_name',
-      'city_town',
-      'district_region',
-      'zip_code',
-      'address_country',
-      'email',
-      'email_confirm',
-      'phone',
-      'alt_phone',
-      'preferred_language',
-      'do_you_know_travel_date',
-      ...(do_you_know_travel_date === 'Yes' ? [
-        'travel_date_month',
-        'travel_date_day',
-        'travel_date_year',
-      ] as (keyof FormValues)[] : []),
-      'consent_declaration',
-      'previous_visa_number',
-    ],
-  ];
-
   const onSubmit = async (data: FormValues) => {
     setSubmitStatus('idle');
     setErrorMessage('');
@@ -380,21 +312,16 @@ function ApplyFormMultiStep() {
     try {
       console.log('🚀 Starting form submission...');
       
-      // 1. Run reCAPTCHA v3 (assume site key is set in env or config)
       let recaptchaToken = '';
       if (typeof window !== 'undefined' && window.grecaptcha) {
-        console.log('📝 Executing reCAPTCHA...');
         recaptchaToken = await window.grecaptcha.execute(
           process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!,
           { action: 'submit' }
         );
-        console.log('✅ reCAPTCHA executed successfully');
       } else {
         throw new Error('reCAPTCHA not loaded');
       }
 
-      // 2. POST to /api/apply with form data and recaptcha token
-      console.log('📧 Sending form data to /api/apply...');
       const response = await fetch('/api/apply', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -403,14 +330,9 @@ function ApplyFormMultiStep() {
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        console.error('❌ /api/apply failed:', errorData);
         throw new Error(errorData.message || 'Failed to submit application');
       }
       
-      console.log('✅ Form data sent successfully, email should be sent');
-
-      // 3. Create Stripe Checkout session
-      console.log('💳 Creating Stripe checkout session...');
       const checkoutRes = await fetch('/api/create-checkout-session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -421,23 +343,16 @@ function ApplyFormMultiStep() {
       });
       if (!checkoutRes.ok) {
         const errorData = await checkoutRes.json().catch(() => ({}));
-        console.error('❌ Stripe checkout creation failed:', errorData);
         throw new Error(errorData.error || 'Failed to initiate payment');
       }
       const { sessionId } = await checkoutRes.json();
       if (!sessionId) throw new Error('No sessionId returned from payment API');
       
-      console.log('✅ Stripe session created, redirecting to checkout...');
-
-      // 4. Redirect to Stripe Checkout
       const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
       if (!stripe) throw new Error('Stripe.js failed to load');
       const { error } = await stripe.redirectToCheckout({ sessionId });
       if (error) throw new Error(error.message);
 
-      // If redirect succeeds, the user will be on Stripe's page
-      // If redirect fails, show success message (user stays on our page)
-      console.log('✅ Redirecting to Stripe checkout...');
       setSubmitStatus('success');
       setHasSubmitted(true);
       reset();
@@ -454,21 +369,16 @@ function ApplyFormMultiStep() {
     }
   };
 
-  // Reset hasSubmitted if the user changes any field
   const isDirty = formState.isDirty;
   React.useEffect(() => {
     if (isDirty) setHasSubmitted(false);
   }, [isDirty]);
 
-  // Add a ref for the form
   const formRef = React.useRef<HTMLFormElement>(null);
-  // Track if component has mounted to avoid scroll on initial load
   const didMountRef = React.useRef(false);
 
-  // Scroll to top of form when step changes, but not on initial mount
   React.useLayoutEffect(() => {
     if (didMountRef.current) {
-      // Use setTimeout to ensure DOM is fully updated
       const timeoutId = setTimeout(() => {
         if (formRef.current) {
           formRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -485,7 +395,7 @@ function ApplyFormMultiStep() {
 
   // Step content definitions
   const steps = [
-    // Step 0: Passport and personal details (combine previous steps 0 and 1)
+    // Step 0: Passport and personal details (complete and unabridged)
     <div key="passport-personal-details" className="mb-8">
       <h2 className="text-xl font-bold mb-4">Passport details of applicant</h2>
       {/* TRAVEL DOCUMENT */}
@@ -982,7 +892,7 @@ function ApplyFormMultiStep() {
         </div>
       </div>
     </div>,
-    // Step 1: All other fields (employment, address, contact, travel, consent)
+    // Step 1: All other fields (complete and unabridged)
     <div key="all-other-fields" className="mb-8">
       <h2 className="text-xl font-bold mb-4">Additional Information</h2>
       {/* ARE YOU A CITIZEN OF ANY ADDITIONAL NATIONALITIES? */}
@@ -1431,7 +1341,6 @@ function ApplyFormMultiStep() {
           <option value="Ecuador">Ecuador</option>
           <option value="Egypt">Egypt</option>
           <option value="El Salvador">El Salvador</option>
-          {/* ... more options ... */}
             </select>
         {formState.errors.address_country && <p className="text-red-600 text-sm">{formState.errors.address_country.message}</p>}
       </div>
@@ -1645,4 +1554,4 @@ export default function ApplyPage() {
       <Footer />
     </>
   );
-} 
+}
