@@ -465,7 +465,7 @@ function ApplyFormMultiStep() {
           <option value="Vatican (holders of a passport or travel document issued by the Vatican)">{t.nationalities.vatican}</option>
           <option value="OTHER">{t.nationalities.other}</option>
         </select>
-        <span className="text-xs text-gray-500">On your passport, look for a field named "Code", Issuing country", "Authority" or "Country code".</span>
+        <span className="text-xs text-gray-500">On your passport, look for a field named &quot;Code&quot;, Issuing country&quot;, &quot;Authority&quot; or &quot;Country code&quot;.</span>
         {formState.errors.nationality && <p className="text-red-600 text-sm">{formState.errors.nationality.message}</p>}
       </div>
       {!isEligible && (
@@ -1517,7 +1517,7 @@ function ApplyFormMultiStep() {
 
     <div key="step-2" className="mb-8">
       <h2 className="text-xl font-bold mb-4">Travel Information</h2>
-      <div className="text-sm text-gray-500 mb-4">If you don't know, you may enter an approximate date/time</div>
+      <div className="text-sm text-gray-500 mb-4">If you don&apos;t know, you may enter an approximate date/time</div>
       <div className="mb-6">
         <label className="block mb-1 font-medium">{t.formFields.doYouKnowTravelDate} <span className="text-red-600">*</span></label>
         <div className="flex gap-6">

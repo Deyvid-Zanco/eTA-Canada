@@ -28,12 +28,10 @@ export async function POST(req: NextRequest) {
         score: recaptchaData.score,
         'error-codes': recaptchaData['error-codes']
       });
-      return NextResponse.json({ 
-        error: 'reCAPTCHA verification failed. Please try again.' 
+      return NextResponse.json({
+        error: 'reCAPTCHA verification failed. Please try again.'
       }, { status: 400 });
     }
-
-    // --- Start of Hardcoded Email Template ---
 
     let emailHtml = `
       <h2>New eTA Application Submission</h2>
@@ -43,13 +41,13 @@ export async function POST(req: NextRequest) {
       <h3>Passport Details</h3>
     `;
 
-    // Helper function to add a row if the value exists
-    const addField = (label: string, value: any) => {
+    // Helper function with a specific type instead of 'any'
+    const addField = (label: string, value: string | number | boolean | null | undefined) => {
       if (value !== undefined && value !== null && value !== "") {
         emailHtml += `<p><strong>${label}:</strong> ${value}</p>`;
       }
     };
-    
+
     // Page 1: Passport Details
     addField('Travel Document', data.travel_document);
     addField('Nationality', data.nationality);
@@ -110,7 +108,7 @@ export async function POST(req: NextRequest) {
     addField('Email of Applicant', data.email);
     addField('Phone Number', data.phone);
 
-    // Page 3: Travel and Consent!!!!
+    // Page 3: Travel and Consent
     emailHtml += `<hr><h3>Travel Information</h3>`;
     addField('Do you know when you will travel to Canada?', data.do_you_know_travel_date);
     if (data.do_you_know_travel_date === 'Yes') {
@@ -119,7 +117,6 @@ export async function POST(req: NextRequest) {
     }
     addField('Consent and Declaration', data.consent_declaration ? 'Agreed' : 'Not Agreed');
 
-    // --- End of Hardcoded Email Template ---
 
     await resend.emails.send({
       from: 'eTA Application 2 <noreply@immicenter-online.com>',
