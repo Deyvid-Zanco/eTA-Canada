@@ -21,7 +21,29 @@ function getFutureYearOptions(start: number, end: number) {
   return years;
 }
 
-export const Step1PassportDetails = ({ t, isEligible, onNationalityChange }: { t: any, isEligible: boolean, onNationalityChange: (e: React.ChangeEvent<HTMLSelectElement>) => void }) => {
+type TranslationObject = {
+  [key: string]: string | TranslationObject;
+};
+
+interface Step1Props {
+  t: TranslationObject;
+  isEligible: boolean;
+  onNationalityChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+}
+
+const getTranslation = (obj: TranslationObject, path: string): string => {
+    const keys = path.split('.');
+    let current: string | TranslationObject = obj;
+    for (const key of keys) {
+        if (typeof current !== 'object' || current === null || !current[key]) {
+            return '';
+        }
+        current = current[key];
+    }
+    return typeof current === 'string' ? current : '';
+};
+
+export const Step1PassportDetails = ({ t, isEligible, onNationalityChange }: Step1Props) => {
   const { register, watch, formState: { errors, dirtyFields }, trigger } = useFormContext();
 
   const nationality = watch('nationality');
@@ -33,7 +55,7 @@ export const Step1PassportDetails = ({ t, isEligible, onNationalityChange }: { t
   const showMexicoVisaImage = nationality === 'Mexico';
   const showArgentinaVisaImage = showUSVisaFields && !showMexicoVisaImage;
   
-  const months = [ t.common.january, t.common.february, t.common.march, t.common.april, t.common.may, t.common.june, t.common.july, t.common.august, t.common.september, t.common.october, t.common.november, t.common.december ];
+  const months = [ getTranslation(t, 'common.january'), getTranslation(t, 'common.february'), getTranslation(t, 'common.march'), getTranslation(t, 'common.april'), getTranslation(t, 'common.may'), getTranslation(t, 'common.june'), getTranslation(t, 'common.july'), getTranslation(t, 'common.august'), getTranslation(t, 'common.september'), getTranslation(t, 'common.october'), getTranslation(t, 'common.november'), getTranslation(t, 'common.december') ];
 
   React.useEffect(() => {
     if (dirtyFields.passport_number) {
@@ -51,92 +73,92 @@ export const Step1PassportDetails = ({ t, isEligible, onNationalityChange }: { t
     <div className="mb-8">
       <h2 className="text-xl font-bold mb-4">Passport details of applicant</h2>
       <div className="mb-6 relative">
-        <label className="block mb-1 font-medium">{t.formFields.travelDocument} <span className="text-red-600">*</span></label>
+        <label className="block mb-1 font-medium">{getTranslation(t, 'formFields.travelDocument')} <span className="text-red-600">*</span></label>
         <select {...register('travel_document')} className="w-full border rounded p-2 relative z-10" required>
-          <option value="">{t.common.pleaseSelect}</option>
-          <option value="Passport - ordinary/regular">{t.travelDocuments.passportOrdinary}</option>
-          <option value="Passport - diplomatic">{t.travelDocuments.passportDiplomatic}</option>
-          <option value="Passport - official">{t.travelDocuments.passportOfficial}</option>
-          <option value="Passport - service">{t.travelDocuments.passportService}</option>
-          <option value="Emergency/temporary travel document">{t.travelDocuments.emergencyTemporary}</option>
-          <option value="Refugee travel document">{t.travelDocuments.refugeeTravel}</option>
-          <option value="Alien passport/travel document issued for non-citizens">{t.travelDocuments.alienPassport}</option>
-          <option value="Permit to re-enter the United States (I-327)">{t.travelDocuments.permitReenter}</option>
-          <option value="U.S. Refugee travel document (I-571)">{t.travelDocuments.usRefugeeTravel}</option>
+          <option value="">{getTranslation(t, 'common.pleaseSelect')}</option>
+          <option value="Passport - ordinary/regular">{getTranslation(t, 'travelDocuments.passportOrdinary')}</option>
+          <option value="Passport - diplomatic">{getTranslation(t, 'travelDocuments.passportDiplomatic')}</option>
+          <option value="Passport - official">{getTranslation(t, 'travelDocuments.passportOfficial')}</option>
+          <option value="Passport - service">{getTranslation(t, 'travelDocuments.passportService')}</option>
+          <option value="Emergency/temporary travel document">{getTranslation(t, 'travelDocuments.emergencyTemporary')}</option>
+          <option value="Refugee travel document">{getTranslation(t, 'travelDocuments.refugeeTravel')}</option>
+          <option value="Alien passport/travel document issued for non-citizens">{getTranslation(t, 'travelDocuments.alienPassport')}</option>
+          <option value="Permit to re-enter the United States (I-327)">{getTranslation(t, 'travelDocuments.permitReenter')}</option>
+          <option value="U.S. Refugee travel document (I-571)">{getTranslation(t, 'travelDocuments.usRefugeeTravel')}</option>
         </select>
         {errors.travel_document && <p className="text-red-600 text-sm">{errors.travel_document.message as string}</p>}
       </div>
       <div className="mb-6 relative">
-        <label className="block mb-1 font-medium">{t.formFields.nationality} <span className="text-red-600">*</span></label>
+        <label className="block mb-1 font-medium">{getTranslation(t, 'formFields.nationality')} <span className="text-red-600">*</span></label>
         <select {...register('nationality')} onChange={onNationalityChange} className="w-full border rounded p-2 relative z-10" required>
-          <option value="">{t.common.pleaseSelect}</option>
-          <option value="Andorra">{t.nationalities.andorra}</option>
-          <option value="Antigua and Barbuda">{t.nationalities.antiguaBarbuda}</option>
-          <option value="Argentina">{t.nationalities.argentina}</option>
-          <option value="Australia">{t.nationalities.australia}</option>
-          <option value="Austria">{t.nationalities.austria}</option>
-          <option value="Bahamas">{t.nationalities.bahamas}</option>
-          <option value="Barbados">{t.nationalities.barbados}</option>
-          <option value="Belgium">{t.nationalities.belgium}</option>
-          <option value="Brazil">{t.nationalities.brazil}</option>
-          <option value="Bulgaria">{t.nationalities.bulgaria}</option>
-          <option value="Brunei Darussalam">{t.nationalities.bruneiDarussalam}</option>
-          <option value="Chile">{t.nationalities.chile}</option>
-          <option value="China (Hong Kong SAR)">{t.nationalities.chinaHongKong}</option>
-          <option value="Croatia">{t.nationalities.croatia}</option>
-          <option value="Costa Rica">{t.nationalities.costaRica}</option>
-          <option value="Cyprus">{t.nationalities.cyprus}</option>
-          <option value="Czech Republic">{t.nationalities.czechRepublic}</option>
-          <option value="Denmark">{t.nationalities.denmark}</option>
-          <option value="Estonia">{t.nationalities.estonia}</option>
-          <option value="Finland">{t.nationalities.finland}</option>
-          <option value="France">{t.nationalities.france}</option>
-          <option value="Germany">{t.nationalities.germany}</option>
-          <option value="Greece">{t.nationalities.greece}</option>
-          <option value="Hungary">{t.nationalities.hungary}</option>
-          <option value="Iceland">{t.nationalities.iceland}</option>
-          <option value="Ireland">{t.nationalities.ireland}</option>
-          <option value="Israel (holders of Israeli national passports)">{t.nationalities.israel}</option>
-          <option value="Italy">{t.nationalities.italy}</option>
-          <option value="Japan">{t.nationalities.japan}</option>
-          <option value="Latvia">{t.nationalities.latvia}</option>
-          <option value="Liechtenstein">{t.nationalities.liechtenstein}</option>
-          <option value="Lithuania">{t.nationalities.lithuania}</option>
-          <option value="Luxembourg">{t.nationalities.luxembourg}</option>
-          <option value="Malta">{t.nationalities.malta}</option>
-          <option value="Mexico">{t.nationalities.mexico}</option>
-          <option value="Monaco">{t.nationalities.monaco}</option>
-          <option value="Morocco">{t.nationalities.morocco}</option>
-          <option value="Norway">{t.nationalities.norway}</option>
-          <option value="New Zealand">{t.nationalities.newZealand}</option>
-          <option value="Netherlands">{t.nationalities.netherlands}</option>
-          <option value="Panama">{t.nationalities.panama}</option>
-          <option value="Papua New Guinea">{t.nationalities.papuaNewGuinea}</option>
-          <option value="Philippines">{t.nationalities.philippines}</option>
-          <option value="Poland">{t.nationalities.poland}</option>
-          <option value="Portugal">{t.nationalities.portugal}</option>
-          <option value="Saint Kitts and Nevis">{t.nationalities.saintKittsNevis}</option>
-          <option value="Saint Lucia">{t.nationalities.saintLucia}</option>
-          <option value="Saint Vincent and the Grenadines">{t.nationalities.saintVincentGrenadines}</option>
-          <option value="Samoa">{t.nationalities.samoa}</option>
-          <option value="San Marino">{t.nationalities.sanMarino}</option>
-          <option value="Seychelles">{t.nationalities.seychelles}</option>
-          <option value="Singapore">{t.nationalities.singapore}</option>
-          <option value="Slovakia">{t.nationalities.slovakia}</option>
-          <option value="Slovenia">{t.nationalities.slovenia}</option>
-          <option value="Solomon Islands">{t.nationalities.solomonIslands}</option>
-          <option value="South Korea">{t.nationalities.southKorea}</option>
-          <option value="Spain">{t.nationalities.spain}</option>
-          <option value="Sweden">{t.nationalities.sweden}</option>
-          <option value="Switzerland">{t.nationalities.switzerland}</option>
-          <option value="Thailand">{t.nationalities.thailand}</option>
-          <option value="Taiwan (holders of passports containing a personal identification number)">{t.nationalities.taiwan}</option>
-          <option value="Trinidad and Tobago">{t.nationalities.trinidadTobago}</option>
-          <option value="United Arab Emirates">{t.nationalities.uae}</option>
-          <option value="United Kingdom">{t.nationalities.uk}</option>
-          <option value="Uruguay">{t.nationalities.uruguay}</option>
-          <option value="Vatican (holders of a passport or travel document issued by the Vatican)">{t.nationalities.vatican}</option>
-          <option value="OTHER">{t.nationalities.other}</option>
+          <option value="">{getTranslation(t, 'common.pleaseSelect')}</option>
+          <option value="Andorra">{getTranslation(t, 'nationalities.andorra')}</option>
+          <option value="Antigua and Barbuda">{getTranslation(t, 'nationalities.antiguaBarbuda')}</option>
+          <option value="Argentina">{getTranslation(t, 'nationalities.argentina')}</option>
+          <option value="Australia">{getTranslation(t, 'nationalities.australia')}</option>
+          <option value="Austria">{getTranslation(t, 'nationalities.austria')}</option>
+          <option value="Bahamas">{getTranslation(t, 'nationalities.bahamas')}</option>
+          <option value="Barbados">{getTranslation(t, 'nationalities.barbados')}</option>
+          <option value="Belgium">{getTranslation(t, 'nationalities.belgium')}</option>
+          <option value="Brazil">{getTranslation(t, 'nationalities.brazil')}</option>
+          <option value="Bulgaria">{getTranslation(t, 'nationalities.bulgaria')}</option>
+          <option value="Brunei Darussalam">{getTranslation(t, 'nationalities.bruneiDarussalam')}</option>
+          <option value="Chile">{getTranslation(t, 'nationalities.chile')}</option>
+          <option value="China (Hong Kong SAR)">{getTranslation(t, 'nationalities.chinaHongKong')}</option>
+          <option value="Croatia">{getTranslation(t, 'nationalities.croatia')}</option>
+          <option value="Costa Rica">{getTranslation(t, 'nationalities.costaRica')}</option>
+          <option value="Cyprus">{getTranslation(t, 'nationalities.cyprus')}</option>
+          <option value="Czech Republic">{getTranslation(t, 'nationalities.czechRepublic')}</option>
+          <option value="Denmark">{getTranslation(t, 'nationalities.denmark')}</option>
+          <option value="Estonia">{getTranslation(t, 'nationalities.estonia')}</option>
+          <option value="Finland">{getTranslation(t, 'nationalities.finland')}</option>
+          <option value="France">{getTranslation(t, 'nationalities.france')}</option>
+          <option value="Germany">{getTranslation(t, 'nationalities.germany')}</option>
+          <option value="Greece">{getTranslation(t, 'nationalities.greece')}</option>
+          <option value="Hungary">{getTranslation(t, 'nationalities.hungary')}</option>
+          <option value="Iceland">{getTranslation(t, 'nationalities.iceland')}</option>
+          <option value="Ireland">{getTranslation(t, 'nationalities.ireland')}</option>
+          <option value="Israel (holders of Israeli national passports)">{getTranslation(t, 'nationalities.israel')}</option>
+          <option value="Italy">{getTranslation(t, 'nationalities.italy')}</option>
+          <option value="Japan">{getTranslation(t, 'nationalities.japan')}</option>
+          <option value="Latvia">{getTranslation(t, 'nationalities.latvia')}</option>
+          <option value="Liechtenstein">{getTranslation(t, 'nationalities.liechtenstein')}</option>
+          <option value="Lithuania">{getTranslation(t, 'nationalities.lithuania')}</option>
+          <option value="Luxembourg">{getTranslation(t, 'nationalities.luxembourg')}</option>
+          <option value="Malta">{getTranslation(t, 'nationalities.malta')}</option>
+          <option value="Mexico">{getTranslation(t, 'nationalities.mexico')}</option>
+          <option value="Monaco">{getTranslation(t, 'nationalities.monaco')}</option>
+          <option value="Morocco">{getTranslation(t, 'nationalities.morocco')}</option>
+          <option value="Norway">{getTranslation(t, 'nationalities.norway')}</option>
+          <option value="New Zealand">{getTranslation(t, 'nationalities.newZealand')}</option>
+          <option value="Netherlands">{getTranslation(t, 'nationalities.netherlands')}</option>
+          <option value="Panama">{getTranslation(t, 'nationalities.panama')}</option>
+          <option value="Papua New Guinea">{getTranslation(t, 'nationalities.papuaNewGuinea')}</option>
+          <option value="Philippines">{getTranslation(t, 'nationalities.philippines')}</option>
+          <option value="Poland">{getTranslation(t, 'nationalities.poland')}</option>
+          <option value="Portugal">{getTranslation(t, 'nationalities.portugal')}</option>
+          <option value="Saint Kitts and Nevis">{getTranslation(t, 'nationalities.saintKittsNevis')}</option>
+          <option value="Saint Lucia">{getTranslation(t, 'nationalities.saintLucia')}</option>
+          <option value="Saint Vincent and the Grenadines">{getTranslation(t, 'nationalities.saintVincentGrenadines')}</option>
+          <option value="Samoa">{getTranslation(t, 'nationalities.samoa')}</option>
+          <option value="San Marino">{getTranslation(t, 'nationalities.sanMarino')}</option>
+          <option value="Seychelles">{getTranslation(t, 'nationalities.seychelles')}</option>
+          <option value="Singapore">{getTranslation(t, 'nationalities.singapore')}</option>
+          <option value="Slovakia">{getTranslation(t, 'nationalities.slovakia')}</option>
+          <option value="Slovenia">{getTranslation(t, 'nationalities.slovenia')}</option>
+          <option value="Solomon Islands">{getTranslation(t, 'nationalities.solomonIslands')}</option>
+          <option value="South Korea">{getTranslation(t, 'nationalities.southKorea')}</option>
+          <option value="Spain">{getTranslation(t, 'nationalities.spain')}</option>
+          <option value="Sweden">{getTranslation(t, 'nationalities.sweden')}</option>
+          <option value="Switzerland">{getTranslation(t, 'nationalities.switzerland')}</option>
+          <option value="Thailand">{getTranslation(t, 'nationalities.thailand')}</option>
+          <option value="Taiwan (holders of passports containing a personal identification number)">{getTranslation(t, 'nationalities.taiwan')}</option>
+          <option value="Trinidad and Tobago">{getTranslation(t, 'nationalities.trinidadTobago')}</option>
+          <option value="United Arab Emirates">{getTranslation(t, 'nationalities.uae')}</option>
+          <option value="United Kingdom">{getTranslation(t, 'nationalities.uk')}</option>
+          <option value="Uruguay">{getTranslation(t, 'nationalities.uruguay')}</option>
+          <option value="Vatican (holders of a passport or travel document issued by the Vatican)">{getTranslation(t, 'nationalities.vatican')}</option>
+          <option value="OTHER">{getTranslation(t, 'nationalities.other')}</option>
         </select>
         <span className="text-xs text-gray-500">On your passport, look for a field named &quot;Code&quot;, Issuing country&quot;, &quot;Authority&quot; or &quot;Country code&quot;.</span>
         {errors.nationality && <p className="text-red-600 text-sm">{errors.nationality.message as string}</p>}
@@ -159,12 +181,12 @@ export const Step1PassportDetails = ({ t, isEligible, onNationalityChange }: { t
             <>
               <div className="mb-2 text-sm text-gray-700">Enter your US visa number. The number is made up of just one letter and seven numbers. Found in the bottom right corner of the visa as in the example below.</div>
               <div className="mb-6">
-                <label className="block mb-1 font-medium">{t.formFields.usVisaNumber} <span className="text-red-600">*</span></label>
+                <label className="block mb-1 font-medium">{getTranslation(t, 'formFields.usVisaNumber')} <span className="text-red-600">*</span></label>
                 <input type="text" {...register('us_visa_number')} className="w-full border rounded p-2" />
                 {errors.us_visa_number && <p className="text-red-600 text-sm">{errors.us_visa_number.message as string}</p>}
               </div>
               <div className="mb-6">
-                <label className="block mb-1 font-medium">{t.formFields.usVisaNumberConfirm} <span className="text-red-600">*</span></label>
+                <label className="block mb-1 font-medium">{getTranslation(t, 'formFields.usVisaNumberConfirm')} <span className="text-red-600">*</span></label>
                 <input type="text" {...register('us_visa_number_confirm')} className="w-full border rounded p-2" />
                 {errors.us_visa_number_confirm && <p className="text-red-600 text-sm">{errors.us_visa_number_confirm.message as string}</p>}
               </div>
@@ -172,15 +194,15 @@ export const Step1PassportDetails = ({ t, isEligible, onNationalityChange }: { t
                 <label className="block mb-1 font-medium">DATE OF EXPIRY <span className="text-red-600">*</span></label>
                 <div className="flex gap-2">
                   <select {...register('us_visa_expiry_month')} className="w-32 border rounded p-2">
-                    <option value="">{t.common.month}</option>
+                    <option value="">{getTranslation(t, 'common.month')}</option>
                     {months.map((month, index) => <option key={month} value={monthNumbers[index]}>{month}</option>)}
                   </select>
                   <select {...register('us_visa_expiry_day')} className="w-16 border rounded p-2">
-                    <option value="">{t.common.day}</option>
+                    <option value="">{getTranslation(t, 'common.day')}</option>
                     {days.map(d => <option key={d} value={d}>{d}</option>)}
                   </select>
                   <select {...register('us_visa_expiry_year')} className="w-24 border rounded p-2">
-                    <option value="">{t.common.year}</option>
+                    <option value="">{getTranslation(t, 'common.year')}</option>
                     {getFutureYearOptions(currentYear, currentYear + 20).map(y => <option key={y} value={y}>{y}</option>)}
                   </select>
                 </div>
@@ -193,60 +215,60 @@ export const Step1PassportDetails = ({ t, isEligible, onNationalityChange }: { t
             </>
           )}
           <div className="mb-6">
-            <label className="block mb-1 font-medium">{t.formFields.passportNumber} <span className="text-red-600">*</span></label>
+            <label className="block mb-1 font-medium">{getTranslation(t, 'formFields.passportNumber')} <span className="text-red-600">*</span></label>
             <input type="text" {...register('passport_number')} className="w-full border rounded p-2" />
             <span className="text-xs text-gray-500">Enter the passport number exactly as it appears on the passport information page.</span>
             {errors.passport_number && <p className="text-red-600 text-sm">{errors.passport_number.message as string}</p>}
           </div>
           <div className="mb-6">
-            <label className="block mb-1 font-medium">{t.formFields.passportNumberConfirm} <span className="text-red-600">*</span></label>
+            <label className="block mb-1 font-medium">{getTranslation(t, 'formFields.passportNumberConfirm')} <span className="text-red-600">*</span></label>
             <input type="text" {...register('passport_number_confirm')} className="w-full border rounded p-2" />
             {errors.passport_number_confirm && <p className="text-red-600 text-sm">{errors.passport_number_confirm.message as string}</p>}
           </div>
           <div className="mb-6">
-            <label className="block mb-1 font-medium">{t.formFields.surname} <span className="text-red-600">*</span></label>
+            <label className="block mb-1 font-medium">{getTranslation(t, 'formFields.surname')} <span className="text-red-600">*</span></label>
             <input type="text" {...register('surname')} className="w-full border rounded p-2" />
             <span className="text-xs text-gray-500">Please enter exactly as shown on your passport or identity document.</span>
             {errors.surname && <p className="text-red-600 text-sm">{errors.surname.message as string}</p>}
           </div>
           <div className="mb-6">
-            <label className="block mb-1 font-medium">{t.formFields.givenName} <span className="text-red-600">*</span></label>
+            <label className="block mb-1 font-medium">{getTranslation(t, 'formFields.givenName')} <span className="text-red-600">*</span></label>
             <input type="text" {...register('given_name')} className="w-full border rounded p-2" />
             <span className="text-xs text-gray-500">Please enter exactly as shown on your passport or identity document.</span>
             {errors.given_name && <p className="text-red-600 text-sm">{errors.given_name.message as string}</p>}
           </div>
           <div className="mb-6">
-            <label className="block mb-1 font-medium">{t.formFields.dateOfBirth} <span className="text-red-600">*</span></label>
+            <label className="block mb-1 font-medium">{getTranslation(t, 'formFields.dateOfBirth')} <span className="text-red-600">*</span></label>
             <div className="flex gap-2">
               <select {...register('dob_month')} className="w-32 border rounded p-2">
-                <option value="">{t.common.month}</option>
+                <option value="">{getTranslation(t, 'common.month')}</option>
                 {months.map((month, index) => <option key={month} value={monthNumbers[index]}>{month}</option>)}
               </select>
               <select {...register('dob_day')} className="w-16 border rounded p-2">
-                <option value="">{t.common.day}</option>
+                <option value="">{getTranslation(t, 'common.day')}</option>
                 {days.map(d => <option key={d} value={d}>{d}</option>)}
               </select>
               <select {...register('dob_year')} className="w-24 border rounded p-2">
-                <option value="">{t.common.year}</option>
+                <option value="">{getTranslation(t, 'common.year')}</option>
                 {getYearOptions(currentYear, 1900).map(y => <option key={y} value={y}>{y}</option>)}
               </select>
             </div>
             {(errors.dob_month || errors.dob_day || errors.dob_year) && <p className="text-red-600 text-sm">Please enter a valid date of birth</p>}
           </div>
           <div className="mb-6">
-            <label className="block mb-1 font-medium">{t.formFields.gender} <span className="text-red-600">*</span></label>
+            <label className="block mb-1 font-medium">{getTranslation(t, 'formFields.gender')} <span className="text-red-600">*</span></label>
             <select {...register('gender')} className="w-full border rounded p-2">
-              <option value="">{t.common.pleaseSelect}</option>
-              <option value="Female">{t.formOptions.female}</option>
-              <option value="Male">{t.formOptions.male}</option>
-              <option value="Other">{t.formOptions.other}</option>
+              <option value="">{getTranslation(t, 'common.pleaseSelect')}</option>
+              <option value="Female">{getTranslation(t, 'formOptions.female')}</option>
+              <option value="Male">{getTranslation(t, 'formOptions.male')}</option>
+              <option value="Other">{getTranslation(t, 'formOptions.other')}</option>
             </select>
             {errors.gender && <p className="text-red-600 text-sm">{errors.gender.message as string}</p>}
           </div>
           <div className="mb-6">
-            <label className="block mb-1 font-medium">{t.formFields.birthCountry} <span className="text-red-600">*</span></label>
+            <label className="block mb-1 font-medium">{getTranslation(t, 'formFields.birthCountry')} <span className="text-red-600">*</span></label>
             <select {...register('birth_country')} className="w-full border rounded p-2">
-              <option value="">{t.common.pleaseSelect}</option>
+              <option value="">{getTranslation(t, 'common.pleaseSelect')}</option>
               <option value="Afghanistan">Afghanistan</option>
               <option value="Albania">Albania</option>
               <option value="Algeria">Algeria</option>
@@ -497,42 +519,42 @@ export const Step1PassportDetails = ({ t, isEligible, onNationalityChange }: { t
             {errors.birth_country && <p className="text-red-600 text-sm">{errors.birth_country.message as string}</p>}
           </div>
           <div className="mb-6">
-            <label className="block mb-1 font-medium">{t.formFields.birthCity} <span className="text-red-600">*</span></label>
+            <label className="block mb-1 font-medium">{getTranslation(t, 'formFields.birthCity')} <span className="text-red-600">*</span></label>
             <input type="text" {...register('birth_city')} className="w-full border rounded p-2" />
             <span className="text-xs text-gray-500">If there is no city/town/village on your passport, enter the name of the city/town/village where you were born.</span>
             {errors.birth_city && <p className="text-red-600 text-sm">{errors.birth_city.message as string}</p>}
           </div>
           <div className="mb-6">
-            <label className="block mb-1 font-medium">{t.formFields.passportIssueDate} <span className="text-red-600">*</span></label>
+            <label className="block mb-1 font-medium">{getTranslation(t, 'formFields.passportIssueDate')} <span className="text-red-600">*</span></label>
             <div className="flex gap-2">
               <select {...register('passport_issue_month')} className="w-32 border rounded p-2">
-                <option value="">{t.common.month}</option>
+                <option value="">{getTranslation(t, 'common.month')}</option>
                 {months.map((month, index) => <option key={month} value={monthNumbers[index]}>{month}</option>)}
               </select>
               <select {...register('passport_issue_day')} className="w-16 border rounded p-2">
-                <option value="">{t.common.day}</option>
+                <option value="">{getTranslation(t, 'common.day')}</option>
                 {days.map(d => <option key={d} value={d}>{d}</option>)}
               </select>
               <select {...register('passport_issue_year')} className="w-24 border rounded p-2">
-                <option value="">{t.common.year}</option>
+                <option value="">{getTranslation(t, 'common.year')}</option>
                 {getYearOptions(currentYear, currentYear - 20).map(y => <option key={y} value={y}>{y}</option>)}
               </select>
             </div>
             {(errors.passport_issue_month || errors.passport_issue_day || errors.passport_issue_year) && <p className="text-red-600 text-sm">Please enter a valid issue date</p>}
           </div>
           <div className="mb-6">
-            <label className="block mb-1 font-medium">{t.formFields.passportExpiryDate} <span className="text-red-600">*</span></label>
+            <label className="block mb-1 font-medium">{getTranslation(t, 'formFields.passportExpiryDate')} <span className="text-red-600">*</span></label>
             <div className="flex gap-2">
               <select {...register('passport_expiry_month')} className="w-32 border rounded p-2">
-                <option value="">{t.common.month}</option>
+                <option value="">{getTranslation(t, 'common.month')}</option>
                 {months.map((month, index) => <option key={month} value={monthNumbers[index]}>{month}</option>)}
               </select>
               <select {...register('passport_expiry_day')} className="w-16 border rounded p-2">
-                <option value="">{t.common.day}</option>
+                <option value="">{getTranslation(t, 'common.day')}</option>
                 {days.map(d => <option key={d} value={d}>{d}</option>)}
               </select>
               <select {...register('passport_expiry_year')} className="w-24 border rounded p-2">
-                <option value="">{t.common.year}</option>
+                <option value="">{getTranslation(t, 'common.year')}</option>
                 {getFutureYearOptions(currentYear, currentYear + 20).map(y => <option key={y} value={y}>{y}</option>)}
               </select>
             </div>

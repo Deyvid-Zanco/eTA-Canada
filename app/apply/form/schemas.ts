@@ -1,5 +1,4 @@
 import * as yup from 'yup';
-import { AnyObject } from 'yup';
 
 const usVisaNationalities = [
   'Mexico',
@@ -71,7 +70,6 @@ export type FormValues = {
   travel_date_year?: string | null;
   consent_declaration: boolean;
 };
-
 
 export const schema: yup.ObjectSchema<FormValues> = yup.object({
   travel_document: yup.string().required('This field is required'),

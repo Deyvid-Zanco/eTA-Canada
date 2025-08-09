@@ -3,7 +3,27 @@
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 
-export const Step2AdditionalInfo = ({ t }: { t: any }) => {
+type TranslationObject = {
+  [key: string]: string | TranslationObject;
+};
+
+interface Step2Props {
+  t: TranslationObject;
+}
+
+const getTranslation = (obj: TranslationObject, path: string): string => {
+    const keys = path.split('.');
+    let current: string | TranslationObject = obj;
+    for (const key of keys) {
+        if (typeof current !== 'object' || current === null || !current[key]) {
+            return '';
+        }
+        current = current[key];
+    }
+    return typeof current === 'string' ? current : '';
+};
+
+export const Step2AdditionalInfo = ({ t }: Step2Props) => {
   const { register, watch, formState: { errors, dirtyFields }, trigger } = useFormContext();
 
   const occupation = watch('occupation');
@@ -18,7 +38,7 @@ export const Step2AdditionalInfo = ({ t }: { t: any }) => {
   const monthNumbers = Array.from({ length: 12 }, (_, i) => String(i + 1).padStart(2, '0'));
   const days = Array.from({ length: 31 }, (_, i) => String(i + 1).padStart(2, '0'));
   
-  const months = [ t.common.january, t.common.february, t.common.march, t.common.april, t.common.may, t.common.june, t.common.july, t.common.august, t.common.september, t.common.october, t.common.november, t.common.december ];
+  const months = [ getTranslation(t, 'common.january'), getTranslation(t, 'common.february'), getTranslation(t, 'common.march'), getTranslation(t, 'common.april'), getTranslation(t, 'common.may'), getTranslation(t, 'common.june'), getTranslation(t, 'common.july'), getTranslation(t, 'common.august'), getTranslation(t, 'common.september'), getTranslation(t, 'common.october'), getTranslation(t, 'common.november'), getTranslation(t, 'common.december') ];
   
   function getFutureYearOptions(start: number, end: number) {
     const years = [];
@@ -36,13 +56,13 @@ export const Step2AdditionalInfo = ({ t }: { t: any }) => {
     <div className="mb-8">
       <h2 className="text-xl font-bold mb-4">Personal &amp; Employment Details</h2>
       <div className="mb-6">
-        <label className="block mb-1 font-medium">{t.formFields.additionalNationality} <span className="text-red-600">*</span></label>
+        <label className="block mb-1 font-medium">{getTranslation(t, 'formFields.additionalNationality')} <span className="text-red-600">*</span></label>
         <div className="flex gap-6">
           <label className="inline-flex items-center gap-2">
-            <input type="radio" value="No" {...register('additional_nationality')} /> {t.formOptions.no}
+            <input type="radio" value="No" {...register('additional_nationality')} /> {getTranslation(t, 'formOptions.no')}
           </label>
           <label className="inline-flex items-center gap-2">
-            <input type="radio" value="Yes" {...register('additional_nationality')} /> {t.formOptions.yes}
+            <input type="radio" value="Yes" {...register('additional_nationality')} /> {getTranslation(t, 'formOptions.yes')}
           </label>
         </div>
         {errors.additional_nationality && <p className="text-red-600 text-sm">{errors.additional_nationality.message as string}</p>}
@@ -55,27 +75,27 @@ export const Step2AdditionalInfo = ({ t }: { t: any }) => {
         </div>
       )}
       <div className="mb-6">
-        <label className="block mb-1 font-medium">{t.formFields.maritalStatus} <span className="text-red-600">*</span></label>
+        <label className="block mb-1 font-medium">{getTranslation(t, 'formFields.maritalStatus')} <span className="text-red-600">*</span></label>
         <select {...register('marital_status')} className="w-full border rounded p-2">
-          <option value="">{t.common.pleaseSelect}</option>
-          <option value="Married">{t.formOptions.married}</option>
-          <option value="Legally Separated">{t.formOptions.legallySeparated}</option>
-          <option value="Divorced">{t.formOptions.divorced}</option>
-          <option value="Annulled Marriage">{t.formOptions.annulledMarriage}</option>
-          <option value="Widowed">{t.formOptions.widowed}</option>
-          <option value="Common-Law">{t.formOptions.commonLaw}</option>
-          <option value="Never Married/Single">{t.formOptions.neverMarried}</option>
+          <option value="">{getTranslation(t, 'common.pleaseSelect')}</option>
+          <option value="Married">{getTranslation(t, 'formOptions.married')}</option>
+          <option value="Legally Separated">{getTranslation(t, 'formOptions.legallySeparated')}</option>
+          <option value="Divorced">{getTranslation(t, 'formOptions.divorced')}</option>
+          <option value="Annulled Marriage">{getTranslation(t, 'formOptions.annulledMarriage')}</option>
+          <option value="Widowed">{getTranslation(t, 'formOptions.widowed')}</option>
+          <option value="Common-Law">{getTranslation(t, 'formOptions.commonLaw')}</option>
+          <option value="Never Married/Single">{getTranslation(t, 'formOptions.neverMarried')}</option>
         </select>
         {errors.marital_status && <p className="text-red-600 text-sm">{errors.marital_status.message as string}</p>}
       </div>
       <div className="mb-6">
-        <label className="block mb-1 font-medium">{t.formFields.canadaVisaApplied} <span className="text-red-600">*</span></label>
+        <label className="block mb-1 font-medium">{getTranslation(t, 'formFields.canadaVisaApplied')} <span className="text-red-600">*</span></label>
         <div className="flex gap-6">
           <label className="inline-flex items-center gap-2">
-            <input type="radio" value="No" {...register('canada_visa_applied')} /> {t.formOptions.no}
+            <input type="radio" value="No" {...register('canada_visa_applied')} /> {getTranslation(t, 'formOptions.no')}
           </label>
           <label className="inline-flex items-center gap-2">
-            <input type="radio" value="Yes" {...register('canada_visa_applied')} /> {t.formOptions.yes}
+            <input type="radio" value="Yes" {...register('canada_visa_applied')} /> {getTranslation(t, 'formOptions.yes')}
           </label>
         </div>
         {errors.canada_visa_applied && <p className="text-red-600 text-sm">{errors.canada_visa_applied.message as string}</p>}
@@ -97,9 +117,9 @@ export const Step2AdditionalInfo = ({ t }: { t: any }) => {
 
       <h3 className="text-xl font-bold mb-4 mt-8">Employment information</h3>
       <div className="mb-6">
-        <label className="block mb-1 font-medium">{t.formFields.occupation} <span className="text-red-600">*</span></label>
+        <label className="block mb-1 font-medium">{getTranslation(t, 'formFields.occupation')} <span className="text-red-600">*</span></label>
         <select {...register('occupation')} className="w-full border rounded p-2">
-          <option value="">{t.common.pleaseSelect}</option>
+          <option value="">{getTranslation(t, 'common.pleaseSelect')}</option>
           <option value="Art, culture, recreation and sport occupations">Art, culture, recreation and sport occupations</option>
           <option value="Business, finance and administration occupations">Business, finance and administration occupations</option>
           <option value="Education, law and social, community and government services occupations">Education, law and social, community and government services occupations</option>
@@ -133,7 +153,7 @@ export const Step2AdditionalInfo = ({ t }: { t: any }) => {
           <div className="mb-6">
             <label className="block mb-1 font-medium">COUNTRY/TERRITORY <span className="text-red-600">*</span></label>
             <select {...register('employment_country')} className="w-full border rounded p-2">
-              <option value="">{t.common.pleaseSelect}</option>
+              <option value="">{getTranslation(t, 'common.pleaseSelect')}</option>
               <option value="Afghanistan">Afghanistan</option>
               <option value="Albania">Albania</option>
               <option value="Algeria">Algeria</option>
@@ -414,7 +434,7 @@ export const Step2AdditionalInfo = ({ t }: { t: any }) => {
       <div className="mb-6">
         <label className="block mb-1 font-medium">COUNTRY/TERRITORY <span className="text-red-600">*</span></label>
         <select {...register('address_country')} className="w-full border rounded p-2">
-          <option value="">{t.common.pleaseSelect}</option>
+          <option value="">{getTranslation(t, 'common.pleaseSelect')}</option>
           <option value="Afghanistan">Afghanistan</option>
           <option value="Albania">Albania</option>
           <option value="Algeria">Algeria</option>
@@ -572,7 +592,7 @@ export const Step2AdditionalInfo = ({ t }: { t: any }) => {
           <option value="Nigeria">Nigeria</option>
           <option value="Niue">Niue</option>
           <option value="Norfolk Island">Norfolk Island</option>
-          <option value="Northern Republic of Northern Cyprus">Northern Republic of Northern Cyprus</option>
+          <option value="Turkish Republic of Northern Cyprus">Turkish Republic of Northern Cyprus</option>
           <option value="Northern Mariana Islands">Northern Mariana Islands</option>
           <option value="Norway">Norway</option>
           <option value="Oman">Oman</option>
@@ -593,7 +613,7 @@ export const Step2AdditionalInfo = ({ t }: { t: any }) => {
           <option value="Romania">Romania</option>
           <option value="Russia">Russia</option>
           <option value="Rwanda">Rwanda</option>
-          <option value="Saint Barthélemy">Saint Barthélemy</option>
+          <option value="Saint Barthelemy">Saint Barthelemy</option>
           <option value="Saint Helena">Saint Helena</option>
           <option value="Saint Kitts and Nevis">Saint Kitts and Nevis</option>
           <option value="Saint Lucia">Saint Lucia</option>
@@ -664,7 +684,7 @@ export const Step2AdditionalInfo = ({ t }: { t: any }) => {
         {errors.zip_code && <p className="text-red-600 text-sm">{errors.zip_code.message as string}</p>}
       </div>
       <div className="mb-6">
-        <label className="block mb-1 font-medium">{t.formFields.email} <span className="text-red-600">*</span></label>
+        <label className="block mb-1 font-medium">{getTranslation(t, 'formFields.email')} <span className="text-red-600">*</span></label>
         <input type="email" {...register('email')} className="w-full border rounded p-2" placeholder="example@example.com" />
         {errors.email && <p className="text-red-600 text-sm">{errors.email.message as string}</p>}
       </div>
@@ -678,13 +698,13 @@ export const Step2AdditionalInfo = ({ t }: { t: any }) => {
       <h2 className="text-xl font-bold mb-4">Travel Information</h2>
       <div className="text-sm text-gray-500 mb-4">If you don&apos;t know, you may enter an approximate date/time</div>
       <div className="mb-6">
-        <label className="block mb-1 font-medium">{t.formFields.doYouKnowTravelDate} <span className="text-red-600">*</span></label>
+        <label className="block mb-1 font-medium">{getTranslation(t, 'formFields.doYouKnowTravelDate')} <span className="text-red-600">*</span></label>
         <div className="flex gap-6">
           <label className="inline-flex items-center gap-2">
-            <input type="radio" value="No" {...register('do_you_know_travel_date')} /> {t.formOptions.no}
+            <input type="radio" value="No" {...register('do_you_know_travel_date')} /> {getTranslation(t, 'formOptions.no')}
           </label>
           <label className="inline-flex items-center gap-2">
-            <input type="radio" value="Yes" {...register('do_you_know_travel_date')} /> {t.formOptions.yes}
+            <input type="radio" value="Yes" {...register('do_you_know_travel_date')} /> {getTranslation(t, 'formOptions.yes')}
           </label>
         </div>
         {errors.do_you_know_travel_date && <p className="text-red-600 text-sm">{errors.do_you_know_travel_date.message as string}</p>}
@@ -694,15 +714,15 @@ export const Step2AdditionalInfo = ({ t }: { t: any }) => {
           <label className="block mb-1 font-medium">WHEN DO YOU PLAN TO TRAVEL TO CANADA? <span className="text-red-600">*</span></label>
           <div className="flex gap-2">
             <select {...register('travel_date_month')} className="w-32 border rounded p-2">
-              <option value="">{t.common.month}</option>
+              <option value="">{getTranslation(t, 'common.month')}</option>
               {months.map((month, index) => <option key={month} value={monthNumbers[index]}>{month}</option>)}
             </select>
             <select {...register('travel_date_day')} className="w-16 border rounded p-2">
-              <option value="">{t.common.day}</option>
+              <option value="">{getTranslation(t, 'common.day')}</option>
               {days.map(d => <option key={d} value={d}>{d}</option>)}
             </select>
             <select {...register('travel_date_year')} className="w-24 border rounded p-2">
-              <option value="">{t.common.year}</option>
+              <option value="">{getTranslation(t, 'common.year')}</option>
               {getFutureYearOptions(currentYear, currentYear + 5).map(y => <option key={y} value={y}>{y}</option>)}
             </select>
           </div>
