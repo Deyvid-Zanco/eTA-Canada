@@ -236,20 +236,26 @@ function ApplyFormMultiStep() {
 
   const methods = useForm<FormValues>({
     resolver: yupResolver(schema),
-    mode: 'onSubmit',
+    mode: 'onTouched', 
   });
 
   const { handleSubmit, formState, watch, register, reset, trigger, setValue } = methods;
+  
   const nationality = watch('nationality');
+  const occupation = watch('occupation');
+  const canadaVisaApplied = watch('canada_visa_applied');
+  const additionalNationality = watch('additional_nationality');
+  const knowsTravelDate = watch('do_you_know_travel_date');
+
+  const watchedUSVisaNumber = watch("us_visa_number");
+  const watchedPassportNumber = watch("passport_number");
+  const watchedPreviousVisaNumber = watch("previous_visa_number");
+
   const showTaiwanID = nationality === 'Taiwan (holders of passports containing a personal identification number)';
   const showUSVisaFields = usVisaNationalities.includes(nationality);
   const showMexicoVisaImage = nationality === 'Mexico';
   const showArgentinaVisaImage = showUSVisaFields && !showMexicoVisaImage;
-  const occupation = watch('occupation');
   const hideJobFields = ['Unemployed', 'Homemaker', 'Retired'].includes(occupation);
-  const canadaVisaApplied = watch('canada_visa_applied');
-  const additionalNationality = watch('additional_nationality');
-  const knowsTravelDate = watch('do_you_know_travel_date');
 
   const months = [
     t.common.january, t.common.february, t.common.march, t.common.april,
@@ -347,27 +353,16 @@ function ApplyFormMultiStep() {
   }, [step]);
 
   const handleNext = async () => {
-    let fieldsToValidate: (keyof FormValues)[] = [];
-    if (step === 0) {
-      fieldsToValidate = [
-        'travel_document', 'nationality', 'taiwan_id', 'us_visa_number',
-        'us_visa_number_confirm', 'us_visa_expiry_month', 'us_visa_expiry_day',
-        'us_visa_expiry_year', 'passport_number', 'passport_number_confirm',
-        'surname', 'given_name', 'dob_month', 'dob_day', 'dob_year', 'gender',
-        'birth_country', 'birth_city', 'passport_issue_month', 'passport_issue_day',
-        'passport_issue_year', 'passport_expiry_month', 'passport_expiry_day',
-        'passport_expiry_year'
-      ];
-    } else if (step === 1) {
-      fieldsToValidate = [
-        'additional_nationality', 'additional_nationality_details', 'marital_status',
-        'canada_visa_applied', 'previous_visa_number', 'previous_visa_number_confirm',
-        'occupation', 'job_description', 'employer_name', 'employment_country',
-        'employer_city', 'employment_start_year', 'apartment_number', 'street_number',
-        'street_name', 'city_town', 'district_region', 'address_country', 'zip_code',
-        'email', 'phone'
-      ];
-    }
+    const fieldsToValidate: (keyof FormValues)[] = [
+      'travel_document', 'nationality', 'taiwan_id', 'us_visa_number',
+      'us_visa_number_confirm', 'us_visa_expiry_month', 'us_visa_expiry_day',
+      'us_visa_expiry_year', 'passport_number', 'passport_number_confirm',
+      'surname', 'given_name', 'dob_month', 'dob_day', 'dob_year', 'gender',
+      'birth_country', 'birth_city', 'passport_issue_month', 'passport_issue_day',
+      'passport_issue_year', 'passport_expiry_month', 'passport_expiry_day',
+      'passport_expiry_year'
+    ];
+    
     const isValid = await trigger(fieldsToValidate);
     if (isValid) {
       setStep(step + 1);
@@ -492,7 +487,7 @@ function ApplyFormMultiStep() {
               </div>
               <div className="mb-6">
                 <label className="block mb-1 font-medium">{t.formFields.usVisaNumberConfirm} <span className="text-red-600">*</span></label>
-                <input type="text" {...register('us_visa_number_confirm')} className="w-full border rounded p-2" />
+                <input type="text" {...register('us_visa_number_confirm', { validate: value => value === watchedUSVisaNumber || "Visa numbers must match" })} className="w-full border rounded p-2" />
                 {formState.errors.us_visa_number_confirm && <p className="text-red-600 text-sm">{formState.errors.us_visa_number_confirm.message}</p>}
               </div>
               <div className="mb-6">
@@ -527,7 +522,7 @@ function ApplyFormMultiStep() {
           </div>
           <div className="mb-6">
             <label className="block mb-1 font-medium">{t.formFields.passportNumberConfirm} <span className="text-red-600">*</span></label>
-            <input type="text" {...register('passport_number_confirm')} className="w-full border rounded p-2" />
+            <input type="text" {...register('passport_number_confirm', { validate: value => value === watchedPassportNumber || "Passport numbers must match" })} className="w-full border rounded p-2" />
             {formState.errors.passport_number_confirm && <p className="text-red-600 text-sm">{formState.errors.passport_number_confirm.message}</p>}
           </div>
           <div className="mb-6">
@@ -622,6 +617,7 @@ function ApplyFormMultiStep() {
               <option value="Congo">Congo</option>
               <option value="Cook Islands">Cook Islands</option>
               <option value="Costa Rica">Costa Rica</option>
+              <option value="Cote d'Ivoire">Cote d&apos;Ivoire</option>
               <option value="Croatia">Croatia</option>
               <option value="Cuba">Cuba</option>
               <option value="Curaçao">Curaçao</option>
@@ -869,7 +865,7 @@ function ApplyFormMultiStep() {
     </div>,
 
     <div key="step-1" className="mb-8">
-      <h2 className="text-xl font-bold mb-4">Personal details of applicant</h2>
+      <h2 className="text-xl font-bold mb-4">Personal &amp; Employment Details</h2>
       <div className="mb-6">
         <label className="block mb-1 font-medium">{t.formFields.additionalNationality} <span className="text-red-600">*</span></label>
         <div className="flex gap-6">
@@ -924,13 +920,13 @@ function ApplyFormMultiStep() {
           </div>
           <div className="mt-4 mb-6">
             <label className="block mb-1 font-medium">Unique client identifier (UCI) / Previous Canadian visa, eTA or permit number (re-enter) <span className="text-red-600">*</span></label>
-            <input type="text" {...register('previous_visa_number_confirm')} className="w-full border rounded p-2" />
+            <input type="text" {...register('previous_visa_number_confirm', { validate: value => value === watchedPreviousVisaNumber || "Numbers must match" })} className="w-full border rounded p-2" />
             {formState.errors.previous_visa_number_confirm && <p className="text-red-600 text-sm">{formState.errors.previous_visa_number_confirm.message}</p>}
           </div>
         </>
       )}
 
-      <h2 className="text-xl font-bold mb-4 mt-8">Employment information</h2>
+      <h3 className="text-xl font-bold mb-4 mt-8">Employment information</h3>
       <div className="mb-6">
         <label className="block mb-1 font-medium">{t.formFields.occupation} <span className="text-red-600">*</span></label>
         <select {...register('occupation')} className="w-full border rounded p-2">
@@ -1017,6 +1013,7 @@ function ApplyFormMultiStep() {
               <option value="Congo">Congo</option>
               <option value="Cook Islands">Cook Islands</option>
               <option value="Costa Rica">Costa Rica</option>
+              <option value="Cote d'Ivoire">Cote d&apos;Ivoire</option>
               <option value="Croatia">Croatia</option>
               <option value="Cuba">Cuba</option>
               <option value="Cyprus">Cyprus</option>
@@ -1219,7 +1216,8 @@ function ApplyFormMultiStep() {
           </div>
         </>
       )}
-      <h2 className="text-xl font-bold mb-4 mt-8">Residential address</h2>
+
+      <h3 className="text-xl font-bold mb-4 mt-8">Residential address</h3>
       <div className="text-sm text-gray-500 mb-4">Enter your permanent home address. Do not enter an address where you live temporarily.</div>
       <div className="mb-6">
         <label className="block mb-1 font-medium">APARTMENT NUMBER</label>
@@ -1513,9 +1511,7 @@ function ApplyFormMultiStep() {
         <span className="text-xs text-gray-500">Favor inserir um número de telefone válido.</span>
         {formState.errors.phone && <p className="text-red-600 text-sm">{formState.errors.phone.message}</p>}
       </div>
-    </div>,
-
-    <div key="step-2" className="mb-8">
+      <hr className="my-8" />
       <h2 className="text-xl font-bold mb-4">Travel Information</h2>
       <div className="text-sm text-gray-500 mb-4">If you don&apos;t know, you may enter an approximate date/time</div>
       <div className="mb-6">
@@ -1569,12 +1565,13 @@ function ApplyFormMultiStep() {
       <form ref={formRef} className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-8 space-y-8" onSubmit={handleSubmit(onSubmit)}>
         {steps[step]}
         <div className="text-center flex justify-between mt-8">
-          {step > 0 && (
+          {step > 0 ? (
             <button type="button" className="bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-6 rounded-md font-semibold" onClick={() => setStep(step - 1)}>
               {t.common.back}
             </button>
+          ) : (
+            <div></div> 
           )}
-          <div className="flex-grow"></div>
           {step < steps.length - 1 ? (
             <button type="button" className="bg-red-600 hover:bg-red-700 text-white py-2 px-12 rounded-md text-lg font-semibold" onClick={handleNext} disabled={!isEligible}>
               {t.common.next}
