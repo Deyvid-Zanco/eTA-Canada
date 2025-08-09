@@ -241,21 +241,41 @@ function ApplyFormMultiStep() {
 
   const { handleSubmit, formState, watch, register, reset, trigger, setValue } = methods;
 
+  const { dirtyFields } = formState;
+  
   const nationality = watch('nationality');
   const occupation = watch('occupation');
   const canadaVisaApplied = watch('canada_visa_applied');
   const additionalNationality = watch('additional_nationality');
   const knowsTravelDate = watch('do_you_know_travel_date');
 
-  const watchedUSVisaNumber = watch("us_visa_number");
-  const watchedPassportNumber = watch("passport_number");
-  const watchedPreviousVisaNumber = watch("previous_visa_number");
+  const passportNumberConfirm = watch('passport_number_confirm');
+  const usVisaNumberConfirm = watch('us_visa_number_confirm');
+  const previousVisaNumberConfirm = watch('previous_visa_number_confirm');
 
   const showTaiwanID = nationality === 'Taiwan (holders of passports containing a personal identification number)';
   const showUSVisaFields = usVisaNationalities.includes(nationality);
   const showMexicoVisaImage = nationality === 'Mexico';
   const showArgentinaVisaImage = showUSVisaFields && !showMexicoVisaImage;
   const hideJobFields = ['Unemployed', 'Homemaker', 'Retired'].includes(occupation);
+
+  React.useEffect(() => {
+    if (dirtyFields.passport_number) {
+      trigger("passport_number_confirm");
+    }
+  }, [passportNumberConfirm, dirtyFields.passport_number, trigger]);
+
+  React.useEffect(() => {
+    if (dirtyFields.us_visa_number) {
+      trigger("us_visa_number_confirm");
+    }
+  }, [usVisaNumberConfirm, dirtyFields.us_visa_number, trigger]);
+
+  React.useEffect(() => {
+    if (dirtyFields.previous_visa_number) {
+      trigger("previous_visa_number_confirm");
+    }
+  }, [previousVisaNumberConfirm, dirtyFields.previous_visa_number, trigger]);
 
   const months = [
     t.common.january, t.common.february, t.common.march, t.common.april,
@@ -487,7 +507,7 @@ function ApplyFormMultiStep() {
               </div>
               <div className="mb-6">
                 <label className="block mb-1 font-medium">{t.formFields.usVisaNumberConfirm} <span className="text-red-600">*</span></label>
-                <input type="text" {...register('us_visa_number_confirm', { validate: value => value === watchedUSVisaNumber || "Visa numbers must match" })} className="w-full border rounded p-2" />
+                <input type="text" {...register('us_visa_number_confirm')} className="w-full border rounded p-2" />
                 {formState.errors.us_visa_number_confirm && <p className="text-red-600 text-sm">{formState.errors.us_visa_number_confirm.message}</p>}
               </div>
               <div className="mb-6">
@@ -522,7 +542,7 @@ function ApplyFormMultiStep() {
           </div>
           <div className="mb-6">
             <label className="block mb-1 font-medium">{t.formFields.passportNumberConfirm} <span className="text-red-600">*</span></label>
-            <input type="text" {...register('passport_number_confirm', { validate: value => value === watchedPassportNumber || "Passport numbers must match" })} className="w-full border rounded p-2" />
+            <input type="text" {...register('passport_number_confirm')} className="w-full border rounded p-2" />
             {formState.errors.passport_number_confirm && <p className="text-red-600 text-sm">{formState.errors.passport_number_confirm.message}</p>}
           </div>
           <div className="mb-6">
@@ -920,7 +940,7 @@ function ApplyFormMultiStep() {
           </div>
           <div className="mt-4 mb-6">
             <label className="block mb-1 font-medium">Unique client identifier (UCI) / Previous Canadian visa, eTA or permit number (re-enter) <span className="text-red-600">*</span></label>
-            <input type="text" {...register('previous_visa_number_confirm', { validate: value => value === watchedPreviousVisaNumber || "Numbers must match" })} className="w-full border rounded p-2" />
+            <input type="text" {...register('previous_visa_number_confirm')} className="w-full border rounded p-2" />
             {formState.errors.previous_visa_number_confirm && <p className="text-red-600 text-sm">{formState.errors.previous_visa_number_confirm.message}</p>}
           </div>
         </>
