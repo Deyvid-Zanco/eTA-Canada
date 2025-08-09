@@ -110,7 +110,7 @@ export async function POST(req: NextRequest) {
     addField('Email of Applicant', data.email);
     addField('Phone Number', data.phone);
 
-    // Page 3: Travel and Consent
+    // Page 3: Travel and Consent!!!!
     emailHtml += `<hr><h3>Travel Information</h3>`;
     addField('Do you know when you will travel to Canada?', data.do_you_know_travel_date);
     if (data.do_you_know_travel_date === 'Yes') {
