@@ -183,6 +183,7 @@ const schema: yup.ObjectSchema<FormValues> = yup.object({
     then: schema => schema.required('This field is required').matches(/^(19|20)\d{2}$/, 'Year must be in YYYY format'),
     otherwise: schema => schema.notRequired().nullable(),
   }),
+  //
   apartment_number: yup.string().notRequired().nullable(),
   street_number: yup.string().required('This field is required'),
   street_name: yup.string().required('This field is required'),
