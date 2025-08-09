@@ -1296,7 +1296,7 @@ function ApplyFormMultiStep() {
           <option value="Congo">Congo</option>
           <option value="Cook Islands">Cook Islands</option>
           <option value="Costa Rica">Costa Rica</option>
-          <option value="Cote d'Ivoire">Cote d'Ivoire</option>
+          <option value="Cote d'Ivoire">Cote d&apos;Ivoire</option>
           <option value="Croatia">Croatia</option>
           <option value="Cuba">Cuba</option>
           <option value="Curaçao">Curaçao</option>
