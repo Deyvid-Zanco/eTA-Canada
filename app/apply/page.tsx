@@ -236,7 +236,8 @@ function ApplyFormMultiStep() {
 
   const methods = useForm<FormValues>({
     resolver: yupResolver(schema),
-    mode: 'onSubmit',
+    mode: 'onBlur',
+    shouldFocusError: false,
   });
 
   const { handleSubmit, formState, watch, register, reset, trigger, setValue } = methods;
