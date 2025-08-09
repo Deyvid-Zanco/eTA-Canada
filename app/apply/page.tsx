@@ -183,7 +183,6 @@ const schema: yup.ObjectSchema<FormValues> = yup.object({
     then: schema => schema.required('This field is required').matches(/^(19|20)\d{2}$/, 'Year must be in YYYY format'),
     otherwise: schema => schema.notRequired().nullable(),
   }),
-  //
   apartment_number: yup.string().notRequired().nullable(),
   street_number: yup.string().required('This field is required'),
   street_name: yup.string().required('This field is required'),
@@ -237,11 +236,11 @@ function ApplyFormMultiStep() {
 
   const methods = useForm<FormValues>({
     resolver: yupResolver(schema),
-    mode: 'onTouched', 
+    mode: 'onSubmit',
   });
 
   const { handleSubmit, formState, watch, register, reset, trigger, setValue } = methods;
-  
+
   const nationality = watch('nationality');
   const occupation = watch('occupation');
   const canadaVisaApplied = watch('canada_visa_applied');
@@ -1571,7 +1570,7 @@ function ApplyFormMultiStep() {
               {t.common.back}
             </button>
           ) : (
-            <div></div> 
+            <div></div>
           )}
           {step < steps.length - 1 ? (
             <button type="button" className="bg-red-600 hover:bg-red-700 text-white py-2 px-12 rounded-md text-lg font-semibold" onClick={handleNext} disabled={!isEligible}>
