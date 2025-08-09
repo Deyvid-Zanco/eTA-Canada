@@ -138,7 +138,7 @@ export const en = {
     travelDate: "WHEN DO YOU PLAN TO TRAVEL TO CANADA?",
     consentDeclaration: "I agree",
     previousVisaNumber: "Please enter your previous Canadian visa/permit/ETA number",
-    employmentStartDate: "Since when do you work at this location? (MM/YYYY)",
+    employmentStartDate: "Since when do you work at this location? (YYYY)",
   },
 
   // Form Options
