@@ -19,6 +19,20 @@ export function Step2({ register, errors, watch }: Step2Props) {
   const canadaVisaApplied = watch('canada_visa_applied') as string;
   const hideJobFields = ['Unemployed', 'Homemaker', 'Retired', 'Military/armed forces'].includes(occupation);
 
+  // Watch email fields for real-time validation
+  const email = watch('email') as string;
+  const emailConfirm = watch('email_confirm') as string;
+  const [emailMatchError, setEmailMatchError] = React.useState('');
+
+  // useEffect to check email match
+  React.useEffect(() => {
+    if (emailConfirm && email !== emailConfirm) {
+      setEmailMatchError('Email addresses do not match');
+    } else {
+      setEmailMatchError('');
+    }
+  }, [email, emailConfirm]);
+
   // Create months array using translation keys
   const months = [
     t.common.january,
@@ -236,6 +250,7 @@ export function Step2({ register, errors, watch }: Step2Props) {
         <label className="block mb-1 font-medium">{t.formFields.emailConfirm} <span className="text-red-600">*</span></label>
         <input type="email" {...register('email_confirm')} className="w-full border rounded p-2" required />
         {errors.email_confirm && <p className="text-red-600 text-sm">{(errors.email_confirm as { message?: string })?.message || t.common.required}</p>}
+        {emailMatchError && <p className="text-red-600 text-sm">{emailMatchError}</p>}
       </div>
 
       {/* Phone */}
