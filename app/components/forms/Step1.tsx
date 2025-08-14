@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { useLanguage } from "@/lib/contexts/LanguageContext";
-import { US_VISA_NATIONALITIES, COUNTRY_LIST } from "@/lib/constants";
+import { US_VISA_NATIONALITIES, NATIONALITIES_LIST, COUNTRY_LIST } from "@/lib/constants";
 import { UseFormRegister, UseFormWatch, FieldErrors } from "react-hook-form";
 import { step1Schema } from "@/lib/schemas/step1Schema";
 import { InferType } from 'yup';
@@ -133,73 +133,9 @@ export function Step1({ register, errors, watch }: Step1Props) {
           value={nationality || ''}
         >
           <option value="">{t.common.pleaseSelect}</option>
-          <option value="Andorra">{t.nationalities.andorra}</option>
-          <option value="Antigua and Barbuda">{t.nationalities.antiguaBarbuda}</option>
-          <option value="Argentina">{t.nationalities.argentina}</option>
-          <option value="Australia">{t.nationalities.australia}</option>
-          <option value="Austria">{t.nationalities.austria}</option>
-          <option value="Bahamas">{t.nationalities.bahamas}</option>
-          <option value="Barbados">{t.nationalities.barbados}</option>
-          <option value="Belgium">{t.nationalities.belgium}</option>
-          <option value="Brazil">{t.nationalities.brazil}</option>
-          <option value="Bulgaria">{t.nationalities.bulgaria}</option>
-          <option value="Brunei Darussalam">{t.nationalities.bruneiDarussalam}</option>
-          <option value="Chile">{t.nationalities.chile}</option>
-          <option value="China (Hong Kong SAR)">{t.nationalities.chinaHongKong}</option>
-          <option value="Croatia">{t.nationalities.croatia}</option>
-          <option value="Costa Rica">{t.nationalities.costaRica}</option>
-          <option value="Cyprus">{t.nationalities.cyprus}</option>
-          <option value="Czech Republic">{t.nationalities.czechRepublic}</option>
-          <option value="Denmark">{t.nationalities.denmark}</option>
-          <option value="Estonia">{t.nationalities.estonia}</option>
-          <option value="Finland">{t.nationalities.finland}</option>
-          <option value="France">{t.nationalities.france}</option>
-          <option value="Germany">{t.nationalities.germany}</option>
-          <option value="Greece">{t.nationalities.greece}</option>
-          <option value="Hungary">{t.nationalities.hungary}</option>
-          <option value="Iceland">{t.nationalities.iceland}</option>
-          <option value="Ireland">{t.nationalities.ireland}</option>
-          <option value="Israel (holders of Israeli national passports)">{t.nationalities.israel}</option>
-          <option value="Italy">{t.nationalities.italy}</option>
-          <option value="Japan">{t.nationalities.japan}</option>
-          <option value="Latvia">{t.nationalities.latvia}</option>
-          <option value="Liechtenstein">{t.nationalities.liechtenstein}</option>
-          <option value="Lithuania">{t.nationalities.lithuania}</option>
-          <option value="Luxembourg">{t.nationalities.luxembourg}</option>
-          <option value="Malta">{t.nationalities.malta}</option>
-          <option value="Mexico">{t.nationalities.mexico}</option>
-          <option value="Monaco">{t.nationalities.monaco}</option>
-          <option value="Morocco">{t.nationalities.morocco}</option>
-          <option value="Norway">{t.nationalities.norway}</option>
-          <option value="New Zealand">{t.nationalities.newZealand}</option>
-          <option value="Netherlands">{t.nationalities.netherlands}</option>
-          <option value="Panama">{t.nationalities.panama}</option>
-          <option value="Papua New Guinea">{t.nationalities.papuaNewGuinea}</option>
-          <option value="Philippines">{t.nationalities.philippines}</option>
-          <option value="Poland">{t.nationalities.poland}</option>
-          <option value="Portugal">{t.nationalities.portugal}</option>
-          <option value="Saint Kitts and Nevis">{t.nationalities.saintKittsNevis}</option>
-          <option value="Saint Lucia">{t.nationalities.saintLucia}</option>
-          <option value="Saint Vincent and the Grenadines">{t.nationalities.saintVincentGrenadines}</option>
-          <option value="Samoa">{t.nationalities.samoa}</option>
-          <option value="San Marino">{t.nationalities.sanMarino}</option>
-          <option value="Seychelles">{t.nationalities.seychelles}</option>
-          <option value="Singapore">{t.nationalities.singapore}</option>
-          <option value="Slovakia">{t.nationalities.slovakia}</option>
-          <option value="Slovenia">{t.nationalities.slovenia}</option>
-          <option value="Solomon Islands">{t.nationalities.solomonIslands}</option>
-          <option value="South Korea">{t.nationalities.southKorea}</option>
-          <option value="Spain">{t.nationalities.spain}</option>
-          <option value="Sweden">{t.nationalities.sweden}</option>
-          <option value="Switzerland">{t.nationalities.switzerland}</option>
-          <option value="Thailand">{t.nationalities.thailand}</option>
-          <option value="Taiwan (holders of passports containing a personal identification number)">{t.nationalities.taiwan}</option>
-          <option value="Trinidad and Tobago">{t.nationalities.trinidadTobago}</option>
-          <option value="United Arab Emirates">{t.nationalities.uae}</option>
-          <option value="United Kingdom">{t.nationalities.uk}</option>
-          <option value="Uruguay">{t.nationalities.uruguay}</option>
-          <option value="Vatican (holders of a passport or travel document issued by the Vatican)">{t.nationalities.vatican}</option>
-          <option value="OTHER">{t.nationalities.other}</option>
+          {NATIONALITIES_LIST.map(country => (
+            <option key={country} value={country}>{country}</option>
+          ))}
         </select>
         {errors.nationality && <p className="text-red-600 text-sm">{t.common.required}</p>}
       </div>
