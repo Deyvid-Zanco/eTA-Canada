@@ -1729,7 +1729,7 @@ export default function ApplyPage() {
           </div>
         </div>
         
-        {/* Permit Renewal Notice: */}
+        {/* Permit Renewal Notice: **/}
         <div className="max-w-4xl mx-auto mb-8 text-center">
           <h2 className="text-lg font-bold text-gray-800 mb-4">{t.form.permitRenewal.title}</h2>
           <div className="flex items-start gap-3 justify-center">
