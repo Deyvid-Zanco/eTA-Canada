@@ -67,7 +67,7 @@ export const es = {
   footer: {
     disclaimer: "Descargo de responsabilidad: IMMI CENTER no está afiliado con ninguna agencia o departamento gubernamental. Los costos por servicios de consultoría NO incluyen ninguna solicitud gubernamental, examen médico o tarifas biométricas. Somos un proveedor privado de consultoría de viajes. Puedes solicitar visas directamente en los sitios web de la Embajada o Consulado. IMMI CENTER está autorizado por el Ministerio de Turismo a través de Cadastur para operar con la actividad de obtención y legalización de documentos para viajeros de acuerdo con la Ley 11.771/08 – Art. 27 § 4o I que puede verificarse en:",
     cadasturLink: "Código QR Cadastur",
-    companyInfo: "MAYARA MANCINI DE OLIVEIRA COSTA – CNPJ 41.909.350/0001-52.",
+    companyInfo: "HELIZA GIOVANA CONRADO DE ANDRADE CHACHA – CNPJ 43.274.527/0001-17.",
     termsOfUse: "Términos de uso",
     cookiesPolicy: "Política de cookies",
     privacyPolicy: "Política de privacidad",

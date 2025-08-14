@@ -67,7 +67,7 @@ export const en = {
   footer: {
     disclaimer: "Disclaimer: IMMI CENTER is not affiliated with any government agency or department. Costs for consulting services DO NOT include any government solicitation, medical examination, or biometric fees. We are a private travel consultancy provider. You can apply directly for visas on the Embassy or Consulate websites. IMMI CENTER is authorized by the Ministry of Tourism through Cadastur to operate with the activity of obtaining and legalizing documents for travelers in accordance with Law 11.771/08 – Art. 27 § 4o I which can be verified at:",
     cadasturLink: "Cadastur QR Code",
-    companyInfo: "MAYARA MANCINI DE OLIVEIRA COSTA – CNPJ 41.909.350/0001-52.",
+    companyInfo: "HELIZA GIOVANA CONRADO DE ANDRADE CHACHA – CNPJ 43.274.527/0001-17.",
     termsOfUse: "Terms of use",
     cookiesPolicy: "Cookies Policy",
     privacyPolicy: "Privacy Policy",
