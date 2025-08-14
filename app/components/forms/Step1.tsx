@@ -30,7 +30,6 @@ export function Step1({ register, errors, watch }: Step1Props) {
   // Watch US visa number fields for real-time validation
   const usVisaNumber = watch('us_visa_number') as string;
   const usVisaNumberConfirm = watch('us_visa_number_confirm') as string;
-  const [usVisaNumberError, setUsVisaNumberError] = React.useState('');
   const [usVisaNumberConfirmError, setUsVisaNumberConfirmError] = React.useState('');
 
   // useEffect to check passport number match
@@ -41,21 +40,6 @@ export function Step1({ register, errors, watch }: Step1Props) {
       setPassportMatchError('');
     }
   }, [passportNumber, passportNumberConfirm]);
-
-  // useEffect to validate US visa number format
-  React.useEffect(() => {
-    if (usVisaNumber && showUSVisaFields) {
-      if (!/^[A-Za-z][0-9]{7}$/.test(usVisaNumber)) {
-        setUsVisaNumberError('Visa number must be 1 letter followed by 7 digits (e.g. A1234567)');
-      } else if (usVisaNumber.length !== 8) {
-        setUsVisaNumberError('Visa number must be exactly 8 characters');
-      } else {
-        setUsVisaNumberError('');
-      }
-    } else {
-      setUsVisaNumberError('');
-    }
-  }, [usVisaNumber, showUSVisaFields]);
 
   // useEffect to check US visa number confirmation match
   React.useEffect(() => {
@@ -157,13 +141,11 @@ export function Step1({ register, errors, watch }: Step1Props) {
             <input 
               type="text" 
               {...register('us_visa_number')} 
-              className={`w-full border rounded p-2 ${usVisaNumberError ? 'border-red-500' : ''}`}
+              className="w-full border rounded p-2"
               required={showUSVisaFields}
-              maxLength={8}
-              placeholder="A1234567"
+              placeholder="Enter visa number"
             />
-            {usVisaNumberError && <p className="text-red-600 text-sm">{usVisaNumberError}</p>}
-            {errors.us_visa_number && !usVisaNumberError && <p className="text-red-600 text-sm">{(errors.us_visa_number as { message?: string })?.message || t.common.required}</p>}
+            {errors.us_visa_number && <p className="text-red-600 text-sm">{(errors.us_visa_number as { message?: string })?.message || t.common.required}</p>}
           </div>
           <div className="mb-6">
             <label className="block mb-1 font-medium">{t.formFields.usVisaNumberConfirm} <span className="text-red-600">*</span></label>
@@ -172,8 +154,7 @@ export function Step1({ register, errors, watch }: Step1Props) {
               {...register('us_visa_number_confirm')} 
               className={`w-full border rounded p-2 ${usVisaNumberConfirmError ? 'border-red-500' : ''}`}
               required={showUSVisaFields}
-              maxLength={8}
-              placeholder="A1234567"
+              placeholder="Re-enter visa number"
             />
             {usVisaNumberConfirmError && <p className="text-red-600 text-sm">{usVisaNumberConfirmError}</p>}
             {errors.us_visa_number_confirm && !usVisaNumberConfirmError && <p className="text-red-600 text-sm">{(errors.us_visa_number_confirm as { message?: string })?.message || t.common.required}</p>}

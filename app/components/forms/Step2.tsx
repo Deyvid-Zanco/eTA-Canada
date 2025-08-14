@@ -186,6 +186,11 @@ export function Step2({ register, errors, watch }: Step2Props) {
         {errors.employment_country && <p className="text-red-600 text-sm">{(errors.employment_country as { message?: string })?.message || t.common.required}</p>}
       </div>
 
+      {/* Personal Information Section */}
+      <div className="mt-8 mb-6">
+        <h3 className="text-lg font-semibold text-gray-800 border-b border-gray-300 pb-2 mb-6">Personal Information</h3>
+      </div>
+
       {/* Apartment number */}
       <div className="mb-6">
         <label className="block mb-1 font-medium">{t.formFields.apartmentNumber}</label>

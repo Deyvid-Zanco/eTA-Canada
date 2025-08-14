@@ -53,7 +53,7 @@ export const NATIONALITIES_LIST = [
   "Slovakia", "Slovenia", "Solomon Islands", "South Korea", "Spain", "Sweden", "Switzerland",
   "Thailand", "Taiwan (holders of passports containing a personal identification number)",
   "Trinidad and Tobago", "United Arab Emirates", "United Kingdom", "Uruguay",
-  "Vatican (holders of a passport or travel document issued by the Vatican)", "OTHER"
+  "Vatican (holders of a passport or travel document issued by the Vatican)"
 ];
 
 // Special visa nationalities - these are the countries that require US visa information
