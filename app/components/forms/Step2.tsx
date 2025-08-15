@@ -17,7 +17,7 @@ export function Step2({ register, errors, watch }: Step2Props) {
   const { t } = useLanguage();
   const occupation = watch('occupation') as string;
   const canadaVisaApplied = watch('canada_visa_applied') as string;
-  const hideJobFields = ['Unemployed', 'Homemaker', 'Retired', 'Student', 'Military/armed forces'].includes(occupation);
+  const hideJobFields = ['Unemployed', 'Homemaker', 'Retired'].includes(occupation);
 
   // Watch email fields for real-time validation
   const email = watch('email') as string;
