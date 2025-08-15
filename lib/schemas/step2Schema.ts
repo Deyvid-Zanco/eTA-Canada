@@ -16,16 +16,20 @@ export const step2Schema = yup.object({
   }),
   occupation: yup.string().required("Required"),
   job_description: yup.string().when("occupation", {
-    is: (val: string) => !["Unemployed", "Homemaker", "Retired", "Military/armed forces"].includes(val),
+    is: (val: string) => !["Unemployed", "Homemaker", "Retired", "Student", "Military/armed forces"].includes(val),
     then: s => s.required("Required"),
     otherwise: s => s.notRequired()
   }),
   employer_name: yup.string().when("occupation", {
-    is: (val: string) => !["Unemployed", "Homemaker", "Retired", "Military/armed forces"].includes(val),
+    is: (val: string) => !["Unemployed", "Homemaker", "Retired", "Student", "Military/armed forces"].includes(val),
     then: s => s.required("Required"),
     otherwise: s => s.notRequired()
   }),
-  employment_country: yup.string().required("Required"),
+  employment_country: yup.string().when("occupation", {
+    is: (val: string) => !["Unemployed", "Homemaker", "Retired", "Student", "Military/armed forces"].includes(val),
+    then: s => s.required("Required"),
+    otherwise: s => s.notRequired()
+  }),
   apartment_number: yup.string().nullable(),
   street_number: yup.string().required("Required"),
   street_name: yup.string().required("Required"),
