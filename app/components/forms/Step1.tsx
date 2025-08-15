@@ -200,8 +200,11 @@ export function Step1({ register, errors, watch }: Step1Props) {
       <div className="mb-6">
         <label className="block mb-1 font-medium">{t.formFields.passportNumberConfirm} <span className="text-red-600">*</span></label>
         <input type="text" {...register('passport_number_confirm')} className="w-full border rounded p-2" required />
-        {errors.passport_number_confirm && <p className="text-red-600 text-sm">{(errors.passport_number_confirm as { message?: string })?.message || t.common.required}</p>}
-        {passportMatchError && <p className="text-red-600 text-sm">{passportMatchError}</p>}
+        {passportMatchError ? (
+          <p className="text-red-600 text-sm">{passportMatchError}</p>
+        ) : (
+          errors.passport_number_confirm && <p className="text-red-600 text-sm">{(errors.passport_number_confirm as { message?: string })?.message || t.common.required}</p>
+        )}
       </div>
 
       {/* SURNAME(S) / LAST NAME(S) */}
