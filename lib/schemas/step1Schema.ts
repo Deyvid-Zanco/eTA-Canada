@@ -19,9 +19,7 @@ export const step1Schema = yup.object({
 
   us_visa_number: yup.string().when("nationality", {
     is: (val: string) => US_VISA_NATIONALITIES.includes(val),
-    then: s => s.required("Required")
-      .matches(/^[A-Za-z][0-9]{7}$/, "1 letter + 7 digits")
-      .length(8, "Must be 8 chars"),
+    then: s => s.required("Required"),
     otherwise: s => s.notRequired().nullable()
   }),
   us_visa_number_confirm: yup.string().when("nationality", {

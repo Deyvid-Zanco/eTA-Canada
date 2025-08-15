@@ -175,16 +175,18 @@ export function Step2({ register, errors, watch }: Step2Props) {
       )}
 
       {/* COUNTRY/TERRITORY */}
-      <div className="mb-6">
-        <label className="block mb-1 font-medium">{t.formFields.employmentCountry} <span className="text-red-600">*</span></label>
-        <select {...register('employment_country')} className="w-full border rounded p-2" required>
-          <option value="">{t.common.pleaseSelect}</option>
-          {COUNTRY_LIST.map(country => (
-            <option key={country} value={country}>{country}</option>
-          ))}
-        </select>
-        {errors.employment_country && <p className="text-red-600 text-sm">{(errors.employment_country as { message?: string })?.message || t.common.required}</p>}
-      </div>
+      {!hideJobFields && (
+        <div className="mb-6">
+          <label className="block mb-1 font-medium">{t.formFields.employmentCountry} <span className="text-red-600">*</span></label>
+          <select {...register('employment_country')} className="w-full border rounded p-2" required>
+            <option value="">{t.common.pleaseSelect}</option>
+            {COUNTRY_LIST.map(country => (
+              <option key={country} value={country}>{country}</option>
+            ))}
+          </select>
+          {errors.employment_country && <p className="text-red-600 text-sm">{(errors.employment_country as { message?: string })?.message || t.common.required}</p>}
+        </div>
+      )}
 
       {/* Personal Information Section */}
       <div className="mt-8 mb-6">
