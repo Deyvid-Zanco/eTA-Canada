@@ -110,8 +110,7 @@ export async function POST(req: NextRequest) {
         addField('Job Description', data.job_description);
         addField('Employer/School Name', data.employer_name);
         addField('Employment Country/Territory', data.employment_country);
-        addField('Employer City/Town', data.employer_city);
-        addField('Employment Start Year', data.employment_start_year);
+        addField('Employment Start Date', data.employment_start_date);
     }
 
     emailHtml += `<hr><h3>Residential Address</h3>`;
