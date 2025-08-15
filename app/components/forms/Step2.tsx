@@ -24,7 +24,7 @@ export function Step2({ register, errors, watch }: Step2Props) {
   const emailConfirm = watch('email_confirm') as string;
   const [emailMatchError, setEmailMatchError] = React.useState('');
 
-  // useEffect to check email match
+  // useEffect to check email match1
   React.useEffect(() => {
     if (emailConfirm && email !== emailConfirm) {
       setEmailMatchError('Email addresses do not match');
