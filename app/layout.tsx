@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "../lib/contexts/LanguageContext";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,6 +27,29 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* ClickCease.com tracking */}
+        <Script
+          id="clickcease-tracking"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              var script = document.createElement('script');
+              script.async = true; 
+              script.type = 'text/javascript';
+              var target = 'https://www.clickcease.com/monitor/stat.js';
+              script.src = target;
+              var elem = document.head;
+              elem.appendChild(script);
+            `,
+          }}
+        />
+        <noscript>
+          <a href='https://www.clickcease.com' rel='nofollow'>
+            <img src='https://monitor.clickcease.com' alt='ClickCease'/>
+          </a>
+        </noscript>
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
