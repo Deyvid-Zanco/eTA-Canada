@@ -30,7 +30,9 @@ export function PhilippinesStep2({ register, errors, watch }: PhilippinesStep2Pr
   // Watch email fields for real-time validation
   const email = watch('email') as string;
   const emailConfirm = watch('email_confirm') as string;
+  const phoneCountryCode = watch('phone_country_code') as string;
   const [emailMatchError, setEmailMatchError] = React.useState('');
+  const [phoneHint, setPhoneHint] = React.useState('');
 
   // useEffect to check email match
   React.useEffect(() => {
@@ -40,6 +42,35 @@ export function PhilippinesStep2({ register, errors, watch }: PhilippinesStep2Pr
       setEmailMatchError('');
     }
   }, [email, emailConfirm]);
+
+  // useEffect to update phone hint based on country code
+  React.useEffect(() => {
+    switch (phoneCountryCode) {
+      case '+1':
+        setPhoneHint('Enter 10 digits (area code + number, e.g., 1234567890)');
+        break;
+      case '+44':
+        setPhoneHint('Enter UK number without leading zero (e.g., 7123456789)');
+        break;
+      case '+61':
+        setPhoneHint('Enter Australian number without leading zero (e.g., 412345678)');
+        break;
+      case '+86':
+        setPhoneHint('Enter Chinese mobile number (e.g., 13800138000)');
+        break;
+      case '+81':
+        setPhoneHint('Enter Japanese number (e.g., 9012345678)');
+        break;
+      case '+65':
+        setPhoneHint('Enter Singapore number (e.g., 81234567)');
+        break;
+      case '+63':
+        setPhoneHint('Enter Philippine number (e.g., 9171234567)');
+        break;
+      default:
+        setPhoneHint('Enter phone number without country code');
+    }
+  }, [phoneCountryCode]);
 
   return (
     <div className="mb-8">
@@ -296,8 +327,9 @@ export function PhilippinesStep2({ register, errors, watch }: PhilippinesStep2Pr
             placeholder="Enter phone number"
           />
         </div>
+        {phoneHint && <span className="text-xs text-gray-500 block mt-1">{phoneHint}</span>}
         {errors.phone_country_code && <p className="text-red-600 text-sm">Country code is required</p>}
-        {errors.phone_number && <p className="text-red-600 text-sm">Phone number is required</p>}
+        {errors.phone_number && <p className="text-red-600 text-sm">{errors.phone_number.message}</p>}
       </div>
 
       <h2 className="text-xl font-bold mb-4 mt-8">Travel Details</h2>

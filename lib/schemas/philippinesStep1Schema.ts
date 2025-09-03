@@ -9,6 +9,7 @@ export const philippinesStep1Schema = yup.object({
   dob_month: yup.string().required("Required"),
   dob_year: yup.string().required("Required"),
   citizenship: yup.string().required("Required"),
+  occupation: yup.string().required("Required"),
   passport_country: yup.string().required("Required"),
   passport_number: yup.string().required("Required"),
   passport_issue_day: yup.string().required("Required"),

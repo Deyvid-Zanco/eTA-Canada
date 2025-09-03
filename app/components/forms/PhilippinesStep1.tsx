@@ -117,6 +117,30 @@ export function PhilippinesStep1({ register, errors }: PhilippinesStep1Props) {
         {errors.citizenship && <p className="text-red-600 text-sm">This field is required</p>}
       </div>
 
+      {/* Occupation */}
+      <div className="mb-6">
+        <label className="block mb-1 font-medium">Occupation <span className="text-red-600">*</span></label>
+        <select {...register('occupation')} className="w-full border rounded p-2" required>
+          <option value="">Please select your occupation</option>
+          <option value="Agriculture">Agriculture</option>
+          <option value="Airline Crew">Airline Crew</option>
+          <option value="Businessman">Businessman</option>
+          <option value="Clerical/Sales">Clerical/Sales</option>
+          <option value="Diplomat">Diplomat</option>
+          <option value="Domestic Helper">Domestic Helper</option>
+          <option value="Entertainer">Entertainer</option>
+          <option value="Housewife">Housewife</option>
+          <option value="Military">Military</option>
+          <option value="Professional/Technical/Administrative">Professional/Technical/Administrative</option>
+          <option value="Retired">Retired</option>
+          <option value="Seaman">Seaman</option>
+          <option value="Student/Minor">Student/Minor</option>
+          <option value="Unemployed">Unemployed</option>
+          <option value="Worker/Laborer">Worker/Laborer</option>
+        </select>
+        {errors.occupation && <p className="text-red-600 text-sm">This field is required</p>}
+      </div>
+
       <h2 className="text-xl font-bold mb-4 mt-8">Passport Details</h2>
       <p className="text-sm text-gray-600 mb-4">Provide details of the passport that you will use to travel. Enter these details exactly as they appear in your passport.</p>
 
