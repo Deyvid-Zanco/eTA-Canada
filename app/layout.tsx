@@ -15,9 +15,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Canada eTA | canada-eta.visasyst.com",
+  title: "IMMI CENTER - eTA & Visa Services | Belgium",
   description:
-    "Complete the eTA Canada application and obtain your Electronic Travel Authorization to visit Canada (ETA). All Visa-exempt foreign nationals must request their Canadian eTA.",
+    "Complete your visa applications online for over 135 destinations. Electronic Travel Authorization (eTA) for Canada, Philippines and more. Quick and easy visa processing.",
 };
 
 export default function RootLayout({

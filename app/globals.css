@@ -26,10 +26,49 @@ body {
 }
 
 /* Custom Landing Page Styles */
+/* Philippines Hero Section - Working CSS setup */
+.m-philippines-hero {
+  @apply bg-cover bg-center text-white flex flex-col justify-center items-center relative;
+  background-image: url('/hero_phillipines.jpeg');
+  min-height: 100vh;
+}
+
+.m-philippines-hero::before {
+  content: "";
+  @apply absolute inset-0 bg-black/50;
+  z-index: 0;
+}
+
+.m-philippines-hero > * {
+  @apply relative z-10;
+}
+
+/* Landing Page Hero Section - Working CSS setup */
+.m-landing-hero {
+  @apply bg-center text-white flex flex-col justify-center items-center relative;
+  background-image: url('/hero%20landing.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100%;
+  height: 50vh;
+}
+
+.m-landing-hero::before {
+  content: "";
+  @apply absolute inset-0 bg-black/40;
+  z-index: 0;
+}
+
+.m-landing-hero > * {
+  @apply relative z-10;
+}
+
+/* Canada Hero Section */
 .m-jumbotron-image6 {
   @apply bg-cover bg-center text-white flex flex-col justify-center items-center relative;
   background-image: url('/hero.png');
-  min-height: 480px;
+  min-height: 60vh;
 }
 
 .m-jumbotron-image6::before {
@@ -88,8 +127,45 @@ select:focus {
   box-shadow: 0 0 0 2px theme('colors.red.600');
 }
 
-/* The single container for your form in your React component 
-  (the one with class "max-w-4xl") can have position: relative if needed for 
-  other custom elements, but it is not necessary for native select dropdowns. 
+/* The single container for your form in your React component
+  (the one with class "max-w-4xl") can have position: relative if needed for
+  other custom elements, but it is not necessary for native select dropdowns.
   It's best to start with no positioning rules and add them only if required.
+*/
+
+/* Ensure images are visible and not hidden by any global rules */
+img {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Ensure the hero image container and image are properly displayed */
+.absolute img,
+.relative img {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Ensure Tailwind object-cover class works properly */
+.object-cover {
+  object-fit: cover !important;
+}
+
+/* Ensure full width and height classes work */
+.w-full {
+  width: 100% !important;
+}
+
+.h-full {
+  height: 100% !important;
+}
+
+/* Debug: Add a red border to images to see if they're rendering */
+/*
+img {
+  border: 2px solid red !important;
+  box-sizing: border-box !important;
+}
 */

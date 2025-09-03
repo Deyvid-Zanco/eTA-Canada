@@ -8,18 +8,11 @@ export async function POST(req: NextRequest) {
     const data = await req.json();
     const recaptchaToken = data.recaptchaToken as string;
 
-    console.log('🔍 reCAPTCHA Debug Info:');
-    console.log('- Token received:', recaptchaToken ? 'Yes' : 'No');
-    console.log('- Token length:', recaptchaToken?.length || 0);
-    console.log('- Secret key exists:', !!process.env.RECAPTCHA_SECRET_KEY);
-    console.log('- Secret key length:', process.env.RECAPTCHA_SECRET_KEY?.length || 0);
-
     if (!recaptchaToken) {
       return NextResponse.json({ error: 'reCAPTCHA verification required' }, { status: 400 });
     }
 
     if (!process.env.RECAPTCHA_SECRET_KEY) {
-      console.error('❌ RECAPTCHA_SECRET_KEY environment variable is not set');
       return NextResponse.json({ error: 'Server configuration error' }, { status: 500 });
     }
 
@@ -33,20 +26,7 @@ export async function POST(req: NextRequest) {
 
     const recaptchaData = await recaptchaResponse.json();
 
-    console.log('🔍 reCAPTCHA Response:', {
-      success: recaptchaData.success,
-      score: recaptchaData.score,
-      'error-codes': recaptchaData['error-codes'],
-      'challenge_ts': recaptchaData['challenge_ts'],
-      'hostname': recaptchaData['hostname']
-    });
-
     if (!recaptchaData.success || recaptchaData.score < 0.5) {
-      console.log('❌ reCAPTCHA verification failed:', {
-        success: recaptchaData.success,
-        score: recaptchaData.score,
-        'error-codes': recaptchaData['error-codes']
-      });
       return NextResponse.json({
         error: 'reCAPTCHA verification failed. Please try again.'
       }, { status: 400 });
@@ -180,7 +160,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: true, message: 'Application submitted successfully' });
 
   } catch (error) {
-    console.error('Form submission error:', error);
     return NextResponse.json({ error: 'Failed to submit application' }, { status: 500 });
   }
 }
