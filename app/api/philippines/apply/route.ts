@@ -159,7 +159,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ success: true, message: 'Application submitted successfully' });
 
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to submit application' }, { status: 500 });
   }
 }
