@@ -47,7 +47,7 @@ export default function PhilippinesLandingPage() {
                 <div className="text-sm md:text-base text-gray-700">Islands to Explore</div>
               </div>
               <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-lg p-4 text-gray-900">
-                <div className="text-3xl md:text-4xl font-bold text-gray-900">€25</div>
+                <div className="text-3xl md:text-4xl font-bold text-gray-900">$57</div>
                 <div className="text-sm md:text-base text-gray-700">Starting Price</div>
               </div>
             </div>
@@ -258,7 +258,7 @@ export default function PhilippinesLandingPage() {
                 href="/philippines/apply"
                 className="bg-yellow-500 hover:bg-yellow-600 text-black py-4 px-12 rounded-md text-xl font-semibold transition-colors"
               >
-                Apply Now - From €25
+                Apply Now - From $57
               </Link>
               <Link
                 href="/"
