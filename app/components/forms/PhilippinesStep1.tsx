@@ -89,13 +89,13 @@ export function PhilippinesStep1({ register, errors }: PhilippinesStep1Props) {
       <div className="mb-6">
         <label className="block mb-1 font-medium">Date of Birth <span className="text-red-600">*</span></label>
         <div className="flex gap-2">
-          <select {...register('dob_day')} className="w-16 border rounded p-2" required>
-            <option value="">Day</option>
-            {days.map(d => <option key={d} value={d}>{d}</option>)}
-          </select>
           <select {...register('dob_month')} className="w-32 border rounded p-2" required>
             <option value="">Month</option>
             {months.map((month, index) => <option key={month} value={monthNumbers[index]}>{month}</option>)}
+          </select>
+          <select {...register('dob_day')} className="w-16 border rounded p-2" required>
+            <option value="">Day</option>
+            {days.map(d => <option key={d} value={d}>{d}</option>)}
           </select>
           <select {...register('dob_year')} className="w-24 border rounded p-2" required>
             <option value="">Year</option>
@@ -174,13 +174,13 @@ export function PhilippinesStep1({ register, errors }: PhilippinesStep1Props) {
       <div className="mb-6">
         <label className="block mb-1 font-medium">Date of Issue <span className="text-red-600">*</span></label>
         <div className="flex gap-2">
-          <select {...register('passport_issue_day')} className="w-16 border rounded p-2" required>
-            <option value="">Day</option>
-            {days.map(d => <option key={d} value={d}>{d}</option>)}
-          </select>
           <select {...register('passport_issue_month')} className="w-32 border rounded p-2" required>
             <option value="">Month</option>
             {months.map((month, index) => <option key={month} value={monthNumbers[index]}>{month}</option>)}
+          </select>
+          <select {...register('passport_issue_day')} className="w-16 border rounded p-2" required>
+            <option value="">Day</option>
+            {days.map(d => <option key={d} value={d}>{d}</option>)}
           </select>
           <select {...register('passport_issue_year')} className="w-24 border rounded p-2" required>
             <option value="">Year</option>
@@ -194,13 +194,13 @@ export function PhilippinesStep1({ register, errors }: PhilippinesStep1Props) {
       <div className="mb-6">
         <label className="block mb-1 font-medium">Expiry Date <span className="text-red-600">*</span></label>
         <div className="flex gap-2">
-          <select {...register('passport_expiry_day')} className="w-16 border rounded p-2" required>
-            <option value="">Day</option>
-            {days.map(d => <option key={d} value={d}>{d}</option>)}
-          </select>
           <select {...register('passport_expiry_month')} className="w-32 border rounded p-2" required>
             <option value="">Month</option>
             {months.map((month, index) => <option key={month} value={monthNumbers[index]}>{month}</option>)}
+          </select>
+          <select {...register('passport_expiry_day')} className="w-16 border rounded p-2" required>
+            <option value="">Day</option>
+            {days.map(d => <option key={d} value={d}>{d}</option>)}
           </select>
           <select {...register('passport_expiry_year')} className="w-24 border rounded p-2" required>
             <option value="">Year</option>

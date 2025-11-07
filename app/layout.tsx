@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Image from "next/image";
 import "./globals.css";
 import { LanguageProvider } from "../lib/contexts/LanguageContext";
 import Script from "next/script";
@@ -18,6 +19,9 @@ export const metadata: Metadata = {
   title: "IMMI CENTER - eTA & Visa Services | Belgium",
   description:
     "Complete your visa applications online for over 135 destinations. Electronic Travel Authorization (eTA) for Canada, Philippines and more. Quick and easy visa processing.",
+  icons: {
+    icon: '/favicons/phillipines.ico', // Philippines favicon by default
+  },
 };
 
 export default function RootLayout({
@@ -26,8 +30,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" style={{ colorScheme: 'light' }}>
       <head>
+        <meta name="color-scheme" content="light" />
         {/* ClickCease.com tracking */}
         <Script
           id="clickcease-tracking"
@@ -46,7 +51,7 @@ export default function RootLayout({
         />
         <noscript>
           <a href='https://www.clickcease.com' rel='nofollow'>
-            <img src='https://monitor.clickcease.com' alt='ClickCease'/>
+            <Image src='https://monitor.clickcease.com' alt='ClickCease' width={1} height={1}/>
           </a>
         </noscript>
       </head>

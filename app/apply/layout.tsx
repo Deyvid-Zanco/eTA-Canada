@@ -1,23 +1,17 @@
-'use client';
+import type { Metadata } from 'next';
+import { ApplyClientWrapper } from './ApplyClientWrapper';
 
-import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
+// Philippines favicon for apply pages
+export const metadata: Metadata = {
+  icons: {
+    icon: '/favicons/phillipines.ico', // Philippines favicon
+  },
+};
 
 export default function ApplyLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <GoogleReCaptchaProvider
-      reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ''}
-      scriptProps={{
-        async: false,
-        defer: false,
-        appendTo: 'head',
-        nonce: undefined,
-      }}
-    >
-      {children}
-    </GoogleReCaptchaProvider>
-  );
+  return <ApplyClientWrapper>{children}</ApplyClientWrapper>;
 } 

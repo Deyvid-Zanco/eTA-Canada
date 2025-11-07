@@ -1,23 +1,17 @@
-'use client';
+import type { Metadata } from 'next';
+import { CanadaApplyClientWrapper } from './CanadaApplyClientWrapper';
 
-import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
+// Canada-specific favicon
+export const metadata: Metadata = {
+  icons: {
+    icon: '/favicon.ico', // Original favicon for Canada apply
+  },
+};
 
 export default function ApplyLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <GoogleReCaptchaProvider
-      reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ''}
-      scriptProps={{
-        async: false,
-        defer: false,
-        appendTo: 'head',
-        nonce: undefined,
-      }}
-    >
-      {children}
-    </GoogleReCaptchaProvider>
-  );
+  return <CanadaApplyClientWrapper>{children}</CanadaApplyClientWrapper>;
 } 

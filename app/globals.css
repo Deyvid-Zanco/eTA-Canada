@@ -12,16 +12,17 @@
   --font-mono: var(--font-geist-mono);
 }
 
+/* Disable dark mode - forms should always use light theme for best readability */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #ffffff;
+    --foreground: #171717;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: #ffffff;
+  color: #1f2937;
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -97,8 +98,8 @@ body {
   @apply w-16 border rounded p-2 text-center;
 }
 
-input[type="text"], input[type="email"], input[type="tel"], input[type="date"], select {
-  @apply w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition;
+input[type="text"], input[type="email"], input[type="date"], select, textarea {
+  @apply w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition text-gray-900 bg-white;
 }
 
 input[type="radio"], input[type="checkbox"] {
@@ -116,6 +117,24 @@ select {
   background-repeat: no-repeat;
   background-position: right 0.75rem center;
   background-size: 1em;
+}
+
+select option {
+  color: #111827; /* text-gray-900 */
+  background-color: white;
+}
+
+/* Ensure form container and text are always readable - override dark mode */
+form,
+form h2,
+form h3 {
+  color: #1f2937; /* text-gray-800 */
+}
+
+/* Ensure form background is white */
+.bg-white {
+  background-color: white;
+  color: #1f2937;
 }
 
 .debug * {

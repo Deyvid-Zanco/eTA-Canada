@@ -1,21 +1,36 @@
 import Stripe from 'stripe';
 import { NextResponse } from 'next/server';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2025-06-30.basil',
-});
+// Initialize Stripe with TEST API key only
+const getStripe = () => {
+  const apiKey = process.env.STRIPE_SECRET_TEST_KEY;
+  
+  if (!apiKey) {
+    throw new Error('STRIPE_SECRET_TEST_KEY environment variable is not set');
+  }
+  
+  // Validate that we're using a test key (starts with sk_test_)
+  if (!apiKey.startsWith('sk_test_')) {
+    throw new Error('STRIPE_SECRET_TEST_KEY must be a test key (starts with sk_test_). Production keys are not allowed.');
+  }
+  
+  return new Stripe(apiKey, {
+    apiVersion: '2025-06-30.basil',
+  });
+};
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
     // Optionally, collect applicant info for metadata
-    const { email, name, product = 'canada' } = body;
+    const { email, name, product = 'canada', travel_method, travel_type } = body;
 
     // Determine price ID based on product type
     const priceId = product === 'philippines'
-      ? process.env.STRIPE_PHILIPPINES_PRICE_ID || 'price_1R9AEB04B98GMnQHPn08mr5L' // Add your Philippines price ID here
+      ? process.env.STRIPE_TEST_PRICE_ID || 'price_1R9AEB04B98GMnQHPn08mr5L' // Philippines using test price ID
       : 'price_1R9AEB04B98GMnQHPn08mr5L'; // Canada price ID (current one)
 
+    const stripe = getStripe();
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [
@@ -25,12 +40,16 @@ export async function POST(req: Request) {
         },
       ],
       mode: 'payment',
-      success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/obrigado?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: product === 'philippines' 
+        ? `${process.env.NEXT_PUBLIC_SITE_URL}/philippines/thanks?session_id={CHECKOUT_SESSION_ID}`
+        : `${process.env.NEXT_PUBLIC_SITE_URL}/obrigado?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/`, // Or a specific cancel page
       metadata: {
         ...(email && { email }),
         ...(name && { name }),
         product, // Add product type to metadata
+        ...(travel_method && { travel_method }),
+        ...(travel_type && { travel_type }),
       },
       customer_email: email, // Optional: pre-fill email in Stripe Checkout
     });

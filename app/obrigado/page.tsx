@@ -84,7 +84,7 @@ export default function ObrigadoPage() {
           {emailStatus === 'sending' && <p className="text-blue-600 dark:text-blue-400 mb-4">Sending payment confirmation email...</p>}
           {emailStatus === 'sent' && <p className="text-green-600 dark:text-green-400 mb-4">Payment confirmation email sent!</p>}
           {emailStatus === 'error' && <p className="text-red-600 dark:text-red-400 mb-4">{errorMsg}</p>}
-          <Link href="/apply">
+          <Link href="/philippines/apply">
             <button className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded shadow transition-colors">
               Need to apply for someone else? Click here to return to the form
             </button>

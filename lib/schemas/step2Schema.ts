@@ -1,4 +1,10 @@
 import * as yup from "yup";
+import { 
+  createDateFromParts, 
+  isValidDate,
+  isDateWithinFutureYears,
+  createValidDateTest 
+} from "@/lib/utils/dateValidation";
 
 export const step2Schema = yup.object({
   additional_nationality: yup.string().nullable(),
@@ -43,20 +49,48 @@ export const step2Schema = yup.object({
   alt_phone: yup.string().nullable(),
   preferred_language: yup.string().required("Required"),
   do_you_know_travel_date: yup.string().required("Required"),
-  travel_date_month: yup.string().when("do_you_know_travel_date", {
-    is: "Yes",
-    then: s => s.required("Required"),
-    otherwise: s => s.notRequired().nullable()
-  }),
-  travel_date_day: yup.string().when("do_you_know_travel_date", {
-    is: "Yes",
-    then: s => s.required("Required"),
-    otherwise: s => s.notRequired().nullable()
-  }),
-  travel_date_year: yup.string().when("do_you_know_travel_date", {
-    is: "Yes",
-    then: s => s.required("Required"),
-    otherwise: s => s.notRequired().nullable()
-  }),
+  
+  // Travel Date - must be today or future (if provided), but not more than 2 years in future
+  travel_date_month: yup.string()
+    .nullable()
+    .when("do_you_know_travel_date", {
+      is: "Yes",
+      then: s => s
+        .required("Required")
+        .test("valid-date", "Invalid date", createValidDateTest("Invalid travel date"))
+        .test("not-past", "Travel date cannot be in the past", function(value: string | null | undefined) {
+          const date = createDateFromParts(value, this.parent.travel_date_day, this.parent.travel_date_year);
+          if (!date || !isValidDate(date)) return true;
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
+          date.setHours(0, 0, 0, 0);
+          return date >= today;
+        })
+        .test("not-too-future", "Travel date cannot be more than 2 years in the future", function(value: string | null | undefined) {
+          const date = createDateFromParts(value, this.parent.travel_date_day, this.parent.travel_date_year);
+          if (!date || !isValidDate(date)) return true;
+          return isDateWithinFutureYears(date, 2);
+        }),
+      otherwise: s => s.notRequired().nullable()
+    }),
+  travel_date_day: yup.string()
+    .nullable()
+    .when("do_you_know_travel_date", {
+      is: "Yes",
+      then: s => s
+        .required("Required")
+        .test("valid-date", "Invalid date", createValidDateTest("Invalid travel date")),
+      otherwise: s => s.notRequired().nullable()
+    }),
+  travel_date_year: yup.string()
+    .nullable()
+    .when("do_you_know_travel_date", {
+      is: "Yes",
+      then: s => s
+        .required("Required")
+        .test("valid-date", "Invalid date", createValidDateTest("Invalid travel date")),
+      otherwise: s => s.notRequired().nullable()
+    }),
+  
   consent_declaration: yup.boolean().oneOf([true], "Must agree").required(),
 });

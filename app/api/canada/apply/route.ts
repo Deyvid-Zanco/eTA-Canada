@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Initialize Resend with API key (fallback to empty string for build time)
+const getResend = () => {
+  const apiKey = process.env.RESEND_API_KEY || '';
+  return new Resend(apiKey);
+};
 
 export async function POST(req: NextRequest) {
   try {
@@ -116,6 +120,7 @@ export async function POST(req: NextRequest) {
     addField('Consent and Declaration', data.consent_declaration ? 'Agreed' : 'Not Agreed');
 
 
+    const resend = getResend();
     await resend.emails.send({
       from: 'eTA Application 2 <noreply@immicenter-online.com>',
       to: process.env.ADMIN_EMAIL || 'admin@yourdomain.com',
