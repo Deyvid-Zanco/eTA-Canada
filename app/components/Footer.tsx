@@ -150,7 +150,7 @@ export function GeneralFooter() {
             />
             <p className="text-gray-600 text-xs leading-relaxed break-words">
               IMMI CENTER provides visa and travel authorization services for multiple destinations worldwide.
-              <b> IMMI CENTER - Belgium</b>&nbsp;
+              <b> IMMI CENTER - Canada, Philippines</b>&nbsp;
               <Link href="/terms" className="underline hover:text-blue-700">Terms of Use</Link> |&nbsp;
               <Link href="/cookies" className="underline hover:text-blue-700">Cookies Policy</Link> |&nbsp;
               <Link href="/privacy" className="underline hover:text-blue-700">Privacy Policy</Link>

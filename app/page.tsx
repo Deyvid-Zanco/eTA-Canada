@@ -8,7 +8,7 @@ export default function LandingPage() {
   return (
     <>
       <Head>
-        <title>IMMI CENTER - eTA & Visa Services | Belgium</title>
+        <title>IMMI CENTER - eTA & Visa Services | Canada, Philipines</title>
         <meta
           name="description"
           content="Complete your visa applications online for over 135 destinations. Electronic Travel Authorization (eTA) for Canada, Philippines and more. Quick and easy visa processing."
