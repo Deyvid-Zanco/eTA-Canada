@@ -122,14 +122,14 @@ export function PhilippinesStep2({ register, errors, watch }: PhilippinesStep2Pr
           {/* Country Code Selector */}
           <select
             {...register('phone_country_code')}
-            className="px-2 sm:px-4 w-32 sm:w-40 py-3 bg-gray-50 border-r text-xs sm:text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none cursor-pointer"
+            className="px-1.5 sm:px-4 w-20 sm:w-40 py-3 bg-gray-50 border-r text-xs sm:text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none cursor-pointer flex-shrink-0"
             required
             style={{ 
               backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E\")",
               backgroundRepeat: 'no-repeat',
-              backgroundPosition: 'right 0.5rem center',
+              backgroundPosition: 'right 0.25rem center',
               backgroundSize: '0.75rem',
-              paddingRight: '2rem'
+              paddingRight: '1.25rem'
             }}
           >
       <option value="">Select Country</option>

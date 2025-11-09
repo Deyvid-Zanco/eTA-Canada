@@ -1,17 +1,12 @@
 import Stripe from 'stripe';
 import { NextResponse } from 'next/server';
 
-// Initialize Stripe with TEST API key only
+// Initialize Stripe with production API key
 const getStripe = () => {
-  const apiKey = process.env.STRIPE_SECRET_TEST_KEY;
+  const apiKey = process.env.STRIPE_SECRET_KEY;
   
   if (!apiKey) {
-    throw new Error('STRIPE_SECRET_TEST_KEY environment variable is not set');
-  }
-  
-  // Validate that we're using a test key (starts with sk_test_)
-  if (!apiKey.startsWith('sk_test_')) {
-    throw new Error('STRIPE_SECRET_TEST_KEY must be a test key (starts with sk_test_). Production keys are not allowed.');
+    throw new Error('STRIPE_SECRET_KEY environment variable is not set');
   }
   
   return new Stripe(apiKey, {

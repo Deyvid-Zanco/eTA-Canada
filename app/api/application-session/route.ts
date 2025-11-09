@@ -4,7 +4,10 @@ import { supabase } from '@/lib/supabase';
 
 // Initialize Stripe with API key (fallback for build time)
 const getStripe = () => {
-  const apiKey = process.env.STRIPE_SECRET_TEST_KEY || 'sk_test_placeholder';
+  const apiKey = process.env.STRIPE_SECRET_KEY || '';
+  if (!apiKey) {
+    throw new Error('STRIPE_SECRET_KEY environment variable is not set');
+  }
   return new Stripe(apiKey, {
     apiVersion: '2025-06-30.basil',
   });
