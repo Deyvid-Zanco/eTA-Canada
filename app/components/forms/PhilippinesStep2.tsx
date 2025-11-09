@@ -122,8 +122,15 @@ export function PhilippinesStep2({ register, errors, watch }: PhilippinesStep2Pr
           {/* Country Code Selector */}
           <select
             {...register('phone_country_code')}
-            className="px-4 w-40 py-3 bg-gray-50 border-r text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="px-2 sm:px-4 w-32 sm:w-40 py-3 bg-gray-50 border-r text-xs sm:text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none cursor-pointer"
             required
+            style={{ 
+              backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E\")",
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'right 0.5rem center',
+              backgroundSize: '0.75rem',
+              paddingRight: '2rem'
+            }}
           >
       <option value="">Select Country</option>
       <option value="+1">&#127482;&#127480; +1 US/CA</option>
@@ -340,7 +347,7 @@ export function PhilippinesStep2({ register, errors, watch }: PhilippinesStep2Pr
     <input
       type="tel"
       {...register('phone_number')}
-      className="flex-1 min-w-170 px-4 py-3 text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      className="flex-1 min-w-0 sm:min-w-170 px-2 sm:px-4 py-3 text-base sm:text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
       required
       placeholder="Enter phone number"
     />

@@ -116,7 +116,7 @@ function ApplyFormMultiStep() {
       const { sessionId } = await checkoutRes.json();
       if (!sessionId) throw new Error('No sessionId returned from payment API');
 
-      const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_TEST_PUBLISHABLE_KEY!);
+      const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
       if (!stripe) throw new Error('Stripe.js failed to load');
       
       const { error } = await stripe.redirectToCheckout({ sessionId });

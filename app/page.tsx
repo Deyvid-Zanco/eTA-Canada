@@ -174,14 +174,14 @@ export default function LandingPage() {
               Belgian residents can obtain their visas online for more than 135 destinations. We support you through all requirements and administration.
             </p>
             <div className="flex flex-wrap justify-center gap-4 mb-8">
-              <span className="bg-white px-4 py-2 rounded-full shadow">🇨🇦 Canada</span>
-              <span className="bg-white px-4 py-2 rounded-full shadow">🇵🇭 Philippines</span>
-              <span className="bg-white px-4 py-2 rounded-full shadow">🇺🇸 USA</span>
-              <span className="bg-white px-4 py-2 rounded-full shadow">🇬🇧 UK</span>
-              <span className="bg-white px-4 py-2 rounded-full shadow">🇪🇺 Schengen</span>
-              <span className="bg-white px-4 py-2 rounded-full shadow">🇦🇺 Australia</span>
-              <span className="bg-white px-4 py-2 rounded-full shadow">🇳🇿 New Zealand</span>
-              <span className="bg-white px-4 py-2 rounded-full shadow">🇯🇵 Japan</span>
+              <span className="text-2xl">🇨🇦</span>
+              <span className="text-2xl">🇵🇭</span>
+              <span className="text-2xl">🇺🇸</span>
+              <span className="text-2xl">🇬🇧</span>
+              <span className="text-2xl">🇪🇺</span>
+              <span className="text-2xl">🇦🇺</span>
+              <span className="text-2xl">🇳🇿</span>
+              <span className="text-2xl">🇯🇵</span>
             </div>
             <Link
               href="#services"
