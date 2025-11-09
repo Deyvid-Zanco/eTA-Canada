@@ -119,17 +119,18 @@ export function PhilippinesStep2({ register, errors, watch }: PhilippinesStep2Pr
         {/* Unified container with flexbox for side-by-side layout */}
         <div className="flex border rounded-lg overflow-hidden shadow-sm">
           
-          {/* Country Code Selector */}
+          {/* Country Code Selector - Compact on mobile */}
           <select
             {...register('phone_country_code')}
-            className="px-1.5 sm:px-4 w-20 sm:w-40 py-3 bg-gray-50 border-r text-xs sm:text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none cursor-pointer flex-shrink-0"
+            className="!w-auto min-w-[70px] sm:min-w-[160px] max-w-[70px] sm:max-w-[160px] px-2 sm:px-3 py-3 bg-gray-50 border-r text-[11px] sm:text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none cursor-pointer flex-shrink-0"
             required
             style={{ 
-              backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E\")",
+              backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E\")",
               backgroundRepeat: 'no-repeat',
-              backgroundPosition: 'right 0.25rem center',
-              backgroundSize: '0.75rem',
-              paddingRight: '1.25rem'
+              backgroundPosition: 'right 0.35rem center',
+              backgroundSize: '0.65rem',
+              paddingRight: '1.5rem',
+              width: '70px'
             }}
           >
       <option value="">Select Country</option>
@@ -347,9 +348,10 @@ export function PhilippinesStep2({ register, errors, watch }: PhilippinesStep2Pr
     <input
       type="tel"
       {...register('phone_number')}
-      className="flex-1 min-w-0 sm:min-w-170 px-2 sm:px-4 py-3 text-base sm:text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      className="flex-1 min-w-0 px-2 sm:px-4 py-3 text-base sm:text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
       required
       placeholder="Enter phone number"
+      style={{ flex: '1 1 0%', minWidth: 0 }}
     />
   </div>
   

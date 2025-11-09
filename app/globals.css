@@ -98,8 +98,20 @@ body {
   @apply w-16 border rounded p-2 text-center;
 }
 
-input[type="text"], input[type="email"], input[type="date"], select, textarea {
+input[type="text"], input[type="email"], input[type="date"], input[type="tel"], textarea {
   @apply w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition text-gray-900 bg-white;
+}
+
+/* Select elements - default to full width but allow overrides */
+select {
+  @apply border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition text-gray-900 bg-white;
+  width: 100%;
+}
+
+/* Allow width overrides for phone country selectors using inline styles or specific classes */
+select[style*="width"],
+select.flex-shrink-0 {
+  width: auto !important;
 }
 
 input[type="radio"], input[type="checkbox"] {
