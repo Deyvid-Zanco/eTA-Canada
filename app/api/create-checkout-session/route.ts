@@ -22,8 +22,8 @@ export async function POST(req: Request) {
 
     // Determine price ID based on product type
     const priceId = product === 'philippines'
-      ? process.env.STRIPE_TEST_PRICE_ID || 'price_1R9AEB04B98GMnQHPn08mr5L' // Philippines using test price ID
-      : 'price_1R9AEB04B98GMnQHPn08mr5L'; // Canada price ID (current one)
+      ? 'price_1S3OJO04B98GMnQHJ8CDnKHy' // Philippines price ID
+      : 'price_1R9AEB04B98GMnQHPn08mr5L'; // Canada price ID
 
     const stripe = getStripe();
     const session = await stripe.checkout.sessions.create({
