@@ -31,10 +31,8 @@ export function PhilippinesStep2({ register, errors, watch }: PhilippinesStep2Pr
   // Watch email fields for real-time validation
   const email = watch('email') as string;
   const emailConfirm = watch('email_confirm') as string;
-  const phoneCountryCode = watch('phone_country_code') as string;
   const travelType = watch('travel_type');
   const [emailMatchError, setEmailMatchError] = React.useState('');
-  const [phoneHint, setPhoneHint] = React.useState('');
 
   // useEffect to check email match
   React.useEffect(() => {
@@ -44,35 +42,6 @@ export function PhilippinesStep2({ register, errors, watch }: PhilippinesStep2Pr
       setEmailMatchError('');
     }
   }, [email, emailConfirm]);
-
-  // useEffect to update phone hint based on country code
-  React.useEffect(() => {
-    switch (phoneCountryCode) {
-      case '+1':
-        setPhoneHint('Enter 10 digits (area code + number, e.g., 1234567890)');
-        break;
-      case '+44':
-        setPhoneHint('Enter UK number without leading zero (e.g., 7123456789)');
-        break;
-      case '+61':
-        setPhoneHint('Enter Australian number without leading zero (e.g., 412345678)');
-        break;
-      case '+86':
-        setPhoneHint('Enter Chinese mobile number (e.g., 13800138000)');
-        break;
-      case '+81':
-        setPhoneHint('Enter Japanese number (e.g., 9012345678)');
-        break;
-      case '+65':
-        setPhoneHint('Enter Singapore number (e.g., 81234567)');
-        break;
-      case '+63':
-        setPhoneHint('Enter Philippine number (e.g., 9171234567)');
-        break;
-      default:
-        setPhoneHint('Enter phone number without country code');
-    }
-  }, [phoneCountryCode]);
 
   const dateLabel = travelType === 'Departure' 
     ? 'Intended Date of Departure' 
@@ -354,13 +323,6 @@ export function PhilippinesStep2({ register, errors, watch }: PhilippinesStep2Pr
       style={{ flex: '1 1 0%', minWidth: 0 }}
     />
   </div>
-  
-  {/* Optional hint/error message area */}
-  {phoneHint && (
-    <div className="mt-2 p-3 bg-blue-50 border border-blue-200 rounded-md">
-      <span className="text-sm text-blue-700 font-medium">{phoneHint}</span>
-    </div>
-  )}
 </div>
 
       <h2 className="text-xl font-bold mb-4 mt-8">Residential Address</h2>
