@@ -20,11 +20,12 @@ export function PhilippinesFooter() {
             />
             <p className="text-gray-600 text-xs leading-relaxed break-words">
               {t.footer.disclaimer}&nbsp;
-              <a href="https://cadastur.turismo.gov.br/cadastur/#!/public/qrcode/41909350000152" target="_blank" className="underline hover:text-blue-700">{t.footer.cadasturLink}</a>.
+              <a href="https://cadastur.turismo.gov.br/cadastur/#!/public/qrcode/43274527000117" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-700">{t.footer.cadasturLink}</a>.
               &nbsp;<b>{t.footer.companyInfo}</b>&nbsp;
               <Link href="/terms" className="underline hover:text-blue-700">{t.footer.termsOfUse}</Link> |&nbsp;
-              <Link href="/cookies" className="underline hover:text-blue-700">{t.footer.cookiesPolicy}</Link> |&nbsp;
-              <Link href="/privacy" className="underline hover:text-blue-700">{t.footer.privacyPolicy}</Link>
+              <Link href="/privacy" className="underline hover:text-blue-700">{t.footer.privacyPolicy}</Link> |&nbsp;
+              <Link href="/refund" className="underline hover:text-blue-700">{t.footer.refundPolicy}</Link> |&nbsp;
+              <Link href="/delivery" className="underline hover:text-blue-700">{t.footer.deliveryPolicy}</Link>
             </p>
           </div>
           <div>
@@ -86,11 +87,12 @@ export function CanadaFooter() {
             />
             <p className="text-gray-600 text-xs leading-relaxed break-words">
               {t.footer.disclaimer}&nbsp;
-              <a href="https://cadastur.turismo.gov.br/cadastur/#!/public/qrcode/41909350000152" target="_blank" className="underline hover:text-red-700">{t.footer.cadasturLink}</a>.
+              <a href="https://cadastur.turismo.gov.br/cadastur/#!/public/qrcode/43274527000117" target="_blank" rel="noopener noreferrer" className="underline hover:text-red-700">{t.footer.cadasturLink}</a>.
               &nbsp;<b>{t.footer.companyInfo}</b>&nbsp;
               <Link href="/terms" className="underline hover:text-red-700">{t.footer.termsOfUse}</Link> |&nbsp;
-              <Link href="/cookies" className="underline hover:text-red-700">{t.footer.cookiesPolicy}</Link> |&nbsp;
-              <Link href="/privacy" className="underline hover:text-red-700">{t.footer.privacyPolicy}</Link>
+              <Link href="/privacy" className="underline hover:text-red-700">{t.footer.privacyPolicy}</Link> |&nbsp;
+              <Link href="/refund" className="underline hover:text-red-700">{t.footer.refundPolicy}</Link> |&nbsp;
+              <Link href="/delivery" className="underline hover:text-red-700">{t.footer.deliveryPolicy}</Link>
             </p>
           </div>
           <div>
@@ -149,11 +151,11 @@ export function GeneralFooter() {
               height={40}
             />
             <p className="text-gray-600 text-xs leading-relaxed break-words">
-              IMMI CENTER provides visa and travel authorization services for multiple destinations worldwide.
-              <b> IMMI CENTER - Canada, Philippines</b>&nbsp;
-              <Link href="/terms" className="underline hover:text-blue-700">Terms of Use</Link> |&nbsp;
-              <Link href="/cookies" className="underline hover:text-blue-700">Cookies Policy</Link> |&nbsp;
-              <Link href="/privacy" className="underline hover:text-blue-700">Privacy Policy</Link>
+              Disclaimer: Immi Center is not affiliated with any government agency or department. Costs for consulting services do not include any government solicitation, medical examination, or biometric fees. We are a private travel consultancy provider. You can apply directly for visas on the Embassy or Consulate websites. Immi Center is authorized by the Ministry of Tourism through Cadastur to operate with the activity of obtaining and legalizing documents for travelers in accordance with Law 11.771/08 – Art. 27 § 4o I which can be verified at: <a href="https://cadastur.turismo.gov.br/cadastur/#!/public/qrcode/43274527000117" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-700">Cadastur QR Code</a>. <b>Heliza Giovana Conrado de Andrade Chacha – CNPJ 43.274.527/0001-17.</b>&nbsp;
+              <Link href="/terms" className="underline hover:text-blue-700">Terms and Conditions</Link> |&nbsp;
+              <Link href="/privacy" className="underline hover:text-blue-700">Privacy Policy</Link> |&nbsp;
+              <Link href="/refund" className="underline hover:text-blue-700">Refund Policy</Link> |&nbsp;
+              <Link href="/delivery" className="underline hover:text-blue-700">Delivery Policy</Link>
             </p>
           </div>
           <div>
@@ -215,11 +217,12 @@ export default function Footer() {
             />
             <p className="text-gray-600 text-xs leading-relaxed break-words">
               {t.footer.disclaimer}&nbsp;
-              <a href="https://cadastur.turismo.gov.br/cadastur/#!/public/qrcode/41909350000152" target="_blank" className="underline hover:text-red-700">{t.footer.cadasturLink}</a>.
+              <a href="https://cadastur.turismo.gov.br/cadastur/#!/public/qrcode/43274527000117" target="_blank" rel="noopener noreferrer" className="underline hover:text-red-700">{t.footer.cadasturLink}</a>.
               &nbsp;<b>{t.footer.companyInfo}</b>&nbsp;
               <Link href="/terms" className="underline hover:text-red-700">{t.footer.termsOfUse}</Link> |&nbsp;
-              <Link href="/cookies" className="underline hover:text-red-700">{t.footer.cookiesPolicy}</Link> |&nbsp;
-              <Link href="/privacy" className="underline hover:text-red-700">{t.footer.privacyPolicy}</Link>
+              <Link href="/privacy" className="underline hover:text-red-700">{t.footer.privacyPolicy}</Link> |&nbsp;
+              <Link href="/refund" className="underline hover:text-red-700">{t.footer.refundPolicy}</Link> |&nbsp;
+              <Link href="/delivery" className="underline hover:text-red-700">{t.footer.deliveryPolicy}</Link>
             </p>
           </div>
           <div>

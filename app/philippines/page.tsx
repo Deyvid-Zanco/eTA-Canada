@@ -2,7 +2,7 @@
 import Head from "next/head";
 import Link from "next/link";
 import { PhilippinesHeader } from "../components/Header";
-import Footer from "../components/Footer";
+import { PhilippinesFooter } from "../components/Footer";
 
 export default function PhilippinesLandingPage() {
   return (
@@ -271,7 +271,7 @@ export default function PhilippinesLandingPage() {
         </section>
       </main>
 
-      <Footer />
+      <PhilippinesFooter />
     </>
   );
 }

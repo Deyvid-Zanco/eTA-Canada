@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Script from 'next/script';
+import { PhilippinesFooter } from '../../components/Footer';
 
 export default function ObrigadoPage() {
   const [emailStatus, setEmailStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
@@ -91,6 +92,7 @@ export default function ObrigadoPage() {
           </Link>
         </div>
       </div>
+      <PhilippinesFooter />
     </>
   );
 } 

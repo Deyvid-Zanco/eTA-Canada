@@ -65,12 +65,14 @@ export const en = {
 
   // Footer
   footer: {
-    disclaimer: "Disclaimer: IMMI CENTER is not affiliated with any government agency or department. Costs for consulting services DO NOT include any government solicitation, medical examination, or biometric fees. We are a private travel consultancy provider. You can apply directly for visas on the Embassy or Consulate websites. IMMI CENTER is authorized by the Ministry of Tourism through Cadastur to operate with the activity of obtaining and legalizing documents for travelers in accordance with Law 11.771/08 – Art. 27 § 4o I which can be verified at:",
+    disclaimer: "Disclaimer: Immi Center is not affiliated with any government agency or department. Costs for consulting services do not include any government solicitation, medical examination, or biometric fees. We are a private travel consultancy provider. You can apply directly for visas on the Embassy or Consulate websites. Immi Center is authorized by the Ministry of Tourism through Cadastur to operate with the activity of obtaining and legalizing documents for travelers in accordance with Law 11.771/08 – Art. 27 § 4o I which can be verified at:",
     cadasturLink: "Cadastur QR Code",
-    companyInfo: "HELIZA GIOVANA CONRADO DE ANDRADE CHACHA – CNPJ 43.274.527/0001-17.",
-    termsOfUse: "Terms of use",
+    companyInfo: "Heliza Giovana Conrado de Andrade Chacha – CNPJ 43.274.527/0001-17.",
+    termsOfUse: "Terms and Conditions",
     cookiesPolicy: "Cookies Policy",
     privacyPolicy: "Privacy Policy",
+    refundPolicy: "Refund Policy",
+    deliveryPolicy: "Delivery Policy",
     applyOnline: "Apply Online",
   },
 
