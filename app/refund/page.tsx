@@ -1,10 +1,10 @@
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import { GeneralHeader } from "../components/Header";
+import { GeneralFooter } from "../components/Footer";
 
 export default function RefundPage() {
   return (
     <>
-      <Header />
+      <GeneralHeader />
       <main className="container mx-auto py-12 px-4 max-w-4xl">
         <h1 className="text-3xl font-bold mb-6">Refund Policy</h1>
         
@@ -14,7 +14,7 @@ export default function RefundPage() {
           </p>
 
           <p className="mb-4">
-            Once you have submitted your application with us, it is assumed and agreed that we will begin the submission process within the timeframe indicated during your application. If you decide to request a refund after your application has been submitted, you may be deemed to accept an application service cancelation fee (35USD), and will only be accepted if the application has not been submitted to Canadian Government. However, refunds due to personal changes or simple cancellation of travel may also be rejected, so please understand and apply as indicated on our website. Refunds that are Reimbursements other than rebates approved by the Canadian government will be determined within 72 hours of our legal team&apos;s assessment.
+            Once you have submitted your application with us, it is assumed and agreed that we will begin the submission process within the timeframe indicated during your application. If you decide to request a refund after your application has been submitted, you may be deemed to accept an application service cancelation fee (35USD), and will only be accepted if the application has not been submitted to the relevant Government authority. However, refunds due to personal changes or simple cancellation of travel may also be rejected, so please understand and apply as indicated on our website. Refunds that are Reimbursements other than rebates approved by the relevant government will be determined within 72 hours of our legal team&apos;s assessment.
           </p>
 
           <p className="mb-4">
@@ -22,7 +22,7 @@ export default function RefundPage() {
           </p>
 
           <p className="mb-4">
-            If you wish to request a refund, email us at immicenter-online.com indicating the following:
+            If you wish to request a refund, email us at immiworldcenter@gmail.com indicating the following:
           </p>
 
           <ul className="list-disc pl-6 mb-4">
@@ -37,7 +37,7 @@ export default function RefundPage() {
           </p>
         </div>
       </main>
-      <Footer />
+      <GeneralFooter />
     </>
   );
 }

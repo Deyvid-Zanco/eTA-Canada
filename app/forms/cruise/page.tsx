@@ -723,7 +723,7 @@ function CruiseFormContent() {
   return (
     <>
       <Head>
-        <title>{isArrival ? 'Arrival' : 'Departure'} Cruise Details | IMMI CENTER</title>
+        <title>{isArrival ? 'Arrival' : 'Departure'} Cruise Details | IMMI WORLD®</title>
         <meta name="robots" content="noindex,nofollow" />
       </Head>
       <PhilippinesHeader />

@@ -26,7 +26,7 @@ export default function CanadaLandingPage() {
           property="og:image"
           content="/eta-canada-immi-center-logo-1024x339.png"
         />
-        <meta property="og:url" content="https://www.immi-center.com/canada" />
+        <meta property="og:url" content="https://www.immi-world.com/canada" />
         <meta property="og:site_name" content="Visa eTa Canada" />
         <meta name="robots" content="noindex,nofollow" />
         <link

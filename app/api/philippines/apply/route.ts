@@ -62,7 +62,7 @@ export async function POST(req: NextRequest) {
     if (data.email) {
 
       await resend.emails.send({
-        from: 'IMMI CENTER <noreply@immicenter-online.com>',
+        from: 'IMMI WORLD® <noreply@immi-world.com>',
         to: data.email,
         subject: 'We have received your Philippines eTravel Application',
         html: `
@@ -84,8 +84,8 @@ export async function POST(req: NextRequest) {
             </div>
 
             <p style="font-size:16px;color:#222;margin-top:32px;margin-bottom:16px;">Please keep an eye on your email inbox (including your SPAM folder) for updates.</p>
-            <p style="font-size:16px;color:#222;margin-bottom:16px;">Best regards,<br/>The IMMI CENTER Team</p>
-            <p style="font-size:13px;color:#888;margin-top:32px;">&copy; IMMI CENTER</p>
+            <p style="font-size:16px;color:#222;margin-bottom:16px;">Best regards,<br/>The IMMI WORLD® Team</p>
+            <p style="font-size:13px;color:#888;margin-top:32px;">&copy; IMMI WORLD®</p>
           </td>
         </tr>
       </table>

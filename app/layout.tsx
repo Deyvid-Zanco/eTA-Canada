@@ -16,9 +16,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "IMMI CENTER - eTA & Visa Services | Canada, Philippines",
+  title: "IMMI WORLD® - eTA & Travel Authorization Services | Canada, Philippines",
   description:
-    "Complete your visa applications online for over 135 destinations. Electronic Travel Authorization (eTA) for Canada, Philippines and more. Quick and easy visa processing.",
+    "Complete your Electronic Travel Authorization (eTA) applications online for multiple destinations. Travel authorization services for Canada, Philippines and more. Quick and easy processing.",
   icons: {
     icon: '/favicons/phillipines.ico', // Philippines favicon by default
   },

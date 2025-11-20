@@ -757,7 +757,7 @@ function FlightFormContent() {
   return (
     <>
       <Head>
-        <title>{isArrival ? 'Arrival' : 'Departure'} Flight Details | IMMI CENTER</title>
+        <title>{isArrival ? 'Arrival' : 'Departure'} Flight Details | IMMI WORLD®</title>
         <meta name="robots" content="noindex,nofollow" />
       </Head>
       <PhilippinesHeader />

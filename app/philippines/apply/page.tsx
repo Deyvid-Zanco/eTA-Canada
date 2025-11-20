@@ -229,7 +229,7 @@ export default function ApplyPage() {
   return (
     <>
       <Head>
-        <title>Philippines eTravel Application Form | IMMI CENTER</title>
+        <title>Philippines eTravel Application Form | IMMI WORLD®</title>
         <meta name="robots" content="noindex,nofollow" />
       </Head>
       <PhilippinesHeader />

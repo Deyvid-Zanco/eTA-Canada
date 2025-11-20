@@ -84,7 +84,7 @@ export async function POST(req: NextRequest) {
         }
         
         emailResult = await resend.emails.send({
-          from: 'IMMI CENTER <noreply@immicenter-online.com>',
+          from: 'IMMI WORLD® <noreply@immi-world.com>',
           to: email,
           subject: 'Payment Received for Philippines eTravel Authorization - Next Steps',
           html: `
@@ -111,7 +111,7 @@ export async function POST(req: NextRequest) {
               We suggest keeping an eye on your email inbox as <span style="font-weight:bold;">well as your SPAM folder</span>, as mentioned during the application process, for future communications and updates regarding your application.
             </p>
             <p style="font-size:16px;color:#222;margin-bottom:16px;">Best regards,<br/>Applicant Support – Philippines eTravel Support</p>
-            <p style="font-size:13px;color:#888;margin-top:32px;">&copy; IMMI CENTER</p>
+            <p style="font-size:13px;color:#888;margin-top:32px;">&copy; IMMI WORLD®</p>
           </td>
         </tr>
       </table>
@@ -123,7 +123,7 @@ export async function POST(req: NextRequest) {
       } else {
         // Canada ETA (original logic)
         emailResult = await resend.emails.send({
-          from: 'IMMI CENTER <noreply@immicenter-online.com>',
+          from: 'IMMI WORLD® <noreply@immi-world.com>',
           to: email,
           subject: 'Payment Received for CANADA ETA PERMIT AUTHORIZATION',
           html: `
@@ -144,7 +144,7 @@ export async function POST(req: NextRequest) {
               We suggest keeping an eye on your email inbox as <span style="font-weight:bold;">well as your SPAM folder</span>, as mentioned during the application process, for future communications and updates regarding your application.
             </p>
             <p style="font-size:16px;color:#222;margin-bottom:16px;">Best regards,<br/>Applicant Support – eTA Canada Support</p>
-            <p style="font-size:13px;color:#888;margin-top:32px;">&copy; IMMI CENTER</p>
+            <p style="font-size:13px;color:#888;margin-top:32px;">&copy; IMMI WORLD®</p>
           </td>
         </tr>
       </table>

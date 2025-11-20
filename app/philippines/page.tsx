@@ -18,7 +18,7 @@ export default function PhilippinesLandingPage() {
           property="og:description"
           content="Apply for Philippines eTravel Visa online. Get your Electronic Travel Authorization (eTA) for visiting the Philippines."
         />
-        <meta property="og:url" content="https://www.immi-center.com/philippines" />
+        <meta property="og:url" content="https://www.immi-world.com/philippines" />
         <meta property="og:site_name" content="Philippines eTravel Visa" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>

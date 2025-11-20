@@ -29,7 +29,7 @@ export function PhilippinesHeader() {
           <Link href="/philippines" className="flex items-center space-x-3">
             <Image
               src="/logo-phillipines.png"
-              alt="IMMI CENTER Philippines"
+              alt="IMMI WORLD® Philippines"
               width={250}
               height={80}
               priority
@@ -50,7 +50,7 @@ export function PhilippinesHeader() {
               FAQ
             </Link>
 
-            <Link href="mailto:info@immi-center.com" className="text-gray-800 hover:text-blue-700">
+            <Link href="mailto:info@immi-world.com" className="text-gray-800 hover:text-blue-700">
               Contact Us
             </Link>
           </nav>
@@ -113,7 +113,7 @@ export function GeneralHeader() {
         <Link href="/" className="flex items-center space-x-3">
           <Image
             src="/logo-default.png"
-            alt="IMMI CENTER"
+            alt="IMMI WORLD®"
             width={250}
             height={80}
             priority

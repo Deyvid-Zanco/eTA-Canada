@@ -8,18 +8,18 @@ export default function LandingPage() {
   return (
     <>
       <Head>
-        <title>IMMI CENTER - eTA & Visa Services | Canada, Philipines</title>
+        <title>IMMI WORLD® - eTA & Travel Authorization Services | Canada, Philippines</title>
         <meta
           name="description"
-          content="Complete your visa applications online for over 135 destinations. Electronic Travel Authorization (eTA) for Canada, Philippines and more. Quick and easy visa processing."
+          content="Complete your Electronic Travel Authorization (eTA) applications online for multiple destinations. Travel authorization services for Canada, Philippines and more. Quick and easy processing."
         />
-        <meta property="og:title" content="IMMI CENTER - eTA & Visa Services" />
+        <meta property="og:title" content="IMMI WORLD® - eTA & Travel Authorization Services" />
         <meta
           property="og:description"
-          content="eTA applications quick and easy. Visa services for individuals, SME, corporations. Belgian residents can obtain visas for 135+ destinations online."
+          content="eTA applications quick and easy. Travel authorization services for individuals, SME, corporations. Belgian residents can obtain travel authorizations for 135+ destinations online."
         />
-        <meta property="og:url" content="https://www.immi-center.com" />
-        <meta property="og:site_name" content="IMMI CENTER" />
+        <meta property="og:url" content="https://www.immi-world.com" />
+        <meta property="og:site_name" content="IMMI WORLD®" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <GeneralHeader />
@@ -31,7 +31,7 @@ export default function LandingPage() {
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="text-center md:text-left">
                 <h1 className="text-4xl md:text-6xl font-bold mb-6">
-                  your visa<br />
+                  travel authorization<br />
                   <span className="text-yellow-400">quick and easy</span>
                 </h1>
                 <p className="text-xl mb-8 max-w-2xl mx-auto md:mx-0">
@@ -42,7 +42,7 @@ export default function LandingPage() {
                     href="#services"
                     className="bg-white text-blue-600 hover:bg-gray-100 py-3 px-8 rounded-md text-lg font-semibold transition-colors"
                   >
-                    ask it online
+                    apply online
                   </Link>
                   <a
                     href="tel:+3227930456"
@@ -60,56 +60,55 @@ export default function LandingPage() {
         {/* Services Section */}
         <section id="services" className="py-16 px-4 bg-gray-50">
           <div className="container mx-auto">
-            <div className="grid md:grid-cols-3 gap-8">
-              {/* eTA Services */}
+            <div className="grid md:grid-cols-2 gap-8">
+              {/* Canada eTA */}
               <div className="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition-shadow text-center">
-                <h3 className="text-2xl font-bold mb-4">eTA applications</h3>
-                <p className="text-lg mb-6">quick and easy</p>
+                <div className="text-4xl mb-4">🇨🇦</div>
+                <h3 className="text-2xl font-bold mb-4">Canada eTA</h3>
+                <p className="text-lg mb-4">Electronic Travel Authorization</p>
+                <p className="text-2xl font-bold text-blue-600 mb-6">$42 USD</p>
                 <Link
-                  href="#countries"
+                  href="/canada"
                   className="bg-blue-600 hover:bg-blue-700 text-white py-3 px-8 rounded-md font-semibold inline-block transition-colors"
                 >
-                  ask it online
+                  Apply for Canada eTA
                 </Link>
               </div>
 
-              {/* Legalization */}
+              {/* Philippines eTravel */}
               <div className="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition-shadow text-center">
-                <h3 className="text-2xl font-bold mb-4">legalization</h3>
-                <p className="text-lg mb-6">quick and easy</p>
+                <div className="text-4xl mb-4">🇵🇭</div>
+                <h3 className="text-2xl font-bold mb-4">Philippines eTravel</h3>
+                <p className="text-lg mb-4">Electronic Travel Authorization</p>
+                <p className="text-2xl font-bold text-blue-600 mb-6">$57 USD</p>
                 <Link
-                  href="/services"
-                  className="bg-green-600 hover:bg-green-700 text-white py-3 px-8 rounded-md font-semibold inline-block transition-colors"
+                  href="/philippines"
+                  className="bg-blue-600 hover:bg-blue-700 text-white py-3 px-8 rounded-md font-semibold inline-block transition-colors"
                 >
-                  ask it online
+                  Apply for Philippines eTravel
                 </Link>
-              </div>
-
-              {/* Support */}
-              <div className="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition-shadow text-center">
-                <h3 className="text-2xl font-bold mb-4">need help?</h3>
-                <p className="text-lg mb-6">save time!</p>
-                
               </div>
             </div>
 
             {/* Service Description */}
             <div className="mt-12 text-center">
               <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                Visa Services for Everyone
+                Travel Authorization Services for Everyone
               </h2>
               <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
                 eTA desk for individuals, SME, corporations, non-governmental organizations and everyone.
-                Privileged relationships with embassies and foreign affairs ministries.
+                We are a private travel consultancy provider authorized to assist with travel authorization applications.
               </p>
               <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
                 <div className="text-center">
                   <div className="text-3xl mb-2">🇨🇦</div>
                   <p className="font-semibold">Canada eTA</p>
+                  <p className="text-sm text-gray-600">$42 USD</p>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl mb-2">🇵🇭</div>
                   <p className="font-semibold">Philippines eTravel</p>
+                  <p className="text-sm text-gray-600">$57 USD</p>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl mb-2">📄</div>
@@ -183,12 +182,20 @@ export default function LandingPage() {
               <span className="text-2xl">🇳🇿</span>
               <span className="text-2xl">🇯🇵</span>
             </div>
-            <Link
-              href="#services"
-              className="bg-blue-600 hover:bg-blue-700 text-white py-3 px-8 rounded-md text-lg font-semibold inline-block transition-colors"
-            >
-              Apply for eTA Online
-            </Link>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                href="/canada"
+                className="bg-blue-600 hover:bg-blue-700 text-white py-3 px-8 rounded-md text-lg font-semibold inline-block transition-colors"
+              >
+                Canada eTA - $42 USD
+              </Link>
+              <Link
+                href="/philippines"
+                className="bg-blue-600 hover:bg-blue-700 text-white py-3 px-8 rounded-md text-lg font-semibold inline-block transition-colors"
+              >
+                Philippines eTravel - $57 USD
+              </Link>
+            </div>
           </div>
         </section>
 

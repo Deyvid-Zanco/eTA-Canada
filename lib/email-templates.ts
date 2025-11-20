@@ -317,7 +317,7 @@ export function generateAdminNotificationEmail(
           <td style="background: #f9fafb; padding: 20px; text-align: center; border-radius: 0 0 12px 12px; border-top: 1px solid #e5e7eb;">
             <p style="color: #6b7280; font-size: 12px; margin: 0;">
               🔒 CONFIDENTIAL - Admin Notification Only<br/>
-              IMMI CENTER Philippines eTravel Processing System
+              IMMI WORLD® Philippines eTravel Processing System
             </p>
           </td>
         </tr>
@@ -471,7 +471,7 @@ export function generateInitialApplicationEmail(
           <td style="background: #f9fafb; padding: 20px; text-align: center; border-radius: 0 0 12px 12px; border-top: 1px solid #e5e7eb;">
             <p style="color: #6b7280; font-size: 12px; margin: 0;">
               🔒 ADMIN NOTIFICATION - Initial Application Stage<br/>
-              IMMI CENTER Philippines eTravel Processing System
+              IMMI WORLD® Philippines eTravel Processing System
             </p>
           </td>
         </tr>
@@ -720,7 +720,7 @@ export function generateComprehensiveApplicationEmail(
           <td style="background: #f9fafb; padding: 20px; text-align: center; border-radius: 0 0 12px 12px; border-top: 1px solid #e5e7eb;">
             <p style="color: #6b7280; font-size: 12px; margin: 0;">
               🔒 ADMIN NOTIFICATION - ${formType} ${travelMode} Application<br/>
-              IMMI CENTER Philippines eTravel Processing System
+              IMMI WORLD® Philippines eTravel Processing System
             </p>
           </td>
         </tr>
@@ -796,10 +796,10 @@ export function generateCustomerConfirmationEmail(data: ApplicationData, _submis
         <tr>
           <td style="background: #f9fafb; padding: 24px 32px; text-align: center; border-radius: 0 0 12px 12px; border-top: 1px solid #e5e7eb;">
             <p style="color: #6b7280; font-size: 14px; margin: 0 0 8px 0; font-weight: 500;">
-              Best regards,<br/>The IMMI CENTER Team
+              Best regards,<br/>The IMMI WORLD® Team
             </p>
             <p style="color: #9ca3af; font-size: 12px; margin: 0;">
-              &copy; ${new Date().getFullYear()} IMMI CENTER - Philippines eTravel Services
+              &copy; ${new Date().getFullYear()} IMMI WORLD® - Philippines eTravel Services
             </p>
           </td>
         </tr>

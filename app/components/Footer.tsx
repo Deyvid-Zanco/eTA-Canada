@@ -47,7 +47,7 @@ export function PhilippinesFooter() {
                 </Link>
               </li>
               <li>
-                <Link href="mailto:info@immi-center.com" className="hover:text-blue-700">
+                <Link href="mailto:info@immi-world.com" className="hover:text-blue-700">
                   Contact Us
                 </Link>
               </li>
@@ -146,12 +146,12 @@ export function GeneralFooter() {
           <div className="flex-1 flex flex-col gap-4">
             <Image
               src="/logo-default.png"
-              alt="IMMI CENTER"
+              alt="IMMI WORLD®"
               width={160}
               height={40}
             />
             <p className="text-gray-600 text-xs leading-relaxed break-words">
-              Disclaimer: Immi Center is not affiliated with any government agency or department. Costs for consulting services do not include any government solicitation, medical examination, or biometric fees. We are a private travel consultancy provider. You can apply directly for visas on the Embassy or Consulate websites. Immi Center is authorized by the Ministry of Tourism through Cadastur to operate with the activity of obtaining and legalizing documents for travelers in accordance with Law 11.771/08 – Art. 27 § 4o I which can be verified at: <a href="https://cadastur.turismo.gov.br/cadastur/#!/public/qrcode/43274527000117" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-700">Cadastur QR Code</a>. <b>Heliza Giovana Conrado de Andrade Chacha – CNPJ 43.274.527/0001-17.</b>&nbsp;
+              Disclaimer: Immi World® is not affiliated with any government agency or department. Costs for consulting services do not include any government solicitation, medical examination, or biometric fees. We are a private travel consultancy provider. You can apply directly for travel authorizations on the Embassy or Consulate websites. Immi World® is authorized by the Ministry of Tourism through Cadastur to operate with the activity of obtaining and legalizing documents for travelers in accordance with Law 11.771/08 – Art. 27 § 4o I which can be verified at: <a href="https://cadastur.turismo.gov.br/cadastur/#!/public/qrcode/43274527000117" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-700">Cadastur QR Code</a>. <b>Heliza Giovana Conrado de Andrade Chacha – CNPJ 43.274.527/0001-17.</b>&nbsp;
               <Link href="/terms" className="underline hover:text-blue-700">Terms and Conditions</Link> |&nbsp;
               <Link href="/privacy" className="underline hover:text-blue-700">Privacy Policy</Link> |&nbsp;
               <Link href="/refund" className="underline hover:text-blue-700">Refund Policy</Link> |&nbsp;
@@ -177,7 +177,7 @@ export function GeneralFooter() {
                 </Link>
               </li>
               <li>
-                <Link href="mailto:info@immi-center.com" className="hover:text-blue-700">
+                <Link href="mailto:info@immi-world.com" className="hover:text-blue-700">
                   Contact Us
                 </Link>
               </li>
