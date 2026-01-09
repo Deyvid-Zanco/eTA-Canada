@@ -22,15 +22,6 @@ export default function PhilippinesThanksPage() {
         .then(data => {
           if (data.success) {
             setEmailStatus('sent');
-            // ✅ Only fire conversion after server confirms payment
-            if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
-              window.gtag('event', 'conversion', {
-                'send_to': 'AW-16512154233/tQOZCLmLoaAZEPn0zcE9',
-                'value': 1.0,
-                'currency': 'BRL',
-                'transaction_id': sessionId // Unique ID to prevent duplicates
-              });
-            }
           } else {
             setEmailStatus('error');
             setErrorMsg(data.error || 'Failed to send payment confirmation email.');
@@ -59,13 +50,22 @@ export default function PhilippinesThanksPage() {
           gtag('config', 'AW-16512154233');
         `}
       </Script>
-      {/* Conversion event removed - now fires only after payment verification in useEffect */}
+      <Script id="conversion-event">
+        {`
+          gtag('event', 'conversion', {
+              'send_to': 'AW-16512154233/tQOZCLmLoaAZEPn0zcE9',
+              'value': 1.0,
+              'currency': 'BRL',
+              'transaction_id': ''
+          });
+        `}
+      </Script>
       <div className="flex flex-col items-center justify-center min-h-screen bg-white dark:bg-gray-900 px-4 py-12">
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 max-w-xl w-full text-center">
           <div className="flex justify-center mb-4">
             <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="28" cy="28" r="28" fill="#E6F4EA" />
-              <path d="M18 29.5L25 36.5L38 23.5" stroke="#34A853" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+              <circle cx="28" cy="28" r="28" fill="#E6F4EA"/>
+              <path d="M18 29.5L25 36.5L38 23.5" stroke="#34A853" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </div>
           <h1 className="text-2xl font-bold text-[#34A853] mb-2">PURCHASE ORDER COMPLETED!</h1>
@@ -74,7 +74,7 @@ export default function PhilippinesThanksPage() {
             We have received your request for the issuance of the E Travel Authorization for the Philippines.
           </p>
           <p className="mb-2 text-gray-900 dark:text-gray-100">
-            Your payment has been confirmed and your application will be processed shortly.<br />
+            Your payment has been confirmed and your application will be processed shortly.<br/>
             <span className="font-semibold">Processing time may take a few minutes or up to 72 hours.</span>
           </p>
           <div className="mb-4 p-4 bg-blue-50 dark:bg-blue-900 border border-blue-200 dark:border-blue-700 rounded-lg">
@@ -87,7 +87,7 @@ export default function PhilippinesThanksPage() {
           <p className="mb-6 text-gray-900 dark:text-gray-100">
             We suggest keeping an eye on your email inbox as <span className="font-bold">well as your SPAM folder</span>, as mentioned during the application process, for future communications and updates regarding your application.
           </p>
-          <p className="mb-6 text-gray-900 dark:text-gray-100">Best regards,<br />Applicant Support – ImmiCenter Support</p>
+          <p className="mb-6 text-gray-900 dark:text-gray-100">Best regards,<br/>Applicant Support – ImmiCenter Support</p>
           {emailStatus === 'sending' && <p className="text-blue-600 dark:text-blue-400 mb-4">Sending next steps email with travel form details...</p>}
           {emailStatus === 'sent' && <p className="text-green-600 dark:text-green-400 mb-4">Next steps email sent successfully! Please check your inbox.</p>}
           {emailStatus === 'error' && <p className="text-red-600 dark:text-red-400 mb-4">Error sending next steps email: {errorMsg}</p>}
