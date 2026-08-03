@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.immi-world.com"),
+  metadataBase: new URL("https://www.immicenter-online.com"),
   title: "IMMI WORLD - Private Travel Application Assistance",
   description:
     "Independent paid assistance for travelers preparing online travel application information. IMMI WORLD is not a government website and does not issue travel authorizations.",

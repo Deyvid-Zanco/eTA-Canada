@@ -14,7 +14,6 @@ import { useSearchParams } from 'next/navigation';
 import { COUNTRY_LIST } from '@/lib/constants';
 import { getActiveAirlines } from '@/lib/airlines';
 import { DocumentUpload } from '@/app/components/DocumentUpload';
-import { useHybridFormPersistence } from '@/lib/hooks/useHybridFormPersistence';
 
 // Add this for TypeScript to recognize grecaptcha on window
 declare global {
@@ -387,7 +386,6 @@ function FlightFormContent() {
   const [showErrorBanner, setShowErrorBanner] = React.useState(false);
   const [showWebcam, setShowWebcam] = useState(false);
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
   const [otherGoodsItems, setOtherGoodsItems] = useState<{id: string; quantity: number; description: string; amountUSD: number}[]>([]);
   const [gamblingItems, setGamblingItems] = useState<{id: string; quantity: number; description: string; amountUSD: number}[]>([]);
   const [cosmeticsItems, setCosmeticsItems] = useState<{id: string; quantity: number; description: string; amountUSD: number}[]>([]);
@@ -410,32 +408,12 @@ function FlightFormContent() {
     setValue,
     watch,
     resetField,
-    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(flightDetailsSchema),
     mode: 'onSubmit',
     reValidateMode: 'onChange',
   });
-
-  // Enhanced form persistence with intelligent storage strategy
-  const {
-    isLoading: persistenceLoading,
-    saveStatus,
-    saveError
-  } = useHybridFormPersistence({
-    formType: 'flight',
-    watch,
-    reset,
-    mode,
-    autoSaveDelay: 5000, // Increased to 5 seconds to reduce save frequency
-    maxLocalStorageSize: 2 * 1024 * 1024 // 2MB
-  });
-
-  // Update loading state
-  React.useEffect(() => {
-    setIsLoading(persistenceLoading);
-  }, [persistenceLoading]);
 
   const watchedPicture = watch('picture');
   const watchedDestinationType = watch('destinationType');
@@ -762,8 +740,6 @@ function FlightFormContent() {
       </Head>
       <PhilippinesHeader />
       
-      {/* Removed session management UI - no longer using Supabase */}
-      
       <main className="container mx-auto py-12 px-4">
         <div className="max-w-4xl mx-auto">
           {submitMessage.includes('successfully') ? (
@@ -777,52 +753,6 @@ function FlightFormContent() {
               <h1 className="text-3xl font-bold mb-8 text-center">
                 {isArrival ? 'Arrival' : 'Departure'} Flight Details Submission
               </h1>
-              
-              {isLoading && (
-                <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                  <div className="flex items-center gap-2">
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
-                    <span className="text-blue-800">Loading saved form data...</span>
-                  </div>
-                </div>
-              )}
-
-              {/* Save Status Indicator */}
-              {saveStatus === 'saving' && (
-                <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-                  <div className="flex items-center gap-2">
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-yellow-600"></div>
-                    <span className="text-yellow-800">Saving form data...</span>
-                  </div>
-                </div>
-              )}
-
-              {saveStatus === 'saved' && (
-                <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-                  <div className="flex items-center gap-2">
-                    <span className="text-green-600">✅</span>
-                    <span className="text-green-800">Form data saved automatically</span>
-                  </div>
-                </div>
-              )}
-
-              {saveStatus === 'error' && saveError && (
-                <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-                  <div className="flex items-center gap-2">
-                    <span className="text-red-600">⚠️</span>
-                    <span className="text-red-800">
-                      Failed to save form data: {
-                        saveError.includes('at ') || 
-                        saveError.includes('.ts') || 
-                        saveError.includes('.js') ||
-                        saveError.length > 200
-                          ? 'Please try again later.'
-                          : saveError
-                      }
-                    </span>
-                  </div>
-                </div>
-              )}
               
               <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
                 <p className="text-blue-800 font-semibold">

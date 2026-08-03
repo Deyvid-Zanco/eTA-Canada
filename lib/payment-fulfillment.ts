@@ -62,10 +62,11 @@ export async function fulfillCheckoutSession(
     const formUrl = new URL(formPath, siteUrl);
     formUrl.searchParams.set("mode", travelType.toLowerCase());
     formUrl.searchParams.set("session_id", session.id);
+    formUrl.searchParams.set("email", email);
 
     const { error } = await resend.emails.send(
       {
-        from: "IMMI WORLD <noreply@immi-world.com>",
+        from: "IMMI WORLD <noreply@immicenter-online.com>",
         to: email,
         subject: "Payment received — next step for your private travel assistance",
         html: `
@@ -83,7 +84,7 @@ export async function fulfillCheckoutSession(
   } else {
     const { error } = await resend.emails.send(
       {
-        from: "IMMI WORLD <noreply@immi-world.com>",
+        from: "IMMI WORLD <noreply@immicenter-online.com>",
         to: email,
         subject: "Payment received — private Canada eTA assistance",
         html: `

@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Private Canada eTA Application Assistance | IMMI WORLD',
     description: 'Independent paid application assistance. We do not issue eTAs and cannot guarantee a decision.',
-    url: 'https://www.immi-world.com/canada',
+    url: 'https://www.immicenter-online.com/canada',
     siteName: 'IMMI WORLD',
     images: ['/hero.png'],
     type: 'website',

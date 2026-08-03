@@ -173,7 +173,7 @@ export async function POST(req: NextRequest) {
     // Send simple confirmation email to the customer
     if (userEmail) {
       await resend.emails.send({
-        from: 'IMMI WORLD® <noreply@immi-world.com>',
+        from: 'IMMI WORLD® <noreply@immicenter-online.com>',
         to: userEmail,
         subject: `✅ Philippines eTravel Application Submitted - Processing within 48 hours`,
         html: customerEmailHtml,

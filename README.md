@@ -28,4 +28,6 @@ npm run cf:build
 npm run preview
 ```
 
-See [CLOUDFLARE_DEPLOY.md](./CLOUDFLARE_DEPLOY.md) for the production variables, Stripe webhook, Supabase/RLS checks, Workers Builds settings, and remaining launch blockers.
+The application does not use a database. Forms and document attachments are delivered through Resend, payments are handled by Stripe, and no application data is persisted by the site after submission.
+
+See [CLOUDFLARE_DEPLOY.md](./CLOUDFLARE_DEPLOY.md) for the production variables, Stripe webhook, Workers Builds settings, and remaining launch checks.

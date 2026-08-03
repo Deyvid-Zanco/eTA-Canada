@@ -130,7 +130,7 @@ export async function POST(req: NextRequest) {
 
     if (data.email) {
       await resend.emails.send({
-        from: 'IMMI WORLD® <noreply@immi-world.com>',
+        from: 'IMMI WORLD® <noreply@immicenter-online.com>',
         to: data.email,
         subject: 'We received your information for private Canada eTA assistance',
         html: `

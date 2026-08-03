@@ -18,7 +18,7 @@ export default function LandingPage() {
           property="og:description"
           content="Independent paid travel application assistance. We do not issue government documents or guarantee a decision."
         />
-        <meta property="og:url" content="https://www.immi-world.com" />
+        <meta property="og:url" content="https://www.immicenter-online.com" />
         <meta property="og:site_name" content="IMMI WORLD®" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
