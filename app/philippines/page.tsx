@@ -33,7 +33,7 @@ export default function PhilippinesLandingPage() {
             </h1>
             <p className="text-xl md:text-2xl lg:text-3xl mb-8 max-w-4xl mx-auto drop-shadow-md">
               Apply for your Electronic Travel Authorization (eTA) to visit the beautiful Philippines.
-              Simple online application process with fast approval.
+              Optional private assistance with clear steps and transparent fees. Government decisions and timing are not guaranteed.
             </p>
 
             {/* Stats */}
@@ -149,9 +149,9 @@ export default function PhilippinesLandingPage() {
                 <div className="bg-blue-100 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6">
                   <span className="text-2xl font-bold text-blue-600">3</span>
                 </div>
-                <h3 className="text-xl font-semibold mb-3">Receive Approval</h3>
+                <h3 className="text-xl font-semibold mb-3">Receive Next Steps</h3>
                 <p className="text-gray-600">
-                  Get your eTravel Visa approval via email. Present it upon arrival in the Philippines.
+                  Receive guidance and next-step information by email. The relevant authorities make all final decisions.
                 </p>
               </div>
             </div>

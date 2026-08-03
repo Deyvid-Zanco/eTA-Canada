@@ -132,7 +132,7 @@ export async function POST(req: NextRequest) {
       await resend.emails.send({
         from: 'IMMI WORLD® <noreply@immi-world.com>',
         to: data.email,
-        subject: 'We have received your response for CANADA ETA PERMIT AUTHORIZATION',
+        subject: 'We received your information for private Canada eTA assistance',
         html: `
 <table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f7;padding:0;margin:0;">
   <tr>
@@ -140,11 +140,11 @@ export async function POST(req: NextRequest) {
       <table width="600" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.04);margin:40px 0;">
         <tr>
           <td style="padding:40px 32px 32px 32px;text-align:center;">
-            <h1 style="color:#34A853;font-size:24px;margin-bottom:16px;">We have received your response for CANADA ETA PERMIT AUTHORIZATION</h1>
+            <h1 style="color:#17365f;font-size:24px;margin-bottom:16px;">We received your information</h1>
             <p style="font-size:16px;color:#222;margin-bottom:16px;">Hello!</p>
-            <p style="font-size:16px;color:#222;margin-bottom:16px;">We have received your request for the issuance of the Electronic Travel Authorization (eTA) for Canada.</p>
+            <p style="font-size:16px;color:#222;margin-bottom:16px;">We received the information you provided to IMMI WORLD for our optional private review and guidance service.</p>
             <p style="font-size:16px;color:#222;margin-bottom:16px;">Your application will be processed shortly.<br/>
-              <span style="font-weight:600;">Processing time may take a few minutes or up to 72 hours.</span>
+              <span style="font-weight:600;">We do not issue eTAs and cannot guarantee a government decision or processing time.</span>
             </p>
             <p style="font-size:20px;color:#222;font-weight:700;margin-bottom:8px;">IMPORTANT INFORMATION:</p>
             <p style="font-size:16px;color:#222;margin-bottom:16px;">

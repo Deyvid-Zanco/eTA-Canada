@@ -78,18 +78,18 @@ export const es = {
 
   // Form Page
   form: {
-    title: "AUTORIZACIÓN DE PERMISO ETA CANADÁ",
-    welcome: "Bienvenido, tienes derecho a un Permiso ETA de Canadá.",
+    title: "Asistencia privada para la solicitud de eTA de Canadá",
+    welcome: "Completa el formulario para utilizar el servicio opcional de revisión y orientación de IMMI WORLD.",
     ifYouApply: {
       title: "Si solicitas, asegúrate de que:",
       point1: "Estás visitando por un máximo de 6 meses",
       point2: "Estás viajando exclusivamente por negocios, tránsito o placer",
     },
     permitRenewal: {
-      title: "Aviso de Renovación de Permiso:",
-      content: "Usa el mismo formulario a continuación si ya tienes un permiso ETA de Canadá válido y buscas renovarlo.",
+      title: "Aviso importante sobre el servicio:",
+      content: "IMMI WORLD es una consultoría privada. Solo las autoridades canadienses deciden si se emite una eTA.",
     },
-    submitApplication: "Enviar Solicitud",
+    submitApplication: "Continuar al pago seguro",
     processing: "Procesando...",
     success: "¡Solicitud enviada exitosamente!",
     error: "Error:",
@@ -508,4 +508,4 @@ export const es = {
     november: "Noviembre",
     december: "Diciembre",
   },
-}; 
+};

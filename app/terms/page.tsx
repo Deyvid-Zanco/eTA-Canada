@@ -5,28 +5,34 @@ export default function TermsPage() {
   return (
     <>
       <GeneralHeader />
-      <main className="container mx-auto py-12 px-4 max-w-4xl">
-        <h1 className="text-3xl font-bold mb-6">Terms and Conditions</h1>
-        
-        <div className="prose max-w-none">
-          <h2 className="text-2xl font-bold mt-8 mb-4">LEGAL NOTICE</h2>
-          <p className="mb-4">
-            At Immi World®, we are committed to building a relationship with our clients based on transparency and trust. It is important that you understand your legal rights and obligations when using our website and services. By accessing or using this website, you acknowledge and agree to the following terms and conditions.
-          </p>
-
-          <h3 className="text-xl font-bold mt-6 mb-4">Use of Services</h3>
-          <p className="mb-4">
-            Immi World® operates as an online application service provider, assisting foreign nationals in completing and submitting Travel Authorization applications required to visit Canada and other destinations.
-          </p>
-          <p className="mb-4">
-            Our team facilitates the process of obtaining your Travel Authorization and delivers the approved authorization to you.
-          </p>
-          <p className="mb-4">
-            By registering, visiting, or using our services through immi-world.com, you agree to be bound by these Terms and Conditions. If you do not agree to these terms, please do not use our services.
-          </p>
+      <main className="mx-auto max-w-4xl px-5 py-14 text-slate-700">
+        <p className="text-sm font-bold uppercase tracking-widest text-[#cf2431]">Legal information</p>
+        <h1 className="mt-3 text-4xl font-bold text-[#071b34]">Terms and Conditions</h1>
+        <div className="mt-8 space-y-8 leading-7">
+          <section>
+            <h2 className="text-2xl font-bold text-[#071b34]">Who we are</h2>
+            <p className="mt-3">IMMI WORLD is an independent private travel consultancy operated by Heliza Giovana Conrado de Andrade Chacha, CNPJ 43.274.527/0001-17. We are not the Government of Canada, an embassy, a consulate or an immigration authority.</p>
+          </section>
+          <section>
+            <h2 className="text-2xl font-bold text-[#071b34]">Scope of the service</h2>
+            <p className="mt-3">Our optional paid service helps clients organize and review information used in a Canada eTA application. We provide administrative guidance and a completeness review. We do not issue eTAs, make government decisions, provide legal advice or guarantee approval or processing time.</p>
+            <p className="mt-3">Clients may apply without our assistance through the official Canada.ca website. Choosing IMMI WORLD is voluntary.</p>
+          </section>
+          <section>
+            <h2 className="text-2xl font-bold text-[#071b34]">Fees</h2>
+            <p className="mt-3">The Canada assistance service costs US$42. The official Canada eTA application fee is CAN$7 and is separate from our service fee. Any additional third-party, medical or biometric cost is also separate unless expressly stated before payment.</p>
+          </section>
+          <section>
+            <h2 className="text-2xl font-bold text-[#071b34]">Client responsibilities</h2>
+            <p className="mt-3">You are responsible for providing complete and truthful information, checking the final information and complying with requests from Canadian authorities. Assistance from IMMI WORLD does not change eligibility requirements or the authority&apos;s decision.</p>
+          </section>
+          <section>
+            <h2 className="text-2xl font-bold text-[#071b34]">Contact</h2>
+            <p className="mt-3">Questions about these terms may be sent to <a className="font-semibold text-blue-800 underline" href="mailto:immiworldcenter@gmail.com">immiworldcenter@gmail.com</a>.</p>
+          </section>
         </div>
       </main>
       <GeneralFooter />
     </>
   );
-} 
+}

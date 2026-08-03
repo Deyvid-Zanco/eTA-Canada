@@ -1,215 +1,109 @@
 "use client";
-import Link from "next/link";
+
 import Image from "next/image";
+import Link from "next/link";
+import { Menu, X } from "lucide-react";
+import { useState } from "react";
 import { useLanguage } from "../../lib/contexts/LanguageContext";
 import LanguageSwitcher from "./LanguageSwitcher";
-import { useState } from "react";
 
-// Philippines-specific Header
 export function PhilippinesHeader() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
-    <header className="bg-white shadow-md sticky top-0 z-50">
-      {/* Top Bar */}
-      <div className="bg-blue-600 text-white py-2">
-        <div className="container mx-auto flex justify-center items-center px-4 md:px-8">
-          <div className="flex items-center text-sm">
-            <span className="text-white text-center w-full">
-              🇵🇭 Philippines eTravel Visa - Fast, Secure, Reliable Processing
-            </span>
-          </div>
-        </div>
+    <header className="sticky top-0 z-50 border-b border-slate-200 bg-white">
+      <div className="bg-blue-700 px-4 py-2 text-center text-xs font-semibold text-white">
+        Private travel assistance service — not a government website
       </div>
-
-      {/* Main Navigation Bar */}
-      <div className="bg-transparent">
-        <div className="container mx-auto flex justify-between items-center py-4 px-4 md:px-8">
-          {/* Logo */}
-          <Link href="/philippines" className="flex items-center space-x-3">
-            <Image
-              src="/logo-phillipines.png"
-              alt="IMMI WORLD® Philippines"
-              width={250}
-              height={80}
-              priority
-            />
-          </Link>
-
-          {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center space-x-6 text-sm font-semibold">
-            <Link href="/philippines" className="text-gray-800 hover:text-blue-700">
-              Home
-            </Link>
-
-            <Link href="/philippines/apply" className="bg-yellow-500 text-black px-4 py-2 rounded hover:bg-yellow-600">
-              Apply
-            </Link>
-
-            <Link href="#faq" className="text-gray-800 hover:text-blue-700">
-              FAQ
-            </Link>
-
-            <Link href="mailto:info@immi-world.com" className="text-gray-800 hover:text-blue-700">
-              Contact Us
-            </Link>
-          </nav>
-
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden text-gray-800 p-2"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            <span className="text-2xl">{isMobileMenuOpen ? '✕' : '☰'}</span>
-          </button>
-        </div>
-
-        {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden bg-white border-t border-gray-200 shadow-lg">
-            <nav className="container mx-auto py-4 px-4 space-y-4">
-              <Link
-                href="/philippines"
-                className="block text-gray-800 hover:text-blue-700 text-center py-2"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Home
-              </Link>
-              <Link
-                href="/philippines/apply"
-                className="block bg-yellow-500 text-black px-4 py-2 rounded hover:bg-yellow-600 text-center"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Apply
-              </Link>
-              <Link
-                href="#faq"
-                className="block text-gray-800 hover:text-blue-700 text-center"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                FAQ
-              </Link>
-              <Link
-                href="mailto:info@immi-center.com"
-                className="block text-gray-800 hover:text-blue-700 text-center"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Contact Us
-              </Link>
-            </nav>
-          </div>
-        )}
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4">
+        <Link href="/philippines">
+          <Image src="/logo-phillipines.png" alt="IMMI WORLD Philippines" width={210} height={64} priority />
+        </Link>
+        <nav className="hidden items-center gap-6 text-sm font-semibold md:flex">
+          <Link href="/philippines">Home</Link>
+          <Link href="/philippines#faq">FAQ</Link>
+          <a href="mailto:immiworldcenter@gmail.com">Contact</a>
+          <Link href="/philippines/apply" className="rounded bg-blue-700 px-4 py-2.5 text-white">Start</Link>
+        </nav>
+        <button className="rounded p-2 md:hidden" onClick={() => setOpen(!open)} aria-expanded={open} aria-label={open ? "Close menu" : "Open menu"}>
+          {open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
+        </button>
       </div>
+      {open && (
+        <nav className="grid gap-2 border-t border-slate-200 px-5 py-4 text-sm font-semibold md:hidden">
+          <Link href="/philippines" onClick={() => setOpen(false)}>Home</Link>
+          <Link href="/philippines#faq" onClick={() => setOpen(false)}>FAQ</Link>
+          <a href="mailto:immiworldcenter@gmail.com">Contact</a>
+          <Link href="/philippines/apply" className="rounded bg-blue-700 px-4 py-3 text-center text-white" onClick={() => setOpen(false)}>Start</Link>
+        </nav>
+      )}
     </header>
   );
 }
 
-// General Header for main landing page - Just logo
 export function GeneralHeader() {
   return (
-    <header className="bg-white shadow-md sticky top-0 z-50">
-      <div className="container mx-auto flex justify-start items-center py-4 px-4 md:px-8">
-        {/* Logo */}
-        <Link href="/" className="flex items-center space-x-3">
-          <Image
-            src="/logo-default.png"
-            alt="IMMI WORLD®"
-            width={250}
-            height={80}
-            priority
-          />
+    <header className="sticky top-0 z-50 border-b border-slate-200 bg-white">
+      <div className="bg-[#071b34] px-4 py-2 text-center text-xs font-semibold text-white">
+        IMMI WORLD is an independent private travel consultancy and is not a government website.
+      </div>
+      <div className="mx-auto flex max-w-7xl items-center px-5 py-4">
+        <Link href="/" className="leading-none" aria-label="IMMI WORLD home">
+          <span className="block text-xl font-black tracking-[0.04em] text-[#071b34]">IMMI WORLD</span>
+          <span className="mt-1 block text-[11px] font-medium tracking-wide text-slate-500">Private travel assistance</span>
         </Link>
       </div>
     </header>
   );
 }
 
-// Canada-specific Header
 export function CanadaHeader() {
-  const { t } = useLanguage();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { language } = useLanguage();
+  const [open, setOpen] = useState(false);
+  const labels = language === "es" ? {
+    disclosure: "Servicio privado de asistencia — no es un sitio web gubernamental",
+    how: "Cómo funciona", pricing: "Tarifas", faq: "Preguntas", contact: "Contacto", action: "Iniciar asistencia",
+  } : {
+    disclosure: "Private assistance service — not a government website",
+    how: "How it works", pricing: "Pricing", faq: "FAQ", contact: "Contact", action: "Start assisted application",
+  };
+
+  const close = () => setOpen(false);
 
   return (
-    <header className="bg-white shadow-md sticky top-0 z-50">
-      {/* Top Bar */}
-      <div className="bg-gray-800 text-white py-2">
-        <div className="container mx-auto flex justify-center items-center px-4 md:px-8">
-          <div className="flex items-center text-sm">
-            <span className="text-white text-center w-full">
-              {t.header.topBarMessage}
-            </span>
-          </div>
-        </div>
+    <header className="sticky top-0 z-50 border-b border-slate-200 bg-white">
+      <div className="bg-[#071b34] py-2 text-white">
+        <p className="mx-auto max-w-[1180px] px-4 text-center text-xs font-semibold tracking-wide">{labels.disclosure}</p>
       </div>
-
-      {/* Main Navigation Bar */}
-      <div className="bg-transparent">
-        <div className="container mx-auto flex justify-between items-center py-4 px-4 md:px-8">
-          {/* Logo */}
-          <Link href="/canada" className="flex items-center space-x-3">
-            <Image
-              src="/eta-canada-immi-center-logo-1024x339.png"
-              alt="Visa eTa Canada"
-              width={250}
-              height={80}
-              priority
-            />
-          </Link>
-
-          {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center space-x-6 text-sm font-semibold">
-            <Link href="/canada" className="text-gray-800 hover:text-red-700">
-              Home
-            </Link>
-
-            <Link href="/canada/apply" className="bg-red-600 px-4 py-2 rounded hover:bg-red-700 text-white">
-              Apply
-            </Link>
-
-            <Link href="#contact" className="text-gray-800 hover:text-red-700">
-              Contact
-            </Link>
-            <LanguageSwitcher />
-          </nav>
-
-          {/* Mobile Menu Button */}
-          <button 
-            className="md:hidden text-gray-800 p-2"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            <span className="text-2xl">{isMobileMenuOpen ? '✕' : '☰'}</span>
-          </button>
-        </div>
-
-        {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden bg-white border-t border-gray-200 shadow-lg">
-            <nav className="container mx-auto py-4 px-4 space-y-4">
-              <Link
-                href="/canada"
-                className="block text-gray-800 hover:text-red-700 text-center py-2"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Home
-              </Link>
-
-              <Link
-                href="/canada/apply"
-                className="block bg-red-600 px-4 py-2 rounded hover:bg-red-700 text-white text-center"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Apply
-              </Link>
-
-              <div className="pt-2 border-t border-gray-200">
-                <LanguageSwitcher />
-              </div>
-            </nav>
-          </div>
-        )}
+      <div className="mx-auto flex max-w-[1180px] items-center justify-between px-5 py-4">
+        <Link href="/canada" className="leading-none" aria-label="IMMI WORLD Canada home">
+          <span className="block text-xl font-black tracking-[0.04em] text-[#071b34]">IMMI WORLD</span>
+          <span className="mt-1 block text-[11px] font-medium tracking-wide text-slate-500">Private travel assistance</span>
+        </Link>
+        <nav className="hidden items-center gap-6 text-sm font-semibold md:flex" aria-label="Main navigation">
+          <Link href="/canada#how-it-works" className="text-slate-700 hover:text-[#b51c28]">{labels.how}</Link>
+          <Link href="/canada#pricing" className="text-slate-700 hover:text-[#b51c28]">{labels.pricing}</Link>
+          <Link href="/canada#faq" className="text-slate-700 hover:text-[#b51c28]">{labels.faq}</Link>
+          <a href="mailto:immiworldcenter@gmail.com" className="text-slate-700 hover:text-[#b51c28]">{labels.contact}</a>
+          <LanguageSwitcher />
+          <Link href="/canada/apply" className="rounded bg-[#cf2431] px-4 py-2.5 text-white hover:bg-[#b51c28]">{labels.action}</Link>
+        </nav>
+        <button className="rounded-md p-2 text-[#071b34] md:hidden" onClick={() => setOpen(!open)} aria-expanded={open} aria-label={open ? "Close menu" : "Open menu"}>
+          {open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
+        </button>
       </div>
+      {open && (
+        <nav className="grid gap-1 border-t border-slate-200 px-5 py-4 text-sm font-semibold md:hidden">
+          <Link href="/canada#how-it-works" className="rounded px-3 py-3 hover:bg-slate-50" onClick={close}>{labels.how}</Link>
+          <Link href="/canada#pricing" className="rounded px-3 py-3 hover:bg-slate-50" onClick={close}>{labels.pricing}</Link>
+          <Link href="/canada#faq" className="rounded px-3 py-3 hover:bg-slate-50" onClick={close}>{labels.faq}</Link>
+          <a href="mailto:immiworldcenter@gmail.com" className="rounded px-3 py-3 hover:bg-slate-50">{labels.contact}</a>
+          <div className="border-t border-slate-200 px-3 pt-4"><LanguageSwitcher /></div>
+          <Link href="/canada/apply" className="mt-3 rounded bg-[#cf2431] px-4 py-3 text-center text-white" onClick={close}>{labels.action}</Link>
+        </nav>
+      )}
     </header>
   );
-} 
+}
 
 export default CanadaHeader;

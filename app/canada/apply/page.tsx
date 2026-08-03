@@ -14,6 +14,7 @@ import { Step1 } from "@/app/components/forms/Step1";
 import { Step2 } from "@/app/components/forms/Step2";
 import { InferType } from 'yup';
 import { Resolver } from 'react-hook-form';
+import { LoaderCircle, ShieldCheck } from 'lucide-react';
 
 import { useLanguage } from "../../../lib/contexts/LanguageContext";
 
@@ -190,10 +191,7 @@ function ApplyFormMultiStep() {
               >
                 {step2Methods.formState.isSubmitting ? (
                   <span className="flex items-center justify-center gap-2">
-                    <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
+                    <LoaderCircle className="h-5 w-5 animate-spin text-white" aria-hidden="true" />
                     {t.form.processing}
                   </span>
                 ) : (
@@ -230,11 +228,25 @@ export default function ApplyPage() {
   return (
     <>
       <Head>
-        <title>eTA Application Form | canada-eta.visasyst.com</title>
+        <title>Private Canada eTA Application Assistance | IMMI WORLD</title>
         <meta name="robots" content="noindex,nofollow" />
       </Head>
       <CanadaHeader />
       <main className="container mx-auto py-12 px-4">
+        <div className="mx-auto mb-8 max-w-4xl rounded-lg border border-slate-300 bg-slate-50 p-5">
+          <div className="flex items-start gap-3">
+            <ShieldCheck className="mt-0.5 h-6 w-6 flex-none text-[#071b34]" aria-hidden="true" />
+            <div>
+              <p className="font-bold text-[#071b34]">Private paid assistance — not a government website</p>
+              <p className="mt-1 text-sm leading-6 text-slate-600">
+                IMMI WORLD charges US$42 for its optional review and guidance service. The official Canada eTA fee is CAN$7 and is separate. We cannot issue an eTA, guarantee approval, or influence processing time.
+              </p>
+              <a href="https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eta/apply.html" target="_blank" rel="noopener noreferrer" className="mt-2 inline-block text-sm font-semibold text-blue-800 underline underline-offset-4">
+                Apply directly on the official Canada.ca website
+              </a>
+            </div>
+          </div>
+        </div>
         {/* These static sections match the layout of your old page */}
         <h1 className="text-3xl font-bold mb-8 text-center">
           {t.form.title}

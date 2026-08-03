@@ -3,3 +3,10 @@
 .env.local
 /node_modules
 BACKUPENV.TXT
+.open-next/
+.wrangler/
+.dev.vars
+.env
+.env.development
+.env.production
+cloudflare-env.d.ts

@@ -184,6 +184,235 @@ img {
   object-fit: cover !important;
 }
 
+/* Canada private-assistance landing page */
+.canada-landing {
+  --canada-navy: #071b34;
+  --canada-ink: #14233a;
+  --canada-red: #cf2431;
+  --canada-soft: #f5f7fa;
+  background: #fff;
+  color: var(--canada-ink);
+}
+
+.canada-shell {
+  width: min(1180px, calc(100% - 40px));
+  margin-inline: auto;
+}
+
+.canada-narrow {
+  width: min(980px, calc(100% - 40px));
+}
+
+.canada-hero {
+  min-height: 690px;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.canada-hero-image {
+  object-fit: cover;
+  object-position: center;
+  z-index: -3;
+}
+
+.canada-hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: rgba(4, 23, 45, .7);
+}
+
+.canada-hero-grid {
+  min-height: 690px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(340px, .72fr);
+  align-items: center;
+  gap: 72px;
+  padding-block: 72px;
+}
+
+.canada-hero-copy {
+  max-width: 650px;
+  color: #fff;
+}
+
+.canada-eyebrow,
+.canada-section-kicker {
+  margin-bottom: 16px;
+  color: #f5c6ca;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.canada-hero h1,
+.canada-section h2,
+.canada-final-cta h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  letter-spacing: -.035em;
+}
+
+.canada-hero h1 {
+  max-width: 620px;
+  font-size: clamp(44px, 5.3vw, 72px);
+  line-height: 1.02;
+  font-weight: 700;
+}
+
+.canada-hero-subtitle {
+  max-width: 600px;
+  margin-top: 24px;
+  color: #eef3f8;
+  font-size: 18px;
+  line-height: 1.65;
+}
+
+.canada-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.canada-button {
+  display: inline-flex;
+  min-height: 50px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  padding: 0 24px;
+  font-size: 15px;
+  font-weight: 750;
+  transition: transform .18s ease, background-color .18s ease, border-color .18s ease;
+}
+
+.canada-button:hover { transform: translateY(-1px); }
+.canada-button:focus-visible { outline: 3px solid #8fc5ff; outline-offset: 3px; }
+.canada-button-primary { background: var(--canada-red); color: #fff; box-shadow: 0 10px 28px rgba(151, 18, 31, .22); }
+.canada-button-primary:hover { background: #b51c28; }
+.canada-button-secondary { border: 1px solid rgba(255,255,255,.72); color: #fff; background: rgba(7,27,52,.32); }
+.canada-button-secondary:hover { border-color: #fff; background: rgba(7,27,52,.62); }
+
+.canada-assurance {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 24px;
+  color: #e7edf4;
+  font-size: 14px;
+}
+.canada-assurance svg { width: 20px; flex: 0 0 auto; }
+
+.canada-service-card {
+  border-radius: 10px;
+  background: rgba(255,255,255,.97);
+  padding: 32px;
+  box-shadow: 0 24px 70px rgba(1, 14, 28, .32);
+}
+
+.canada-service-card > h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 28px;
+  line-height: 1.12;
+}
+
+.canada-feature-list { display: grid; gap: 20px; margin-top: 28px; }
+.canada-feature { display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: start; }
+.canada-icon { display: grid; width: 40px; height: 40px; place-items: center; border-radius: 50%; background: #eef3f8; color: var(--canada-navy); }
+.canada-icon svg { width: 20px; }
+.canada-feature h3 { font-size: 15px; font-weight: 800; }
+.canada-feature p { margin-top: 4px; color: #5a6778; font-size: 13px; line-height: 1.5; }
+
+.canada-price-card { display: grid; margin-top: 28px; border-top: 1px solid #dfe5ec; padding-top: 24px; }
+.canada-price-card p { font-weight: 750; }
+.canada-price-card strong { color: var(--canada-red); font-size: 34px; line-height: 1.2; }
+.canada-price-card span { margin-top: 8px; font-size: 14px; font-weight: 750; }
+.canada-price-card small { margin-top: 8px; color: #657184; line-height: 1.5; }
+
+.canada-section { padding-block: 92px; }
+.canada-section h2 { font-size: clamp(34px, 4vw, 48px); line-height: 1.08; text-align: center; }
+.canada-section-kicker { color: var(--canada-red); text-align: center; }
+.canada-section-intro { margin: 14px auto 0; color: #617084; text-align: center; font-size: 17px; }
+.canada-process { background: #fff; }
+.canada-process-grid { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: 56px; margin-top: 54px; text-align: center; }
+.canada-process-grid::before { content: ""; position: absolute; top: 22px; left: 17%; right: 17%; border-top: 1px dashed #aab7c8; }
+.canada-process-grid article { position: relative; }
+.canada-step { position: relative; z-index: 1; display: grid; width: 46px; height: 46px; margin: 0 auto 22px; place-items: center; border-radius: 50%; background: var(--canada-navy); color: white; font-weight: 800; box-shadow: 0 0 0 8px #fff; }
+.canada-process-icon { width: 32px; height: 32px; margin: 0 auto 14px; color: var(--canada-navy); stroke-width: 1.7; }
+.canada-process-grid h3 { font-size: 17px; font-weight: 800; }
+.canada-process-grid p { margin: 10px auto 0; max-width: 290px; color: #687588; line-height: 1.65; }
+.canada-role-notice { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 44px; border: 1px solid #d7dee8; border-radius: 6px; padding: 18px 24px; color: #3f4d60; background: #fbfcfd; }
+.canada-role-notice svg { width: 22px; flex: 0 0 auto; color: var(--canada-navy); }
+
+.canada-includes { background: var(--canada-soft); }
+.canada-includes-grid { display: grid; grid-template-columns: 1fr 1fr; margin-top: 44px; border: 1px solid #dce3eb; border-radius: 9px; overflow: hidden; background: #fff; }
+.canada-list-panel { padding: 34px; }
+.canada-list-panel + .canada-list-panel { border-left: 1px solid #dce3eb; }
+.canada-list-panel h3 { display: flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 800; }
+.canada-list-panel h3 svg { width: 22px; }
+.canada-list-panel ul { display: grid; gap: 14px; margin-top: 24px; }
+.canada-list-panel li { display: flex; align-items: flex-start; gap: 10px; color: #425064; line-height: 1.5; }
+.canada-list-panel li svg { width: 18px; margin-top: 2px; flex: 0 0 auto; }
+.canada-list-positive { background: #f5fbf8; }
+.canada-list-positive h3, .canada-list-positive li svg { color: #0f8258; }
+.canada-list-neutral { background: #fff9f9; }
+.canada-list-neutral h3, .canada-list-neutral li span { color: #b4232d; }
+.canada-privacy-strip { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 22px; border: 1px solid #dce3eb; border-radius: 6px; padding: 17px; background: #fff; color: #536174; }
+.canada-privacy-strip svg { width: 20px; color: var(--canada-navy); }
+.canada-privacy-strip a { color: #123f74; text-decoration: underline; text-underline-offset: 3px; }
+
+.canada-pricing { background: #fff; }
+.canada-pricing-grid { display: grid; grid-template-columns: 1fr 1fr; margin-top: 42px; border: 1px solid #d7dee8; border-radius: 9px; overflow: hidden; }
+.canada-pricing-grid article { display: grid; justify-items: center; padding: 38px; text-align: center; }
+.canada-pricing-grid article + article { border-left: 1px solid #d7dee8; }
+.canada-pricing-grid svg { width: 28px; height: 28px; color: var(--canada-navy); }
+.canada-pricing-grid p { margin-top: 14px; font-weight: 800; }
+.canada-pricing-grid strong { margin-top: 4px; color: var(--canada-red); font-size: 32px; }
+.canada-pricing-grid span { max-width: 320px; margin-top: 8px; color: #687588; line-height: 1.55; }
+
+.canada-faq { background: var(--canada-soft); }
+.canada-faq-list { margin-top: 38px; border: 1px solid #d5dde7; border-radius: 8px; overflow: hidden; background: #fff; }
+.canada-faq details + details { border-top: 1px solid #dfe5ec; }
+.canada-faq summary { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 21px 24px; cursor: pointer; font-weight: 750; list-style: none; }
+.canada-faq summary::-webkit-details-marker { display: none; }
+.canada-faq summary svg { width: 20px; transition: transform .2s ease; }
+.canada-faq details[open] summary svg { transform: rotate(180deg); }
+.canada-faq details p { padding: 0 24px 22px; color: #5e6b7d; line-height: 1.65; }
+
+.canada-final-cta { padding-block: 52px; background: #fff; }
+.canada-final-cta .canada-shell { display: flex; align-items: center; justify-content: space-between; gap: 30px; border: 1px solid #ead4d6; border-radius: 9px; padding: 32px 38px; background: #fff8f8; }
+.canada-final-cta h2 { font-size: 32px; }
+.canada-final-cta p { margin-top: 8px; color: #687588; }
+.canada-final-actions { display: flex; align-items: center; gap: 20px; flex: 0 0 auto; }
+.canada-final-actions > a:last-child { color: #163e70; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+
+@media (max-width: 900px) {
+  .canada-hero-grid { grid-template-columns: 1fr; gap: 38px; }
+  .canada-hero-overlay { background: rgba(4,23,45,.78); }
+  .canada-service-card { max-width: 580px; }
+  .canada-process-grid { gap: 24px; }
+  .canada-final-cta .canada-shell { align-items: flex-start; flex-direction: column; }
+}
+
+@media (max-width: 680px) {
+  .canada-shell, .canada-narrow { width: min(100% - 28px, 1180px); }
+  .canada-hero-grid { padding-block: 48px; }
+  .canada-hero h1 { font-size: 42px; }
+  .canada-hero-subtitle { font-size: 16px; }
+  .canada-hero-actions, .canada-final-actions { align-items: stretch; flex-direction: column; }
+  .canada-button { width: 100%; text-align: center; }
+  .canada-service-card { padding: 24px; }
+  .canada-section { padding-block: 64px; }
+  .canada-process-grid { grid-template-columns: 1fr; gap: 38px; }
+  .canada-process-grid::before { display: none; }
+  .canada-includes-grid, .canada-pricing-grid { grid-template-columns: 1fr; }
+  .canada-list-panel + .canada-list-panel, .canada-pricing-grid article + article { border-top: 1px solid #d7dee8; border-left: 0; }
+  .canada-role-notice, .canada-privacy-strip { align-items: flex-start; }
+  .canada-final-actions { width: 100%; }
+}
+
 /* Ensure full width and height classes work */
 .w-full {
   width: 100% !important;

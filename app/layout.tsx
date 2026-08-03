@@ -16,11 +16,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "IMMI WORLD® - eTA & Travel Authorization Services | Canada, Philippines",
+  metadataBase: new URL("https://www.immi-world.com"),
+  title: "IMMI WORLD - Private Travel Application Assistance",
   description:
-    "Complete your Electronic Travel Authorization (eTA) applications online for multiple destinations. Travel authorization services for Canada, Philippines and more. Quick and easy processing.",
+    "Independent paid assistance for travelers preparing online travel application information. IMMI WORLD is not a government website and does not issue travel authorizations.",
   icons: {
-    icon: '/favicons/phillipines.ico', // Philippines favicon by default
+    icon: "/favicon.ico",
   },
 };
 

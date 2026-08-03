@@ -5,40 +5,27 @@ export default function RefundPage() {
   return (
     <>
       <GeneralHeader />
-      <main className="container mx-auto py-12 px-4 max-w-4xl">
-        <h1 className="text-3xl font-bold mb-6">Refund Policy</h1>
-        
-        <div className="prose max-w-none">
-          <p className="mb-4">
-            A full refund will be automatically processed to all users who have made their application through this website in case of application denial by the Government.
-          </p>
-
-          <p className="mb-4">
-            Once you have submitted your application with us, it is assumed and agreed that we will begin the submission process within the timeframe indicated during your application. If you decide to request a refund after your application has been submitted, you may be deemed to accept an application service cancelation fee (35USD), and will only be accepted if the application has not been submitted to the relevant Government authority. However, refunds due to personal changes or simple cancellation of travel may also be rejected, so please understand and apply as indicated on our website. Refunds that are Reimbursements other than rebates approved by the relevant government will be determined within 72 hours of our legal team&apos;s assessment.
-          </p>
-
-          <p className="mb-4">
-            All transactions are conducted in United States dollars. Your refund will be issued in US dollars and posted within three working days of your written request for withdrawal from your contract. Once you have received the payment, your bank or credit card company may convert it to your local currency. You will receive the same USD amount as charged in return.
-          </p>
-
-          <p className="mb-4">
-            If you wish to request a refund, email us at immiworldcenter@gmail.com indicating the following:
-          </p>
-
-          <ul className="list-disc pl-6 mb-4">
-            <li>Your reason for the request.</li>
-            <li>Your full names (as appears in your passport).</li>
-            <li>Passport number.</li>
-            <li>The email used to make the registration on this website.</li>
-          </ul>
-
-          <p className="mb-4">
-            For multiple requests, please indicate all names and Passport number. All refund requests will be evaluated within 72 hours.
-          </p>
+      <main className="mx-auto max-w-4xl px-5 py-14 text-slate-700">
+        <p className="text-sm font-bold uppercase tracking-widest text-[#cf2431]">Legal information</p>
+        <h1 className="mt-3 text-4xl font-bold text-[#071b34]">Refund Policy</h1>
+        <div className="mt-8 space-y-6 leading-7">
+          <p>This policy applies to the private IMMI WORLD assistance fee. Government and third-party fees are controlled by their respective providers and are not part of our service fee.</p>
+          <section>
+            <h2 className="text-2xl font-bold text-[#071b34]">Before our review begins</h2>
+            <p className="mt-3">You may request cancellation by email. If our team has not started reviewing or organizing the information, the private assistance fee will be refunded in full.</p>
+          </section>
+          <section>
+            <h2 className="text-2xl font-bold text-[#071b34]">After work begins</h2>
+            <p className="mt-3">If review or guidance work has started, the request will be assessed according to the work already delivered and applicable consumer law. A decision by Canadian authorities is outside our control and does not mean that IMMI WORLD made or influenced that decision.</p>
+          </section>
+          <section>
+            <h2 className="text-2xl font-bold text-[#071b34]">How to request a refund</h2>
+            <p className="mt-3">Email <a className="font-semibold text-blue-800 underline" href="mailto:immiworldcenter@gmail.com">immiworldcenter@gmail.com</a> with the purchaser&apos;s name, order email, Stripe payment reference if available, and the reason for the request. Do not send a passport number by ordinary email unless our support team specifically provides a secure method.</p>
+          </section>
+          <p>Approved refunds are returned to the original payment method. Your bank or card provider controls when the credit appears on your statement.</p>
         </div>
       </main>
       <GeneralFooter />
     </>
   );
 }
-

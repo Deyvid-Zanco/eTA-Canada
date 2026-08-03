@@ -1,153 +1,267 @@
 "use client";
-import Head from "next/head";
+
+import Image from "next/image";
 import Link from "next/link";
+import {
+  Check,
+  ChevronDown,
+  CircleCheck,
+  FileCheck2,
+  FileSearch2,
+  Headphones,
+  LockKeyhole,
+  Send,
+  ShieldCheck,
+  UploadCloud,
+} from "lucide-react";
 import { CanadaHeader } from "../components/Header";
 import { CanadaFooter } from "../components/Footer";
-import CountrySearchGrid from "../components/CountrySearchGrid";
 import { useLanguage } from "../../lib/contexts/LanguageContext";
 
+const OFFICIAL_ETA_URL =
+  "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eta/apply.html";
+
+const content = {
+  en: {
+    eyebrow: "Independent travel assistance",
+    title: "Independent support for your Canada eTA application",
+    subtitle:
+      "We help you review and organize your information before submission. Final decisions are made solely by Canadian immigration authorities.",
+    primary: "Start assisted application",
+    secondary: "Apply directly on Canada.ca",
+    assurance: "No approval guarantees. All fees are shown before payment.",
+    cardTitle: "Private assistance for your Canada eTA",
+    features: [
+      ["Personal review", "We check your information for clarity and completeness."],
+      ["Application guidance", "Plain-language support through the form."],
+      ["Document checklist", "A clear list of the information you should prepare."],
+    ],
+    serviceFee: "Private assistance fee",
+    servicePrice: "US$42",
+    officialFee: "Official government fee: CAN$7",
+    feeNote:
+      "Our fee is separate from the Canadian government fee. You will see the total again before payment.",
+    processTitle: "Simple, transparent process",
+    process: [
+      ["Share your information", "Complete our secure form with your travel and passport details."],
+      ["We review and organize", "Our team checks the information for completeness and consistency."],
+      ["You stay informed", "We provide guidance and communicate the next steps by email."],
+    ],
+    roleNotice:
+      "IMMI WORLD provides private administrative assistance. We do not issue eTAs and cannot influence a government decision.",
+    includesTitle: "What our service includes",
+    includes: [
+      "Review for completeness and common inconsistencies",
+      "Plain-language guidance while completing the form",
+      "Document and information checklist",
+      "Email support about the assistance service",
+    ],
+    excludesTitle: "What our service does not include",
+    excludes: [
+      "A guarantee of approval or processing time",
+      "A government decision on your application",
+      "Government, biometric, medical or third-party fees",
+      "Legal advice or regulated immigration representation",
+    ],
+    privacy: "Your personal information is handled according to our Privacy Policy.",
+    pricingTitle: "Clear fees. No surprises.",
+    pricingSubtitle: "The private assistance fee and the official fee are separate.",
+    assistanceDescription: "One-time payment for our review and guidance service.",
+    governmentDescription: "Set by the Government of Canada for an eTA application.",
+    faqTitle: "Frequently asked questions",
+    faqs: [
+      ["Is IMMI WORLD a government website?", "No. We are an independent private consultancy and are not affiliated with the Government of Canada."],
+      ["Can you guarantee approval?", "No. Only Canadian immigration authorities decide an eTA application. We cannot guarantee an outcome or processing time."],
+      ["Can I apply without your service?", "Yes. Our assistance is optional. You can apply directly through the official Canada.ca website and pay only the official CAN$7 fee."],
+      ["What does the US$42 payment cover?", "It covers IMMI WORLD's private review and guidance service. It is separate from the official government fee."],
+      ["Who issues the eTA?", "The eTA is issued only by the Government of Canada. IMMI WORLD provides administrative assistance and does not issue travel authorizations."],
+    ],
+    finalTitle: "Ready for guided assistance?",
+    finalText: "Review the service and fees, then begin when you are comfortable.",
+  },
+  es: {
+    eyebrow: "Asistencia de viaje independiente",
+    title: "Asistencia independiente para tu solicitud de eTA de Canadá",
+    subtitle:
+      "Te ayudamos a revisar y organizar tu información. Las autoridades migratorias canadienses toman la decisión final.",
+    primary: "Iniciar solicitud asistida",
+    secondary: "Solicitar directamente en Canada.ca",
+    assurance: "No garantizamos la aprobación. Mostramos todas las tarifas antes del pago.",
+    cardTitle: "Asistencia privada para tu eTA de Canadá",
+    features: [
+      ["Revisión personal", "Revisamos la claridad y consistencia de tu información."],
+      ["Orientación", "Ayuda en lenguaje claro durante el formulario."],
+      ["Lista de documentos", "Una lista clara de la información que debes preparar."],
+    ],
+    serviceFee: "Tarifa de asistencia privada",
+    servicePrice: "US$42",
+    officialFee: "Tarifa oficial del gobierno: CAN$7",
+    feeNote: "Nuestra tarifa es independiente de la tarifa del Gobierno de Canadá.",
+    processTitle: "Proceso simple y transparente",
+    process: [
+      ["Comparte tu información", "Completa nuestro formulario seguro con tus datos."],
+      ["Revisamos y organizamos", "Nuestro equipo verifica la integridad y consistencia."],
+      ["Te mantenemos informado", "Enviamos orientación y próximos pasos por correo electrónico."],
+    ],
+    roleNotice: "IMMI WORLD brinda asistencia administrativa privada. No emite eTAs ni puede influir en una decisión gubernamental.",
+    includesTitle: "Qué incluye nuestro servicio",
+    includes: ["Revisión de integridad", "Orientación en lenguaje claro", "Lista de documentos", "Soporte por correo electrónico"],
+    excludesTitle: "Qué no incluye nuestro servicio",
+    excludes: ["Garantía de aprobación o plazo", "Decisión gubernamental", "Tasas gubernamentales o de terceros", "Asesoramiento legal o representación migratoria regulada"],
+    privacy: "Tratamos tu información personal de acuerdo con nuestra Política de Privacidad.",
+    pricingTitle: "Tarifas claras. Sin sorpresas.",
+    pricingSubtitle: "La tarifa de asistencia privada y la tarifa oficial son independientes.",
+    assistanceDescription: "Pago único por nuestro servicio de revisión y orientación.",
+    governmentDescription: "Establecida por el Gobierno de Canadá para una solicitud de eTA.",
+    faqTitle: "Preguntas frecuentes",
+    faqs: [
+      ["¿IMMI WORLD es un sitio gubernamental?", "No. Somos una consultoría privada independiente sin afiliación con el Gobierno de Canadá."],
+      ["¿Pueden garantizar la aprobación?", "No. Solo las autoridades canadienses deciden una solicitud de eTA."],
+      ["¿Puedo solicitar sin este servicio?", "Sí. Nuestra asistencia es opcional. Puedes usar Canada.ca y pagar únicamente la tarifa oficial de CAN$7."],
+      ["¿Qué cubre el pago de US$42?", "Cubre la revisión y orientación privada de IMMI WORLD. Es independiente de la tarifa oficial."],
+      ["¿Quién emite la eTA?", "Solo el Gobierno de Canadá emite la eTA. IMMI WORLD no emite autorizaciones de viaje."],
+    ],
+    finalTitle: "¿Listo para recibir asistencia?",
+    finalText: "Revisa el servicio y las tarifas y comienza cuando estés conforme.",
+  },
+};
+
 export default function CanadaLandingPage() {
-  const { t } = useLanguage();
+  const { language } = useLanguage();
+  const c = content[language];
 
   return (
     <>
-      <Head>
-        <title>Canada eTA - Electronic Travel Authorization</title>
-        <meta
-          name="description"
-          content="Complete the eTA Canada application and obtain your Electronic Travel Authorization to visit Canada (ETA). All Visa-exempt foreign nationals must request their Canadian eTA."
-        />
-        <meta property="og:title" content="Canada eTA" />
-        <meta
-          property="og:description"
-          content="Complete the eTA Canada application and obtain your Electronic Travel Authorization to visit Canada (ETA). All Visa-exempt foreign nationals must request their Canadian eTA."
-        />
-        <meta
-          property="og:image"
-          content="/eta-canada-immi-center-logo-1024x339.png"
-        />
-        <meta property="og:url" content="https://www.immi-world.com/canada" />
-        <meta property="og:site_name" content="Visa eTa Canada" />
-        <meta name="robots" content="noindex,nofollow" />
-        <link
-          rel="shortcut icon"
-          href="/static/img/canada/canadaetavisa/favicon.ico"
-        />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
       <CanadaHeader />
-      <main className="flex flex-col">
-        {/* Hero Section */}
-        <section className="m-jumbotron-image6 flex flex-col items-center justify-center text-center gap-6 px-4">
-          <h1 className="text-3xl md:text-5xl font-bold max-w-3xl">
-            {t.hero.title}
-          </h1>
-          <p className="max-w-2xl">
-            {t.hero.subtitle}
-          </p>
-          <Link
-            href="/canada/apply"
-            className="bg-red-600 hover:bg-red-700 text-white py-3 px-8 rounded-md text-lg font-semibold"
-          >
-            {t.hero.applyNow}
-          </Link>
+      <main className="canada-landing">
+        <section className="canada-hero">
+          <Image
+            src="/hero.png"
+            alt="Mountain lake in Canada"
+            fill
+            priority
+            sizes="100vw"
+            className="canada-hero-image"
+          />
+          <div className="canada-hero-overlay" />
+          <div className="canada-shell canada-hero-grid">
+            <div className="canada-hero-copy">
+              <p className="canada-eyebrow">{c.eyebrow}</p>
+              <h1>{c.title}</h1>
+              <p className="canada-hero-subtitle">{c.subtitle}</p>
+              <div className="canada-hero-actions">
+                <Link href="/canada/apply" className="canada-button canada-button-primary">
+                  {c.primary}
+                </Link>
+                <a href={OFFICIAL_ETA_URL} target="_blank" rel="noopener noreferrer" className="canada-button canada-button-secondary">
+                  {c.secondary}
+                </a>
+              </div>
+              <p className="canada-assurance"><ShieldCheck aria-hidden="true" /> {c.assurance}</p>
+            </div>
+
+            <aside className="canada-service-card" aria-label={c.cardTitle}>
+              <h2>{c.cardTitle}</h2>
+              <div className="canada-feature-list">
+                {c.features.map(([title, description], index) => {
+                  const Icon = index === 0 ? CircleCheck : index === 1 ? FileCheck2 : ShieldCheck;
+                  return (
+                    <div className="canada-feature" key={title}>
+                      <span className="canada-icon"><Icon aria-hidden="true" /></span>
+                      <div><h3>{title}</h3><p>{description}</p></div>
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="canada-price-card">
+                <p>{c.serviceFee}</p>
+                <strong>{c.servicePrice}</strong>
+                <span>{c.officialFee}</span>
+                <small>{c.feeNote}</small>
+              </div>
+            </aside>
+          </div>
         </section>
 
-        {/* Steps Section */}
-        <section className="m-steps container mx-auto py-16 px-4">
-          <div className="grid md:grid-cols-3 gap-12 text-center">
-            <div>
-              <span className="step-number">1</span>
-              <h3 className="font-semibold mb-2">{t.steps.step1.title}</h3>
-              <p>{t.steps.step1.description}</p>
+        <section id="how-it-works" className="canada-section canada-process">
+          <div className="canada-shell">
+            <p className="canada-section-kicker">IMMI WORLD</p>
+            <h2>{c.processTitle}</h2>
+            <div className="canada-process-grid">
+              {c.process.map(([title, description], index) => {
+                const Icon = index === 0 ? UploadCloud : index === 1 ? FileSearch2 : Send;
+                return <article key={title}>
+                  <span className="canada-step">{index + 1}</span>
+                  <Icon className="canada-process-icon" aria-hidden="true" />
+                  <h3>{title}</h3>
+                  <p>{description}</p>
+                </article>;
+              })}
             </div>
-            <div>
-              <span className="step-number">2</span>
-              <h3 className="font-semibold mb-2">{t.steps.step2.title}</h3>
-              <p>{t.steps.step2.description}</p>
+            <div className="canada-role-notice"><ShieldCheck aria-hidden="true" /><p>{c.roleNotice}</p></div>
+          </div>
+        </section>
+
+        <section className="canada-section canada-includes">
+          <div className="canada-shell">
+            <h2>{c.includesTitle}</h2>
+            <div className="canada-includes-grid">
+              <article className="canada-list-panel canada-list-positive">
+                <h3><CircleCheck aria-hidden="true" />{c.includesTitle}</h3>
+                <ul>{c.includes.map((item) => <li key={item}><Check aria-hidden="true" />{item}</li>)}</ul>
+              </article>
+              <article className="canada-list-panel canada-list-neutral">
+                <h3><ShieldCheck aria-hidden="true" />{c.excludesTitle}</h3>
+                <ul>{c.excludes.map((item) => <li key={item}><span aria-hidden="true">—</span>{item}</li>)}</ul>
+              </article>
             </div>
-            <div>
-              <span className="step-number">3</span>
-              <h3 className="font-semibold mb-2">{t.steps.step3.title}</h3>
-              <p>{t.steps.step3.description}</p>
+            <div className="canada-privacy-strip"><LockKeyhole aria-hidden="true" /><p>{c.privacy} <Link href="/privacy">Privacy Policy</Link></p></div>
+          </div>
+        </section>
+
+        <section id="pricing" className="canada-section canada-pricing">
+          <div className="canada-shell canada-narrow">
+            <h2>{c.pricingTitle}</h2>
+            <p className="canada-section-intro">{c.pricingSubtitle}</p>
+            <div className="canada-pricing-grid">
+              <article>
+                <Headphones aria-hidden="true" />
+                <p>{c.serviceFee}</p>
+                <strong>{c.servicePrice}</strong>
+                <span>{c.assistanceDescription}</span>
+              </article>
+              <article>
+                <FileCheck2 aria-hidden="true" />
+                <p>{c.officialFee}</p>
+                <strong>CAN$7</strong>
+                <span>{c.governmentDescription}</span>
+              </article>
             </div>
           </div>
         </section>
 
-        {/* Information Section */}
-        <section id="eta-info" className="container mx-auto py-16 px-4">
-          <h2 className="text-2xl md:text-3xl font-bold mb-6">
-            {t.info.title}
-          </h2>
-          <h3 className="text-xl font-semibold mb-4">{t.info.subtitle}</h3>
-          <p className="mb-6 max-w-3xl">
-            {t.info.description}
-          </p>
-          <Link
-            href="/canada/apply"
-            className="bg-red-600 hover:bg-red-700 text-white py-3 px-8 rounded-md"
-          >
-            {t.info.applyButton}
-          </Link>
-        </section>
-
-        {/* Country List Section */}
-        <section className="container mx-auto py-16 px-4">
-          <h2 className="text-2xl md:text-3xl font-bold mb-6">
-            {t.countryList.title}
-          </h2>
-          <CountrySearchGrid />
-        </section>
-
-        {/* Benefits Section */}
-        <section id="benefits" className="container mx-auto py-16 px-4">
-          <h2 className="text-2xl md:text-3xl font-bold mb-6">{t.benefits.title}</h2>
-          <table className="w-full text-center border-collapse">
-            <thead>
-              <tr className="bg-gray-100">
-                <th className="w-1/2 text-left p-3">{t.benefits.service}</th>
-                <th className="p-3">{t.benefits.ourService}</th>
-                <th className="p-3">{t.benefits.government}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {[
-                [t.benefits.onlineApplication, true, true],
-                [t.benefits.applicationRevision, true, false],
-                [t.benefits.emailSupport, true, false],
-              ].map(([label, ours, gov], idx) => (
-                <tr key={idx} className="hover:bg-gray-50">
-                  <td className="text-left p-3 border-t border-gray-200">
-                    {label as string}
-                  </td>
-                  <td className="p-3 border-t border-gray-200">
-                    {ours ? (
-                      <span className="text-green-600 font-bold">✔</span>
-                    ) : (
-                      <span className="text-red-600 font-bold">✖</span>
-                    )}
-                  </td>
-                  <td className="p-3 border-t border-gray-200">
-                    {gov ? (
-                      <span className="text-green-600 font-bold">✔</span>
-                    ) : (
-                      <span className="text-red-600 font-bold">✖</span>
-                    )}
-                  </td>
-                </tr>
+        <section id="faq" className="canada-section canada-faq">
+          <div className="canada-shell canada-narrow">
+            <h2>{c.faqTitle}</h2>
+            <div className="canada-faq-list">
+              {c.faqs.map(([question, answer]) => (
+                <details key={question}>
+                  <summary>{question}<ChevronDown aria-hidden="true" /></summary>
+                  <p>{answer}</p>
+                </details>
               ))}
-            </tbody>
-          </table>
+            </div>
+          </div>
         </section>
 
-        {/* Final CTA */}
-        <section className="text-center py-12 bg-gray-50">
-          <Link
-            href="/canada/apply"
-            className="bg-red-600 hover:bg-red-700 text-white py-4 px-12 rounded-md text-xl font-semibold"
-          >
-            {t.finalCta.applyForEta}
-          </Link>
+        <section className="canada-final-cta">
+          <div className="canada-shell">
+            <div><h2>{c.finalTitle}</h2><p>{c.finalText}</p></div>
+            <div className="canada-final-actions">
+              <Link href="/canada/apply" className="canada-button canada-button-primary">{c.primary}</Link>
+              <a href={OFFICIAL_ETA_URL} target="_blank" rel="noopener noreferrer">{c.secondary}</a>
+            </div>
+          </div>
         </section>
       </main>
       <CanadaFooter />

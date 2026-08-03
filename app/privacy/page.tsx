@@ -11,7 +11,7 @@ export default function PrivacyPage() {
         <div className="prose max-w-none">
           <h2 className="text-2xl font-bold mt-8 mb-4">PRIVACY AND DATA PROTECTION POLICY</h2>
           <p className="mb-4">
-            Immi World® is authorized by the Ministry of Tourism through Cadastur to operate with the activity of obtaining and legalizing documents for travelers in accordance with Law 11.771/08 – Art. 27 § 4o I which can be verified at: <a href="https://cadastur.turismo.gov.br/cadastur/#!/public/qrcode/43274527000117" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-700">Cadastur QR Code</a>. Heliza Giovana Conrado de Andrade Chacha – CNPJ 43.274.527/0001-17. Immi World® ensures the protection, integrity, and confidentiality of the personal data provided by its clients.
+            Immi World® is an independent private travel consultancy operated by Heliza Giovana Conrado de Andrade Chacha — CNPJ 43.274.527/0001-17. Registration with <a href="https://cadastur.turismo.gov.br/cadastur/#!/public/qrcode/43274527000117" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-700">Cadastur</a> relates to our Brazilian tourism activity and does not mean that we are affiliated with or authorized by the Government of Canada. Immi World® is responsible for protecting the personal data entrusted to the service.
           </p>
           <p className="mb-4">
             Our Data Protection Policy is founded on the principle of proactive responsibility, meaning that Immi World® assumes accountability for the proper application of all legal, regulatory, and jurisprudential data protection requirements, and can demonstrate compliance before competent authorities.
@@ -79,4 +79,4 @@ export default function PrivacyPage() {
       <GeneralFooter />
     </>
   );
-} 
+}

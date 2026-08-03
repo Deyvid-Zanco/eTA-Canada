@@ -65,7 +65,7 @@ export const en = {
 
   // Footer
   footer: {
-    disclaimer: "Disclaimer: Immi World® is not affiliated with any government agency or department. Costs for consulting services do not include any government solicitation, medical examination, or biometric fees. We are a private travel consultancy provider. You can apply directly for travel authorizations on the Embassy or Consulate websites. Immi World® is authorized by the Ministry of Tourism through Cadastur to operate with the activity of obtaining and legalizing documents for travelers in accordance with Law 11.771/08 – Art. 27 § 4o I which can be verified at:",
+    disclaimer: "Disclaimer: Immi World® is an independent private travel consultancy and is not affiliated with the Government of Canada or any embassy or consulate. Our service fee does not include government, medical examination, or biometric fees. You may apply directly through the appropriate official government website. Any Brazilian business or tourism registration mentioned on this site does not imply authorization, endorsement, or affiliation with Canadian authorities.",
     cadasturLink: "Cadastur QR Code",
     companyInfo: "Heliza Giovana Conrado de Andrade Chacha – CNPJ 43.274.527/0001-17.",
     termsOfUse: "Terms and Conditions",
@@ -78,18 +78,18 @@ export const en = {
 
   // Form Page
   form: {
-    title: "CANADA ETA PERMIT AUTHORIZATION",
-    welcome: "Welcome, you are entitled to a Canada ETA Permit.",
+    title: "Private Canada eTA Application Assistance",
+    welcome: "Complete the form to use IMMI WORLD's optional paid review and guidance service.",
     ifYouApply: {
       title: "If you apply, make sure:",
       point1: "You're visiting for a maximum of 6 months",
       point2: "You're traveling exclusively for business, transit or pleasure",
     },
     permitRenewal: {
-      title: "Permit Renewal Notice:",
-      content: "Use the same form below if you already have a valid Canada ETA permit and are looking to renew.",
+      title: "Important service notice:",
+      content: "IMMI WORLD is a private consultancy. Canadian authorities alone decide whether an eTA is issued.",
     },
-    submitApplication: "Submit Application",
+    submitApplication: "Continue to secure payment",
     processing: "Processing...",
     success: "Application submitted successfully!",
     error: "Error:",
@@ -508,4 +508,4 @@ export const en = {
     november: "November",
     december: "December",
   },
-}; 
+};

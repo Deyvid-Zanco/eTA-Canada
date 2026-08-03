@@ -71,11 +71,11 @@ export default function ObrigadoPage() {
           <h1 className="text-2xl font-bold text-[#34A853] mb-2">PURCHASE ORDER COMPLETED!</h1>
           <p className="mb-6 text-gray-900 dark:text-gray-100">Hello!</p>
           <p className="mb-2 text-gray-900 dark:text-gray-100">
-            We have received your request for the issuance of the Electronic Travel Authorization (eTA) for Canada.
+            We received your payment for IMMI WORLD&apos;s optional private Canada eTA application assistance.
           </p>
           <p className="mb-2 text-gray-900 dark:text-gray-100">
-            Your application will be processed shortly.<br />
-            <span className="font-semibold">Processing time may take a few minutes or up to 72 hours.</span>
+            Our team will contact you about the next steps in the assistance service.<br />
+            <span className="font-semibold">We do not issue eTAs and cannot guarantee a government decision or processing time.</span>
           </p>
           <p className="mb-2 font-semibold text-gray-900 dark:text-gray-100">IMPORTANT INFORMATION:</p>
           <p className="mb-6 text-gray-900 dark:text-gray-100">
@@ -95,4 +95,4 @@ export default function ObrigadoPage() {
       <Footer />
     </>
   );
-} 
+}

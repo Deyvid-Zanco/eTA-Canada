@@ -11,12 +11,12 @@ export default function LandingPage() {
         <title>IMMI WORLD® - eTA & Travel Authorization Services | Canada, Philippines</title>
         <meta
           name="description"
-          content="Complete your Electronic Travel Authorization (eTA) applications online for multiple destinations. Travel authorization services for Canada, Philippines and more. Quick and easy processing."
+          content="Optional private assistance for travelers preparing online travel application information. IMMI WORLD is not a government website."
         />
         <meta property="og:title" content="IMMI WORLD® - eTA & Travel Authorization Services" />
         <meta
           property="og:description"
-          content="eTA applications quick and easy. Travel authorization services for individuals, SME, corporations. Belgian residents can obtain travel authorizations for 135+ destinations online."
+          content="Independent paid travel application assistance. We do not issue government documents or guarantee a decision."
         />
         <meta property="og:url" content="https://www.immi-world.com" />
         <meta property="og:site_name" content="IMMI WORLD®" />
@@ -31,11 +31,11 @@ export default function LandingPage() {
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="text-center md:text-left">
                 <h1 className="text-4xl md:text-6xl font-bold mb-6">
-                  travel authorization<br />
-                  <span className="text-yellow-400">quick and easy</span>
+                  private travel application<br />
+                  <span className="text-yellow-400">review and guidance</span>
                 </h1>
                 <p className="text-xl mb-8 max-w-2xl mx-auto md:mx-0">
-                  Complete your Electronic Travel Authorization (eTA) applications online for multiple destinations worldwide.
+                  Optional paid assistance to help organize and review travel application information. We are not a government website.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
                   <Link
@@ -97,7 +97,7 @@ export default function LandingPage() {
               </h2>
               <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
                 eTA desk for individuals, SME, corporations, non-governmental organizations and everyone.
-                We are a private travel consultancy provider authorized to assist with travel authorization applications.
+                We are an independent private travel consultancy. Government authorities alone issue travel authorizations and decide applications.
               </p>
               <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
                 <div className="text-center">
@@ -152,9 +152,9 @@ export default function LandingPage() {
               {/* Fast Processing */}
               <div className="text-center">
                 <div className="bg-purple-50 rounded-lg p-8">
-                  <h3 className="text-2xl font-bold mb-4">Fast Processing</h3>
+                  <h3 className="text-2xl font-bold mb-4">Clear Guidance</h3>
                   <p className="text-gray-600 mb-4">
-                    Quick turnaround times with efficient processing to get your Electronic Travel Authorization approved as soon as possible.
+                    Plain-language administrative guidance and a careful review of the information you provide. No approval or timing guarantees.
                   </p>
                   <div className="text-4xl">⚡</div>
                 </div>

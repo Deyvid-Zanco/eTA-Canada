@@ -8,6 +8,11 @@
     "export": "next export",
     "start": "next start",
     "lint": "next lint",
+    "cf:build": "opennextjs-cloudflare build",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy -- --keep-vars",
+    "upload": "opennextjs-cloudflare build && opennextjs-cloudflare upload -- --keep-vars",
+    "cf:typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
     "setup-database": "tsx --env-file=.env.local scripts/setup-database.ts",
     "setup-storage": "tsx --env-file=.env.local scripts/setup-storage.ts",
     "test-storage": "tsx --env-file=.env.local scripts/test-storage.ts",
@@ -20,6 +25,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^5.1.1",
+    "@opennextjs/cloudflare": "^1.20.2",
     "@stripe/stripe-js": "^7.4.0",
     "@supabase/supabase-js": "^2.57.4",
     "@types/stripe": "^8.0.417",
@@ -27,7 +33,7 @@
     "js-cookie": "^3.0.5",
     "lodash": "^4.17.21",
     "lucide-react": "^0.544.0",
-    "next": "15.3.8",
+    "next": "15.5.22",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-google-recaptcha-v3": "^1.11.0",
@@ -48,9 +54,14 @@
     "@types/react-dom": "^19",
     "@types/uuid": "^11.0.0",
     "eslint": "^9",
-    "eslint-config-next": "15.3.5",
+    "eslint-config-next": "15.5.22",
     "tailwindcss": "^4",
     "tsx": "^4.20.5",
-    "typescript": "^5"
+    "typescript": "^5",
+    "wrangler": "^4.118.0"
+  },
+  "overrides": {
+    "postcss": "8.5.25",
+    "sharp": "0.35.3"
   }
 }
