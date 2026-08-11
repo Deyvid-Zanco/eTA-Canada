@@ -1,79 +1,58 @@
-import { GeneralHeader } from "../components/Header";
+import type { Metadata } from "next";
 import { GeneralFooter } from "../components/Footer";
+import { GeneralHeader } from "../components/Header";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy",
+  description: "How IMMI WORLD collects, uses, shares, and protects personal information.",
+  alternates: { canonical: "/privacy" },
+};
 
 export default function PrivacyPage() {
   return (
     <>
       <GeneralHeader />
-      <main className="container mx-auto py-12 px-4 max-w-4xl">
-        <h1 className="text-3xl font-bold mb-6">Privacy Policy</h1>
-        
-        <div className="prose max-w-none">
-          <h2 className="text-2xl font-bold mt-8 mb-4">PRIVACY AND DATA PROTECTION POLICY</h2>
-          <p className="mb-4">
-            Immi World® is an independent private travel consultancy operated by Heliza Giovana Conrado de Andrade Chacha — CNPJ 43.274.527/0001-17. Registration with <a href="https://cadastur.turismo.gov.br/cadastur/#!/public/qrcode/43274527000117" target="_blank" rel="noopener noreferrer" className="underline hover:text-blue-700">Cadastur</a> relates to our Brazilian tourism activity and does not mean that we are affiliated with or authorized by the Government of Canada. Immi World® is responsible for protecting the personal data entrusted to the service.
-          </p>
-          <p className="mb-4">
-            Our Data Protection Policy is founded on the principle of proactive responsibility, meaning that Immi World® assumes accountability for the proper application of all legal, regulatory, and jurisprudential data protection requirements, and can demonstrate compliance before competent authorities.
-          </p>
+      <main className="mx-auto max-w-4xl px-5 py-14 text-slate-700">
+        <p className="text-sm font-bold uppercase tracking-widest text-[#a71924]">Legal information</p>
+        <h1 className="mt-3 text-4xl font-bold text-[#071a31]">Privacy Policy</h1>
+        <p className="mt-4 text-sm text-slate-500">Last updated: August 10, 2026</p>
 
-          <h3 className="text-xl font-bold mt-6 mb-4">Data Controller – Who We Are</h3>
-          <ul className="list-disc pl-6 mb-4">
-            <li><strong>Name:</strong> Immi World®</li>
-            <li><strong>Address:</strong> Averrois, 96</li>
-            <li><strong>Email:</strong> immiworldcenter@gmail.com</li>
-          </ul>
+        <div className="mt-8 space-y-8 leading-7">
+          <section>
+            <h2 className="text-2xl font-bold text-[#071a31]">Who controls your information</h2>
+            <p className="mt-3">
+              IMMI WORLD is an independent private service operated by Heliza Giovana Conrado de Andrade Chacha, CNPJ 43.274.527/0001-17, at Averrois, 96, Brazil. Contact: <a className="font-semibold text-blue-800 underline" href="mailto:contato@immi-center.com">contato@immi-center.com</a>.
+            </p>
+            <p className="mt-3">We are not affiliated with the Government of Canada. Any Brazilian tourism registration relates only to our Brazilian business activity and is not Canadian government authorization or endorsement.</p>
+          </section>
 
-          <h3 className="text-xl font-bold mt-6 mb-4">Purpose of Data Processing – Why We Collect Your Information</h3>
-          <p className="mb-4">
-            All personal data provided by clients or visitors through the Immi World® website or its staff are included in the company&apos;s personal data processing register, maintained under our responsibility.
-          </p>
-          <p className="mb-4">
-            These data are necessary to deliver the services requested by users or to respond to inquiries and support requests. Immi World® does not engage in user profiling.
-          </p>
-          <p className="mb-4">
-            Data processing performed through this website aims to manage the administrative and documentation process of travel authorization applications requested by the data subject. Accordingly, Immi World® may have access to sensitive data, including medical certificates, health-related information, and criminal record certificates. These data are strictly used for the aforementioned purposes and treated with the utmost confidentiality and security.
-          </p>
+          <section>
+            <h2 className="text-2xl font-bold text-[#071a31]">Information we collect</h2>
+            <p className="mt-3">We collect the contact, identity, passport, employment, address, travel, and eligibility information you enter in the assistance form, along with your consent and service communications. Stripe processes payment information; we do not receive or store your full card number.</p>
+            <p className="mt-3">We may also receive technical information such as IP address, browser details, security signals, referral information, and analytics or advertising events when those tools are active.</p>
+          </section>
 
-          <h3 className="text-xl font-bold mt-6 mb-4">Legal Basis – Why We Are Authorized to Process Your Data</h3>
-          <p className="mb-4">
-            a) <strong>Contractual relationship:</strong> when purchasing a product or hiring a service from Immi World®.
-          </p>
-          <p className="mb-4">
-            b) <strong>Legitimate interest:</strong> for responding to customer inquiries, managing complaints, and collecting pending payments.
-          </p>
-          <p className="mb-4">
-            c) <strong>Consent:</strong> when users voluntarily check the corresponding box on our contact forms, authorizing communication regarding their inquiry or information request.
-          </p>
+          <section>
+            <h2 className="text-2xl font-bold text-[#071a31]">Why we use information</h2>
+            <p className="mt-3">We use information to provide the requested private review and guidance, communicate with you, process and confirm payment, detect abuse, maintain security, comply with legal obligations, and resolve support or refund requests.</p>
+          </section>
 
-          <h3 className="text-xl font-bold mt-6 mb-4">Data Recipients – Who We Share Your Information With</h3>
-          <p className="mb-4">
-            Your data may be shared with public or private entities when required by law. For example, fiscal regulations may obligate Immi World® to provide specific economic transaction details to tax authorities.
-          </p>
-          <p className="mb-4">
-            When services are rendered through our online portal, we may also share data with consular offices relevant to your travel authorization or document application.
-          </p>
+          <section>
+            <h2 className="text-2xl font-bold text-[#071a31]">Service providers and international processing</h2>
+            <p className="mt-3">Information may be processed by providers that support this service, including Cloudflare for hosting and security, Stripe for payments, Resend for email delivery, Google reCAPTCHA and Google Ads for security and conversion measurement, and Microsoft Clarity for analytics when enabled.</p>
+            <p className="mt-3">These providers may process information in countries outside Brazil. Their own privacy terms and safeguards also apply. We disclose information to public authorities only where legally required or when you specifically direct and authorize the next step.</p>
+          </section>
 
-          <h3 className="text-xl font-bold mt-6 mb-4">International Transfers – Where Your Data May Go</h3>
-          <p className="mb-4">
-            If your application involves documentation from outside the European Economic Area (EEA), your data may be transmitted internationally to the appropriate consular or administrative offices.
-          </p>
+          <section>
+            <h2 className="text-2xl font-bold text-[#071a31]">Retention and security</h2>
+            <p className="mt-3">We retain information only for as long as reasonably necessary to provide the service, document transactions, resolve disputes, and meet legal or accounting obligations. Access is limited to people and providers who need the information for these purposes.</p>
+            <p className="mt-3">No online service can promise absolute security. We use administrative and technical measures intended to reduce unauthorized access, alteration, disclosure, or loss.</p>
+          </section>
 
-          <h3 className="text-xl font-bold mt-6 mb-4">Data Retention – How Long We Keep Your Information</h3>
-          <p className="mb-4">
-            Personal data are retained only for as long as necessary to fulfill the purposes for which they were collected. Retention periods are defined based on legal obligations, contractual requirements, and Immi World®&apos;s legitimate business interests.
-          </p>
-          <p className="mb-4">
-            After the active relationship ends, data are securely blocked and stored only for potential legal obligations, judicial actions, or administrative inquiries. Once blocked, the data are inaccessible to Immi World® and will be made available solely to public authorities or courts if required.
-          </p>
-
-          <h3 className="text-xl font-bold mt-6 mb-4">Data Security – How We Protect Your Information</h3>
-          <p className="mb-4">
-            Immi World® applies advanced technical and organizational measures to safeguard personal data from loss, unauthorized access, misuse, or disclosure. Our staff is trained in data protection practices, and any third parties providing support services must comply with the same security and confidentiality standards.
-          </p>
-          <p className="mb-4">
-            Although we strive to maintain the highest levels of security, users are advised to take appropriate measures to protect their personal information when using online services.
-          </p>
+          <section>
+            <h2 className="text-2xl font-bold text-[#071a31]">Your choices and rights</h2>
+            <p className="mt-3">Depending on the law that applies to you, you may request access, correction, confirmation of processing, deletion where permitted, information about sharing, or withdrawal of consent. Email us with enough information to verify and answer your request. Do not send a passport number by ordinary email.</p>
+          </section>
         </div>
       </main>
       <GeneralFooter />

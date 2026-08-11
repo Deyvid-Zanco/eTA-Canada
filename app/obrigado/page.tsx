@@ -1,98 +1,69 @@
 "use client";
-import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
-import Script from 'next/script';
-import Footer from '../components/Footer';
 
-export default function ObrigadoPage() {
-  const [emailStatus, setEmailStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
-  const [errorMsg, setErrorMsg] = useState('');
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import Script from "next/script";
+import { CheckCircle2, LoaderCircle } from "lucide-react";
+import { CanadaFooter } from "../components/Footer";
+import { CanadaHeader } from "../components/Header";
+
+export default function ThankYouPage() {
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
   useEffect(() => {
-    const url = new URL(window.location.href);
-    const sessionId = url.searchParams.get('session_id');
-    if (sessionId) {
-      setEmailStatus('sending');
-      fetch('/api/payment-success', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ session_id: sessionId }),
+    const sessionId = new URL(window.location.href).searchParams.get("session_id");
+    if (!sessionId) return;
+
+    setStatus("sending");
+    fetch("/api/payment-success", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ session_id: sessionId }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (!data.success) throw new Error("Payment confirmation failed");
+        setStatus("sent");
+        if (typeof window.gtag === "function") {
+          window.gtag("event", "conversion", {
+            send_to: "AW-16512154233/tQOZCLmLoaAZEPn0zcE9",
+            value: 42,
+            currency: "USD",
+            transaction_id: sessionId,
+          });
+        }
       })
-        .then(res => res.json())
-        .then(data => {
-          if (data.success) {
-            setEmailStatus('sent');
-            // ✅ Only fire conversion after server confirms payment
-            if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
-              window.gtag('event', 'conversion', {
-                'send_to': 'AW-16512154233/tQOZCLmLoaAZEPn0zcE9',
-                'value': 1.0,
-                'currency': 'BRL',
-                'transaction_id': sessionId // Unique ID to prevent duplicates
-              });
-            }
-          } else {
-            setEmailStatus('error');
-            setErrorMsg(data.error || 'Failed to send payment confirmation email.');
-          }
-        })
-        .catch(() => {
-          setEmailStatus('error');
-          setErrorMsg('Failed to send payment confirmation email.');
-        });
-    }
+      .catch(() => setStatus("error"));
   }, []);
 
   return (
     <>
-      {/* Google tag (gtag.js) */}
-      <Script
-        async
-        src="https://www.googletagmanager.com/gtag/js?id=AW-16512154233"
-      />
-      <Script id="google-analytics">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-
-          gtag('config', 'AW-16512154233');
-        `}
+      <Script async src="https://www.googletagmanager.com/gtag/js?id=AW-16512154233" />
+      <Script id="google-ads-tag">
+        {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','AW-16512154233');`}
       </Script>
-      {/* Conversion event removed - now fires only after payment verification in useEffect */}
-      <div className="flex flex-col items-center justify-center min-h-screen bg-white dark:bg-gray-900 px-4 py-12">
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 max-w-xl w-full text-center">
-          <div className="flex justify-center mb-4">
-            <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="28" cy="28" r="28" fill="#E6F4EA" />
-              <path d="M18 29.5L25 36.5L38 23.5" stroke="#34A853" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
+      <CanadaHeader />
+      <main className="application-page flex items-center">
+        <section className="application-card text-center" aria-labelledby="confirmation-title">
+          <CheckCircle2 className="mx-auto h-14 w-14 text-green-700" aria-hidden="true" />
+          <p className="editorial-eyebrow mt-6">Payment received</p>
+          <h1 id="confirmation-title" className="mt-3 font-serif text-4xl font-bold text-[#071a31]">Thank you for choosing our private assistance</h1>
+          <p className="mx-auto mt-5 max-w-2xl leading-7 text-slate-600">
+            We received your payment. Our team can now review the information you supplied and contact you by email about the next steps.
+          </p>
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-slate-600">
+            IMMI WORLD is not affiliated with the Government of Canada, does not issue eTAs, and cannot guarantee approval or processing time.
+          </p>
+          {status === "sending" && <p className="mt-6 flex items-center justify-center gap-2 text-sm text-slate-600"><LoaderCircle className="h-4 w-4 animate-spin" /> Confirming your payment...</p>}
+          {status === "sent" && <p className="mt-6 text-sm font-semibold text-green-700">A payment confirmation was sent to your email.</p>}
+          {status === "error" && <p className="mt-6 text-sm font-semibold text-red-700">We could not send the confirmation email. Your payment record is still available; contact us for help.</p>}
+          <div className="editorial-actions justify-center">
+            <Link href="/" className="editorial-button editorial-button--primary">Return to home</Link>
+            <a href="mailto:contato@immi-center.com" className="editorial-button editorial-button--link">Contact support</a>
           </div>
-          <h1 className="text-2xl font-bold text-[#34A853] mb-2">PURCHASE ORDER COMPLETED!</h1>
-          <p className="mb-6 text-gray-900 dark:text-gray-100">Hello!</p>
-          <p className="mb-2 text-gray-900 dark:text-gray-100">
-            We received your payment for IMMI WORLD&apos;s optional private Canada eTA application assistance.
-          </p>
-          <p className="mb-2 text-gray-900 dark:text-gray-100">
-            Our team will contact you about the next steps in the assistance service.<br />
-            <span className="font-semibold">We do not issue eTAs and cannot guarantee a government decision or processing time.</span>
-          </p>
-          <p className="mb-2 font-semibold text-gray-900 dark:text-gray-100">IMPORTANT INFORMATION:</p>
-          <p className="mb-6 text-gray-900 dark:text-gray-100">
-            We suggest keeping an eye on your email inbox as <span className="font-bold">well as your SPAM folder</span>, as mentioned during the application process, for future communications and updates regarding your application.
-          </p>
-          <p className="mb-6 text-gray-900 dark:text-gray-100">Best regards,<br />Applicant Support – eTA Canada Support</p>
-          {emailStatus === 'sending' && <p className="text-blue-600 dark:text-blue-400 mb-4">Sending payment confirmation email...</p>}
-          {emailStatus === 'sent' && <p className="text-green-600 dark:text-green-400 mb-4">Payment confirmation email sent!</p>}
-          {emailStatus === 'error' && <p className="text-red-600 dark:text-red-400 mb-4">{errorMsg}</p>}
-          <Link href="/philippines/apply">
-            <button className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded shadow transition-colors">
-              Need to apply for someone else? Click here to return to the form
-            </button>
-          </Link>
-        </div>
-      </div>
-      <Footer />
+        </section>
+      </main>
+      <CanadaFooter />
     </>
   );
 }

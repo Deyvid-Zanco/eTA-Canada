@@ -1,5 +1,12 @@
+import type { Metadata } from "next";
 import { GeneralHeader } from "../components/Header";
 import { GeneralFooter } from "../components/Footer";
+
+export const metadata: Metadata = {
+  title: "Refund Policy",
+  description: "Refund conditions for IMMI WORLD private Canada eTA assistance.",
+  alternates: { canonical: "/refund" },
+};
 
 export default function RefundPage() {
   return (
@@ -20,7 +27,7 @@ export default function RefundPage() {
           </section>
           <section>
             <h2 className="text-2xl font-bold text-[#071b34]">How to request a refund</h2>
-            <p className="mt-3">Email <a className="font-semibold text-blue-800 underline" href="mailto:immiworldcenter@gmail.com">immiworldcenter@gmail.com</a> with the purchaser&apos;s name, order email, Stripe payment reference if available, and the reason for the request. Do not send a passport number by ordinary email unless our support team specifically provides a secure method.</p>
+            <p className="mt-3">Email <a className="font-semibold text-blue-800 underline" href="mailto:contato@immi-center.com">contato@immi-center.com</a> with the purchaser&apos;s name, order email, Stripe payment reference if available, and the reason for the request. Do not send a passport number by ordinary email unless our support team specifically provides a secure method.</p>
           </section>
           <p>Approved refunds are returned to the original payment method. Your bank or card provider controls when the credit appears on your statement.</p>
         </div>

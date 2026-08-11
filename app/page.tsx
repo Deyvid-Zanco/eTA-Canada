@@ -1,207 +1,242 @@
-"use client";
-import Head from "next/head";
+import Image from "next/image";
 import Link from "next/link";
-import { GeneralHeader } from "./components/Header";
+import type { Metadata } from "next";
+import {
+  ArrowRight,
+  Check,
+  ClipboardCheck,
+  FileSearch2,
+  Mail,
+  MessageCircle,
+  ShieldCheck,
+} from "lucide-react";
 import { GeneralFooter } from "./components/Footer";
+import { GeneralHeader } from "./components/Header";
+
+const OFFICIAL_ETA_URL =
+  "https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eta/apply.html";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
+
+const serviceItems = [
+  {
+    icon: FileSearch2,
+    title: "Application information review",
+    copy: "A careful review of the information you provide before the next step.",
+  },
+  {
+    icon: ClipboardCheck,
+    title: "Completeness check",
+    copy: "We highlight missing or inconsistent details that may need your attention.",
+  },
+  {
+    icon: MessageCircle,
+    title: "Next-step guidance",
+    copy: "Plain-language guidance and email support throughout our service.",
+  },
+];
+
+const processSteps = [
+  ["01", "Provide your details", "Complete our two-part secure information form."],
+  ["02", "Pay the service fee", "The private assistance fee is US$42, shown before checkout."],
+  ["03", "Receive our review", "Our team reviews the information and contacts you by email."],
+];
+
+const faqs = [
+  {
+    question: "Is IMMI WORLD part of the Government of Canada?",
+    answer:
+      "No. IMMI WORLD is an independent private company. We do not represent Immigration, Refugees and Citizenship Canada and we do not issue eTAs.",
+  },
+  {
+    question: "Do I have to use this service?",
+    answer:
+      "No. Our assistance is optional. You can apply directly through the official Canada.ca website and pay the government fee there.",
+  },
+  {
+    question: "Does the US$42 include the government fee?",
+    answer:
+      "No. US$42 is our private service fee. The official Government of Canada eTA fee is CAN$7 and is paid separately.",
+  },
+  {
+    question: "Can you guarantee approval or processing time?",
+    answer:
+      "No. Only the Government of Canada decides an application. We cannot guarantee approval, timing, entry, or influence any government decision.",
+  },
+];
 
 export default function LandingPage() {
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "IMMI WORLD",
+    legalName: "Heliza Giovana Conrado de Andrade Chacha",
+    url: "https://www.immicenter-online.com",
+    email: "contato@immi-center.com",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "Averrois, 96",
+      addressCountry: "BR",
+    },
+  };
+
   return (
     <>
-      <Head>
-        <title>IMMI WORLD® - eTA & Travel Authorization Services | Canada, Philippines</title>
-        <meta
-          name="description"
-          content="Optional private assistance for travelers preparing online travel application information. IMMI WORLD is not a government website."
-        />
-        <meta property="og:title" content="IMMI WORLD® - eTA & Travel Authorization Services" />
-        <meta
-          property="og:description"
-          content="Independent paid travel application assistance. We do not issue government documents or guarantee a decision."
-        />
-        <meta property="og:url" content="https://www.immicenter-online.com" />
-        <meta property="og:site_name" content="IMMI WORLD®" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
       <GeneralHeader />
 
-      <main className="flex flex-col">
-        {/* Hero Section */}
-        <section className="m-landing-hero px-4">
-          <div className="container mx-auto">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div className="text-center md:text-left">
-                <h1 className="text-4xl md:text-6xl font-bold mb-6">
-                  private travel application<br />
-                  <span className="text-yellow-400">review and guidance</span>
-                </h1>
-                <p className="text-xl mb-8 max-w-2xl mx-auto md:mx-0">
-                  Optional paid assistance to help organize and review travel application information. We are not a government website.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                  <Link
-                    href="#services"
-                    className="bg-white text-blue-600 hover:bg-gray-100 py-3 px-8 rounded-md text-lg font-semibold transition-colors"
-                  >
-                    apply online
-                  </Link>
-                  <a
-                    href="tel:+3227930456"
-                    className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-blue-600 py-3 px-8 rounded-md text-lg font-semibold transition-colors"
-                  >
-                    need help? save time!
-                  </a>
-                </div>
-              </div>
-              
-            </div>
-          </div>
-        </section>
-
-        {/* Services Section */}
-        <section id="services" className="py-16 px-4 bg-gray-50">
-          <div className="container mx-auto">
-            <div className="grid md:grid-cols-2 gap-8">
-              {/* Canada eTA */}
-              <div className="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition-shadow text-center">
-                <div className="text-4xl mb-4">🇨🇦</div>
-                <h3 className="text-2xl font-bold mb-4">Canada eTA</h3>
-                <p className="text-lg mb-4">Electronic Travel Authorization</p>
-                <p className="text-2xl font-bold text-blue-600 mb-6">$42 USD</p>
-                <Link
-                  href="/canada"
-                  className="bg-blue-600 hover:bg-blue-700 text-white py-3 px-8 rounded-md font-semibold inline-block transition-colors"
-                >
-                  Apply for Canada eTA
-                </Link>
-              </div>
-
-              {/* Philippines eTravel */}
-              <div className="bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition-shadow text-center">
-                <div className="text-4xl mb-4">🇵🇭</div>
-                <h3 className="text-2xl font-bold mb-4">Philippines eTravel</h3>
-                <p className="text-lg mb-4">Electronic Travel Authorization</p>
-                <p className="text-2xl font-bold text-blue-600 mb-6">$57 USD</p>
-                <Link
-                  href="/philippines"
-                  className="bg-blue-600 hover:bg-blue-700 text-white py-3 px-8 rounded-md font-semibold inline-block transition-colors"
-                >
-                  Apply for Philippines eTravel
-                </Link>
-              </div>
-            </div>
-
-            {/* Service Description */}
-            <div className="mt-12 text-center">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                Travel Authorization Services for Everyone
-              </h2>
-              <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-                eTA desk for individuals, SME, corporations, non-governmental organizations and everyone.
-                We are an independent private travel consultancy. Government authorities alone issue travel authorizations and decide applications.
+      <main>
+        <section className="editorial-hero" aria-labelledby="hero-title">
+          <Image
+            src="/canada-eta-hero.png"
+            alt="Canadian waterfront city with mountains in the background"
+            fill
+            priority
+            sizes="100vw"
+            className="editorial-hero__image"
+          />
+          <div className="editorial-shell editorial-hero__content">
+            <div className="editorial-hero__copy">
+              <p className="editorial-eyebrow">Canada eTA application assistance</p>
+              <h1 id="hero-title">A clearer way to prepare your Canada eTA application</h1>
+              <p className="editorial-hero__lede">
+                Optional private review and guidance to help you organize your application information with care and clarity.
               </p>
-              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
-                <div className="text-center">
-                  <div className="text-3xl mb-2">🇨🇦</div>
-                  <p className="font-semibold">Canada eTA</p>
-                  <p className="text-sm text-gray-600">$42 USD</p>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl mb-2">🇵🇭</div>
-                  <p className="font-semibold">Philippines eTravel</p>
-                  <p className="text-sm text-gray-600">$57 USD</p>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl mb-2">📄</div>
-                  <p className="font-semibold">Document Legalization</p>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl mb-2">🌍</div>
-                  <p className="font-semibold">135+ Countries</p>
-                </div>
+              <div className="editorial-actions">
+                <Link href="/canada/apply" className="editorial-button editorial-button--primary">
+                  Start your application <ArrowRight aria-hidden="true" />
+                </Link>
+                <a
+                  href={OFFICIAL_ETA_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="editorial-button editorial-button--link"
+                >
+                  Apply directly on Canada.ca
+                </a>
+              </div>
+              <div className="editorial-price" id="pricing">
+                <span>Private service fee</span>
+                <strong>US$42</strong>
+                <small>Official government fee: CAN$7, paid separately.</small>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Features Section */}
-        <section className="py-16 px-4">
-          <div className="container mx-auto">
-            <div className="grid md:grid-cols-3 gap-8">
-              {/* Pickup and Delivery */}
-              <div className="text-center">
-                <div className="bg-blue-50 rounded-lg p-8">
-                  <h3 className="text-2xl font-bold mb-4">Pickup and Delivery</h3>
-                  <p className="text-gray-600 mb-4">
-                    Having no time to drop the documentation at our office? We offer pickup and delivery services at your premises, home, office, or any convenient location.
-                  </p>
-                  <div className="text-4xl">🚚</div>
-                </div>
-              </div>
+        <section className="editorial-service" id="service" aria-labelledby="service-title">
+          <div className="editorial-shell">
+            <div className="editorial-section-heading editorial-section-heading--compact">
+              <h2 id="service-title">What you receive</h2>
+            </div>
+            <div className="editorial-service-grid">
+              {serviceItems.map(({ icon: Icon, title, copy }) => (
+                <article key={title} className="editorial-service-item">
+                  <Icon aria-hidden="true" />
+                  <h3>{title}</h3>
+                  <p>{copy}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
 
-              {/* Exceptional Support */}
-              <div className="text-center">
-                <div className="bg-green-50 rounded-lg p-8">
-                  <h3 className="text-2xl font-bold mb-4">Exceptional Support</h3>
-                  <p className="text-gray-600 mb-4">
-                    We&apos;re committed to all our customers to deliver the best services for visas. Have any question? You can call us, email us, or fill in our online request form.
-                  </p>
-                  <div className="text-4xl">🎯</div>
-                </div>
-              </div>
+        <section className="editorial-process" id="process" aria-labelledby="process-title">
+          <div className="editorial-shell editorial-process__layout">
+            <div className="editorial-section-heading editorial-section-heading--compact">
+              <h2 id="process-title">Our process</h2>
+            </div>
+            <ol className="editorial-process-grid">
+              {processSteps.map(([number, title, copy]) => (
+                <li key={number}>
+                  <span>{number}</span>
+                  <h3>{title}</h3>
+                  <p>{copy}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
 
-              {/* Fast Processing */}
-              <div className="text-center">
-                <div className="bg-purple-50 rounded-lg p-8">
-                  <h3 className="text-2xl font-bold mb-4">Clear Guidance</h3>
-                  <p className="text-gray-600 mb-4">
-                    Plain-language administrative guidance and a careful review of the information you provide. No approval or timing guarantees.
-                  </p>
-                  <div className="text-4xl">⚡</div>
-                </div>
+        <section className="editorial-scope" aria-labelledby="scope-title">
+          <div className="editorial-shell editorial-scope__grid">
+            <div>
+              <p className="editorial-eyebrow">Transparent by design</p>
+              <h2 id="scope-title">Know exactly what you are paying for</h2>
+              <p>
+                IMMI WORLD provides an optional administrative review service. The service can help identify incomplete or inconsistent information, but the applicant remains responsible for accuracy and eligibility.
+              </p>
+            </div>
+            <div className="editorial-scope__card">
+              <h3>Our service includes</h3>
+              <ul>
+                <li><Check aria-hidden="true" /> Information organization and review</li>
+                <li><Check aria-hidden="true" /> Completeness and consistency check</li>
+                <li><Check aria-hidden="true" /> Email guidance on next steps</li>
+              </ul>
+              <div className="editorial-scope__price-row">
+                <span>Total private service fee</span>
+                <strong>US$42</strong>
+              </div>
+              <p className="editorial-scope__note">Government fees are not included.</p>
+            </div>
+          </div>
+        </section>
+
+        <section className="editorial-faq" id="faq" aria-labelledby="faq-title">
+          <div className="editorial-shell editorial-faq__grid">
+            <div className="editorial-section-heading">
+              <p className="editorial-eyebrow">Questions, answered</p>
+              <h2 id="faq-title">Before you begin</h2>
+              <p>Clear information helps you decide whether a private assistance service is right for you.</p>
+            </div>
+            <div className="editorial-faq__list">
+              {faqs.map((item) => (
+                <details key={item.question}>
+                  <summary>{item.question}</summary>
+                  <p>{item.answer}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="editorial-trust" id="contact" aria-labelledby="trust-title">
+          <div className="editorial-shell editorial-trust__grid">
+            <div>
+              <ShieldCheck aria-hidden="true" />
+              <p className="editorial-eyebrow">Independent private service</p>
+              <h2 id="trust-title">A clear distinction from the official process</h2>
+              <p>
+                IMMI WORLD is operated by Heliza Giovana Conrado de Andrade Chacha, CNPJ 43.274.527/0001-17, in Brazil. We are not affiliated with the Government of Canada.
+              </p>
+            </div>
+            <div className="editorial-trust__contact">
+              <Mail aria-hidden="true" />
+              <div>
+                <span>Questions before paying?</span>
+                <a href="mailto:contato@immi-center.com">contato@immi-center.com</a>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Countries Section */}
-        <section id="countries" className="py-16 px-4 bg-gray-50">
-          <div className="container mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-8">
-              Over 135 Countries Served
-            </h2>
-            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-              Belgian residents can obtain their visas online for more than 135 destinations. We support you through all requirements and administration.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4 mb-8">
-              <span className="text-2xl">🇨🇦</span>
-              <span className="text-2xl">🇵🇭</span>
-              <span className="text-2xl">🇺🇸</span>
-              <span className="text-2xl">🇬🇧</span>
-              <span className="text-2xl">🇪🇺</span>
-              <span className="text-2xl">🇦🇺</span>
-              <span className="text-2xl">🇳🇿</span>
-              <span className="text-2xl">🇯🇵</span>
+        <section className="editorial-cta" aria-labelledby="cta-title">
+          <div className="editorial-shell editorial-cta__content">
+            <div>
+              <p className="editorial-eyebrow">Ready when you are</p>
+              <h2 id="cta-title">Prepare your information with confidence</h2>
             </div>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="/canada"
-                className="bg-blue-600 hover:bg-blue-700 text-white py-3 px-8 rounded-md text-lg font-semibold inline-block transition-colors"
-              >
-                Canada eTA - $42 USD
-              </Link>
-              <Link
-                href="/philippines"
-                className="bg-blue-600 hover:bg-blue-700 text-white py-3 px-8 rounded-md text-lg font-semibold inline-block transition-colors"
-              >
-                Philippines eTravel - $57 USD
-              </Link>
-            </div>
+            <Link href="/canada/apply" className="editorial-button editorial-button--light">
+              Start private assistance <ArrowRight aria-hidden="true" />
+            </Link>
           </div>
         </section>
-
-      
-
-        
       </main>
 
       <GeneralFooter />

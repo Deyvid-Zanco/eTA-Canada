@@ -106,12 +106,7 @@ export function Step1({ register, errors, watch }: Step1Props) {
       <div className="mb-6 relative">
         <label className="block mb-1 font-medium">{t.formFields.nationality} <span className="text-red-600">*</span></label>
         <select 
-          {...register('nationality', { 
-            required: true,
-            onChange: (e: React.ChangeEvent<HTMLSelectElement>) => {
-              console.log('Nationality selected:', e.target.value);
-            }
-          })} 
+          {...register('nationality', { required: true })}
           className="w-full border rounded p-2 relative z-10" 
           required
           value={nationality || ''}

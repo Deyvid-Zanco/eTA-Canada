@@ -29,6 +29,7 @@ Public variables:
 - `NEXT_PUBLIC_SITE_URL` — `https://www.immicenter-online.com`, with no trailing slash.
 - `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` — Stripe live publishable key.
 - `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` — reCAPTCHA key authorized for the production domain.
+- `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` — optional Google Search Console HTML-tag verification token (the `content` value only).
 
 Runtime secrets (Cloudflare **Secret** type):
 
@@ -40,16 +41,15 @@ Runtime secrets (Cloudflare **Secret** type):
 Runtime text configuration:
 
 - `STRIPE_PRICE_ID` — Canada one-time price; `STRIPE_CANADA_PRICE_ID` is also accepted as a fallback.
-- `STRIPE_PHILIPPINES_PRICE_ID`
 - `ADMIN_EMAIL`
 
-`STRIPE_PRICE_ID`, `STRIPE_PHILIPPINES_PRICE_ID`, and `ADMIN_EMAIL` are runtime configuration but do not contain credentials, so they may be ordinary text variables. API keys and webhook/captcha signing secrets must use Cloudflare's encrypted **Secret** type.
+`STRIPE_PRICE_ID` and `ADMIN_EMAIL` are runtime configuration but do not contain credentials, so they may be ordinary text variables. API keys and webhook/captcha signing secrets must use Cloudflare's encrypted **Secret** type.
 
 Never place a Stripe secret, Resend key, reCAPTCHA secret, or Cloudflare token in `wrangler.jsonc` or any `NEXT_PUBLIC_` variable.
 
 ## External dashboard checklist
 
-1. Stripe: confirm `STRIPE_PRICE_ID` points to a live one-time US$42 price, configure the Philippines US$57 price separately, create the production webhook endpoint at `https://www.immicenter-online.com/api/stripe/webhook`, subscribe it to `checkout.session.completed` and `checkout.session.async_payment_succeeded`, and store its signing secret as `STRIPE_WEBHOOK_SECRET`.
+1. Stripe: confirm `STRIPE_PRICE_ID` points to the live one-time US$42 Canada assistance price, create the production webhook endpoint at `https://www.immicenter-online.com/api/stripe/webhook`, subscribe it to `checkout.session.completed` and `checkout.session.async_payment_succeeded`, and store its signing secret as `STRIPE_WEBHOOK_SECRET`.
 2. Resend: verify `immicenter-online.com`, its SPF/DKIM records, and every `from` address used by the application.
 3. reCAPTCHA: authorize `immicenter-online.com`, `www.immicenter-online.com`, and the temporary Workers preview hostname if previews will submit forms.
 4. Cloudflare: attach the custom domain only after the Worker preview passes checkout, webhook, form, email, and mobile tests.

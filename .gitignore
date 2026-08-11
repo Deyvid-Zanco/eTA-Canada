@@ -10,3 +10,4 @@ BACKUPENV.TXT
 .env.development
 .env.production
 cloudflare-env.d.ts
+/artifacts/

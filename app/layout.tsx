@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import Image from "next/image";
 import "./globals.css";
 import { LanguageProvider } from "../lib/contexts/LanguageContext";
-import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,9 +15,28 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.immicenter-online.com"),
-  title: "IMMI WORLD - Private Travel Application Assistance",
+  title: {
+    default: "Canada eTA Application Assistance | IMMI WORLD",
+    template: "%s | IMMI WORLD",
+  },
   description:
-    "Independent paid assistance for travelers preparing online travel application information. IMMI WORLD is not a government website and does not issue travel authorizations.",
+    "Optional private review and guidance for Canada eTA application information. US$42 service fee. Not affiliated with the Government of Canada.",
+  openGraph: {
+    type: "website",
+    url: "/",
+    siteName: "IMMI WORLD",
+    title: "Canada eTA Application Assistance | IMMI WORLD",
+    description:
+      "Independent private review and guidance for Canada eTA application information.",
+    images: [{ url: "/canada-eta-hero.png", width: 1920, height: 780 }],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  verification: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+    ? { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }
+    : undefined,
   icons: {
     icon: "/favicon.ico",
   },
@@ -31,30 +48,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" style={{ colorScheme: 'light' }}>
+    <html lang="en" style={{ colorScheme: "light" }}>
       <head>
         <meta name="color-scheme" content="light" />
-        {/* ClickCease.com tracking */}
-        <Script
-          id="clickcease-tracking"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              var script = document.createElement('script');
-              script.async = true; 
-              script.type = 'text/javascript';
-              var target = 'https://www.clickcease.com/monitor/stat.js';
-              script.src = target;
-              var elem = document.head;
-              elem.appendChild(script);
-            `,
-          }}
-        />
-        <noscript>
-          <a href='https://www.clickcease.com' rel='nofollow'>
-            <Image src='https://monitor.clickcease.com' alt='ClickCease' width={1} height={1}/>
-          </a>
-        </noscript>
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}

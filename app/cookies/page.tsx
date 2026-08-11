@@ -1,5 +1,12 @@
+import type { Metadata } from "next";
 import { GeneralHeader } from "../components/Header";
 import { GeneralFooter } from "../components/Footer";
+
+export const metadata: Metadata = {
+  title: "Cookie Policy",
+  description: "Cookies and tracking technologies used by the IMMI WORLD website.",
+  alternates: { canonical: "/cookies" },
+};
 
 export default function CookiesPage() {
   return (
@@ -25,7 +32,7 @@ export default function CookiesPage() {
           </section>
           <section>
             <h2 className="text-2xl font-bold text-[#071b34]">Contact</h2>
-            <p className="mt-3">Questions about tracking or privacy can be sent to <a className="font-semibold text-blue-800 underline" href="mailto:immiworldcenter@gmail.com">immiworldcenter@gmail.com</a>.</p>
+            <p className="mt-3">Questions about tracking or privacy can be sent to <a className="font-semibold text-blue-800 underline" href="mailto:contato@immi-center.com">contato@immi-center.com</a>.</p>
           </section>
         </div>
       </main>

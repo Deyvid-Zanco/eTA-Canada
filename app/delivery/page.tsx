@@ -1,5 +1,12 @@
+import type { Metadata } from "next";
 import { GeneralHeader } from "../components/Header";
 import { GeneralFooter } from "../components/Footer";
+
+export const metadata: Metadata = {
+  title: "Service Delivery",
+  description: "Scope and delivery of IMMI WORLD private Canada eTA application assistance.",
+  alternates: { canonical: "/delivery" },
+};
 
 export default function DeliveryPage() {
   return (
@@ -23,7 +30,7 @@ export default function DeliveryPage() {
           </section>
           <section>
             <h2 className="text-2xl font-bold text-[#071b34]">Support</h2>
-            <p className="mt-3">For questions about delivery of the private assistance service, contact <a className="font-semibold text-blue-800 underline" href="mailto:immiworldcenter@gmail.com">immiworldcenter@gmail.com</a>.</p>
+            <p className="mt-3">For questions about delivery of the private assistance service, contact <a className="font-semibold text-blue-800 underline" href="mailto:contato@immi-center.com">contato@immi-center.com</a>.</p>
           </section>
         </div>
       </main>

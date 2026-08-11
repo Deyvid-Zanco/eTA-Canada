@@ -94,8 +94,8 @@ export const es = {
     success: "¡Solicitud enviada exitosamente!",
     error: "Error:",
     paymentError: "Error de Pago:",
-    submissionSuccess: "✅ ¡Solicitud enviada exitosamente!",
-    submissionError: "❌ Error",
+    submissionSuccess: "Solicitud enviada exitosamente.",
+    submissionError: "Error",
   },
 
   // Form Fields

@@ -1,170 +1,104 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { Resend } from 'resend';
+import { NextRequest, NextResponse } from "next/server";
+import { Resend } from "resend";
+import { rejectCrossSiteRequest } from "@/lib/security/requestGuards";
 
-// Initialize Resend with API key (fallback to empty string for build time)
-const getResend = () => {
-  const apiKey = process.env.RESEND_API_KEY || '';
-  return new Resend(apiKey);
+type RecaptchaResponse = {
+  success?: boolean;
+  score?: number;
+  action?: string;
 };
 
+function escapeHtml(value: unknown) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function humanizeField(key: string) {
+  return key
+    .replaceAll("_", " ")
+    .replace(/\b\w/g, (letter) => letter.toUpperCase());
+}
+
 export async function POST(req: NextRequest) {
+  const rejected = rejectCrossSiteRequest(req);
+  if (rejected) return rejected;
+
+  const contentLength = Number(req.headers.get("content-length") || "0");
+  if (contentLength > 131072) {
+    return NextResponse.json({ error: "Request is too large" }, { status: 413 });
+  }
+
+  let data: Record<string, unknown>;
   try {
-    const data = await req.json();
-    const recaptchaToken = data.recaptchaToken as string;
-
-    if (!recaptchaToken) {
-      return NextResponse.json({ error: 'reCAPTCHA verification required' }, { status: 400 });
-    }
-
-    if (!process.env.RECAPTCHA_SECRET_KEY) {
-      return NextResponse.json({ error: 'Server configuration error' }, { status: 500 });
-    }
-
-    const recaptchaResponse = await fetch('https://www.google.com/recaptcha/api/siteverify', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: `secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`,
-    });
-
-    const recaptchaData = await recaptchaResponse.json();
-
-    if (!recaptchaData.success || recaptchaData.score < 0.5) {
-      return NextResponse.json({
-        error: 'reCAPTCHA verification failed. Please try again.'
-      }, { status: 400 });
-    }
-
-    let emailHtml = `
-      <h2>New eTA Application Submission</h2>
-      <p><strong>Submission Time:</strong> ${new Date().toLocaleString()}</p>
-      <p><strong>reCAPTCHA Score:</strong> ${recaptchaData.score} (${recaptchaData.score >= 0.7 ? 'High confidence' : 'Medium confidence'})</p>
-      <hr>
-      <h3>Passport Details</h3>
-    `;
-
-    // Helper function with a specific type instead of 'any'
-    const addField = (label: string, value: string | number | boolean | null | undefined) => {
-      if (value !== undefined && value !== null && value !== "") {
-        emailHtml += `<p><strong>${label}:</strong> ${value}</p>`;
-      }
-    };
-
-    // Page 1: Passport Details
-    addField('Travel Document', data.travel_document);
-    addField('Nationality', data.nationality);
-    if (data.nationality === 'Taiwan (holders of passports containing a personal identification number)') {
-      addField('Taiwan National Identification Number', data.taiwan_id);
-    }
-    if (data.us_visa_number) {
-        addField('US Visa Number', data.us_visa_number);
-        addField('US Visa Number (Confirm)', data.us_visa_number_confirm);
-        const usVisaExpiry = `${data.us_visa_expiry_month || ''}/${data.us_visa_expiry_day || ''}/${data.us_visa_expiry_year || ''}`;
-        addField('US Visa Expiry Date', usVisaExpiry);
-    }
-    addField('Passport Number', data.passport_number);
-    addField('Passport Number (Confirm)', data.passport_number_confirm);
-    addField('Surname(s) / Last Name(s)', data.surname);
-    addField('Given Name(s) / First Name(s)', data.given_name);
-    const dob = `${data.dob_month || ''}/${data.dob_day || ''}/${data.dob_year || ''}`;
-    addField('Date of Birth', dob);
-    addField('Gender', data.gender);
-    addField('Country/Territory of Birth', data.birth_country);
-    addField('City/Town of Birth', data.birth_city);
-    const passportIssueDate = `${data.passport_issue_month || ''}/${data.passport_issue_day || ''}/${data.passport_issue_year || ''}`;
-    addField('Date of Issue of Passport', passportIssueDate);
-    const passportExpiryDate = `${data.passport_expiry_month || ''}/${data.passport_expiry_day || ''}/${data.passport_expiry_year || ''}`;
-    addField('Date of Expiry of Passport', passportExpiryDate);
-
-    // Page 2: Personal, Employment, and Address Details
-    emailHtml += `<hr><h3>Personal & Employment Details</h3>`;
-    addField('Are you a citizen of any additional nationalities?', data.additional_nationality);
-    if (data.additional_nationality === 'Yes') {
-      addField('Additional Nationalities', data.additional_nationality_details);
-    }
-    addField('Marital Status', data.marital_status);
-    addField('Have you ever applied for a Canadian visa, eTA, or permit?', data.canada_visa_applied);
-    if (data.canada_visa_applied === 'Yes') {
-      addField('Previous UCI / Visa / eTA Number', data.previous_visa_number);
-      addField('Previous UCI / Visa / eTA Number (Confirm)', data.previous_visa_number_confirm);
-    }
-    addField('Occupation', data.occupation);
-    if (!['Unemployed', 'Homemaker', 'Retired'].includes(data.occupation)) {
-        addField('Job Description', data.job_description);
-        addField('Employer/School Name', data.employer_name);
-        addField('Employment Country/Territory', data.employment_country);
-        addField('Employment Start Date', data.employment_start_date);
-    }
-
-    emailHtml += `<hr><h3>Residential Address</h3>`;
-    addField('Apartment Number', data.apartment_number);
-    addField('Street Number', data.street_number);
-    addField('Street Name', data.street_name);
-    addField('City/Town', data.city_town);
-    addField('District/Region', data.district_region);
-    addField('Country/Territory', data.address_country);
-    addField('Zipcode', data.zip_code);
-    
-    emailHtml += `<hr><h3>Contact Information</h3>`;
-    addField('Email of Applicant', data.email);
-    addField('Phone Number', data.phone);
-
-    // Page 3: Travel and Consent
-    emailHtml += `<hr><h3>Travel Information</h3>`;
-    addField('Do you know when you will travel to Canada?', data.do_you_know_travel_date);
-    if (data.do_you_know_travel_date === 'Yes') {
-      const travelDate = `${data.travel_date_month || ''}/${data.travel_date_day || ''}/${data.travel_date_year || ''}`;
-      addField('Planned Travel Date', travelDate);
-    }
-    addField('Consent and Declaration', data.consent_declaration ? 'Agreed' : 'Not Agreed');
-
-
-    const resend = getResend();
-    await resend.emails.send({
-      from: 'eTA Application 2 <noreply@immicenter-online.com>',
-      to: process.env.ADMIN_EMAIL || 'admin@yourdomain.com',
-      subject: `New eTA Application - ${data.given_name || ''} ${data.surname || ''}`,
-      html: emailHtml,
-    });
-
-    if (data.email) {
-      await resend.emails.send({
-        from: 'IMMI WORLD® <noreply@immicenter-online.com>',
-        to: data.email,
-        subject: 'We received your information for private Canada eTA assistance',
-        html: `
-<table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f7;padding:0;margin:0;">
-  <tr>
-    <td align="center">
-      <table width="600" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.04);margin:40px 0;">
-        <tr>
-          <td style="padding:40px 32px 32px 32px;text-align:center;">
-            <h1 style="color:#17365f;font-size:24px;margin-bottom:16px;">We received your information</h1>
-            <p style="font-size:16px;color:#222;margin-bottom:16px;">Hello!</p>
-            <p style="font-size:16px;color:#222;margin-bottom:16px;">We received the information you provided to IMMI WORLD for our optional private review and guidance service.</p>
-            <p style="font-size:16px;color:#222;margin-bottom:16px;">Your application will be processed shortly.<br/>
-              <span style="font-weight:600;">We do not issue eTAs and cannot guarantee a government decision or processing time.</span>
-            </p>
-            <p style="font-size:20px;color:#222;font-weight:700;margin-bottom:8px;">IMPORTANT INFORMATION:</p>
-            <p style="font-size:16px;color:#222;margin-bottom:16px;">
-              We suggest keeping an eye on your email inbox as <span style="font-weight:bold;">well as your SPAM folder</span>, as mentioned during the application process, for future communications and updates regarding your application.
-            </p>
-            <p style="font-size:16px;color:#222;margin-bottom:16px;">Best regards,<br/>Applicant Support – eTA Canada Support</p>
-            <p style="font-size:13px;color:#888;margin-top:32px;">&copy; IMMI WORLD®</p>
-          </td>
-        </tr>
-      </table>
-    </td>
-  </tr>
-</table>
-        `,
-      });
-    }
-
-    return NextResponse.json({ success: true, message: 'Application submitted successfully' });
-
+    data = await req.json();
   } catch {
-    return NextResponse.json({ error: 'Failed to submit application' }, { status: 500 });
+    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+  }
+
+  try {
+    const secret = process.env.RECAPTCHA_SECRET_KEY;
+    const resendKey = process.env.RESEND_API_KEY;
+    const adminEmail = process.env.ADMIN_EMAIL;
+    if (!secret || !resendKey || !adminEmail) {
+      throw new Error("Application service is not configured");
+    }
+
+    const recaptchaToken = typeof data.recaptchaToken === "string" ? data.recaptchaToken : "";
+    const applicantEmail = typeof data.email === "string" ? data.email.trim() : "";
+
+    if (!recaptchaToken || !/^\S+@\S+\.\S+$/.test(applicantEmail)) {
+      return NextResponse.json({ error: "Valid application details are required" }, { status: 400 });
+    }
+
+    const verificationResponse = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({ secret, response: recaptchaToken }),
+    });
+    const verification = (await verificationResponse.json()) as RecaptchaResponse;
+
+    if (!verification.success || (verification.score ?? 0) < 0.5 || (verification.action && verification.action !== "submit")) {
+      return NextResponse.json({ error: "Security verification failed. Please try again." }, { status: 400 });
+    }
+
+    const rows = Object.entries(data)
+      .filter(([key, value]) => key !== "recaptchaToken" && value !== "" && value !== null && value !== undefined)
+      .map(([key, value]) => `<tr><th align="left" style="padding:8px;border-bottom:1px solid #ddd">${escapeHtml(humanizeField(key))}</th><td style="padding:8px;border-bottom:1px solid #ddd">${escapeHtml(value)}</td></tr>`)
+      .join("");
+
+    const resend = new Resend(resendKey);
+    const givenName = typeof data.given_name === "string" ? data.given_name : "";
+    const surname = typeof data.surname === "string" ? data.surname : "";
+    const fullName = `${givenName} ${surname}`.trim();
+    const adminResult = await resend.emails.send({
+      from: "IMMI WORLD <noreply@immicenter-online.com>",
+      to: adminEmail,
+      subject: `New private Canada eTA assistance request — ${fullName || "Applicant"}`,
+      html: `<h1>New assistance request</h1><p>Security score: ${escapeHtml(verification.score)}</p><table cellspacing="0" cellpadding="0">${rows}</table>`,
+    });
+    if (adminResult.error) throw new Error(adminResult.error.message);
+
+    const applicantResult = await resend.emails.send({
+      from: "IMMI WORLD <noreply@immicenter-online.com>",
+      to: applicantEmail,
+      subject: "We received your information for private Canada eTA assistance",
+      html: `
+        <h1>We received your information</h1>
+        <p>Thank you. We received the information you provided for IMMI WORLD's optional private review and guidance service.</p>
+        <p>After checkout, our team can review the information and contact you by email about the next steps.</p>
+        <p>IMMI WORLD is not affiliated with the Government of Canada, does not issue eTAs, and cannot guarantee a decision or processing time.</p>
+        <p>Questions: <a href="mailto:contato@immi-center.com">contato@immi-center.com</a></p>
+      `,
+    });
+    if (applicantResult.error) throw new Error(applicantResult.error.message);
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error("Canada application submission failed", error);
+    return NextResponse.json({ error: "Unable to submit the information. Please try again." }, { status: 500 });
   }
 }

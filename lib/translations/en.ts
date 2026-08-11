@@ -94,8 +94,8 @@ export const en = {
     success: "Application submitted successfully!",
     error: "Error:",
     paymentError: "Payment Error:",
-    submissionSuccess: "✅ Application submitted successfully!",
-    submissionError: "❌ Error",
+    submissionSuccess: "Application submitted successfully.",
+    submissionError: "Error",
   },
 
   // Form Fields
