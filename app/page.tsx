@@ -6,9 +6,7 @@ import {
   Check,
   ClipboardCheck,
   FileSearch2,
-  Mail,
   MessageCircle,
-  ShieldCheck,
 } from "lucide-react";
 import { GeneralFooter } from "./components/Footer";
 import { GeneralHeader } from "./components/Header";
@@ -202,26 +200,6 @@ export default function LandingPage() {
                   <p>{item.answer}</p>
                 </details>
               ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="editorial-trust" id="contact" aria-labelledby="trust-title">
-          <div className="editorial-shell editorial-trust__grid">
-            <div>
-              <ShieldCheck aria-hidden="true" />
-              <p className="editorial-eyebrow">Independent private service</p>
-              <h2 id="trust-title">A clear distinction from the official process</h2>
-              <p>
-                IMMI WORLD is operated by Heliza Giovana Conrado de Andrade Chacha, CNPJ 43.274.527/0001-17, in Brazil. We are not affiliated with the Government of Canada.
-              </p>
-            </div>
-            <div className="editorial-trust__contact">
-              <Mail aria-hidden="true" />
-              <div>
-                <span>Questions before paying?</span>
-                <a href="mailto:contato@immi-center.com">contato@immi-center.com</a>
-              </div>
             </div>
           </div>
         </section>

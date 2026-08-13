@@ -10,7 +10,7 @@ const OFFICIAL_ETA_URL =
 
 function SiteFooter() {
   return (
-    <footer className="editorial-footer">
+    <footer className="editorial-footer" id="contact">
       <div className="editorial-shell editorial-footer__grid">
         <div className="editorial-footer__brand">
           <p className="editorial-footer__wordmark">IMMI WORLD</p>
@@ -22,17 +22,7 @@ function SiteFooter() {
           </a>
         </div>
 
-        <div>
-          <h2>Company</h2>
-          <ul>
-            <li>{COMPANY}</li>
-            <li>CNPJ {CNPJ}</li>
-            <li className="editorial-footer__icon-row"><MapPin aria-hidden="true" /> {ADDRESS}</li>
-            <li className="editorial-footer__icon-row"><Mail aria-hidden="true" /> <a href={`mailto:${EMAIL}`}>{EMAIL}</a></li>
-          </ul>
-        </div>
-
-        <div>
+        <div className="editorial-footer__legal">
           <h2>Legal</h2>
           <nav>
             <Link href="/terms">Terms of Service</Link>
@@ -43,6 +33,17 @@ function SiteFooter() {
           </nav>
         </div>
       </div>
+
+      <div className="editorial-shell editorial-footer__company" aria-label="Company information">
+        <p className="editorial-footer__company-label">Company information</p>
+        <ul>
+          <li>{COMPANY}</li>
+          <li>CNPJ {CNPJ}</li>
+          <li className="editorial-footer__icon-row"><MapPin aria-hidden="true" /> {ADDRESS}</li>
+          <li className="editorial-footer__icon-row"><Mail aria-hidden="true" /> <a href={`mailto:${EMAIL}`}>{EMAIL}</a></li>
+        </ul>
+      </div>
+
       <div className="editorial-shell editorial-footer__bottom">
         <p>© {new Date().getFullYear()} IMMI WORLD. All rights reserved.</p>
         <p>Optional paid service. Government fees are separate.</p>

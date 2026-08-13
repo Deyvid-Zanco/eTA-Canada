@@ -285,8 +285,7 @@ a {
 .editorial-service,
 .editorial-process,
 .editorial-scope,
-.editorial-faq,
-.editorial-trust {
+.editorial-faq {
   padding-block: 90px;
 }
 
@@ -297,7 +296,6 @@ a {
 
 .editorial-section-heading h2,
 .editorial-scope h2,
-.editorial-trust h2,
 .editorial-cta h2 {
   margin-top: 13px;
   color: var(--navy);
@@ -307,8 +305,7 @@ a {
 }
 
 .editorial-section-heading > p:last-child,
-.editorial-scope__grid > div:first-child > p:last-child,
-.editorial-trust__grid > div:first-child > p:last-child {
+.editorial-scope__grid > div:first-child > p:last-child {
   margin-top: 20px;
   color: var(--muted);
   line-height: 1.75;
@@ -539,56 +536,6 @@ a {
   line-height: 1.7;
 }
 
-.editorial-trust {
-  padding-block: 74px;
-  background: var(--white);
-}
-
-.editorial-trust__grid {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  gap: 80px;
-}
-
-.editorial-trust__grid > div:first-child > svg {
-  width: 32px;
-  height: 32px;
-  margin-bottom: 20px;
-  color: var(--red);
-  stroke-width: 1.5;
-}
-
-.editorial-trust h2 {
-  max-width: 710px;
-}
-
-.editorial-trust__contact {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  border-left: 1px solid var(--line);
-  padding: 18px 0 18px 38px;
-}
-
-.editorial-trust__contact > svg {
-  width: 24px;
-  color: var(--red);
-}
-
-.editorial-trust__contact span {
-  display: block;
-  color: var(--muted);
-  font-size: 12px;
-}
-
-.editorial-trust__contact a {
-  display: block;
-  margin-top: 4px;
-  color: var(--navy);
-  font-weight: 750;
-}
-
 .editorial-cta {
   padding-block: 58px;
   background: var(--red);
@@ -626,8 +573,8 @@ a {
 
 .editorial-footer__grid {
   display: grid;
-  grid-template-columns: 1.35fr 1fr .7fr;
-  gap: 75px;
+  grid-template-columns: minmax(0, 1.6fr) minmax(180px, .7fr);
+  gap: 90px;
 }
 
 .editorial-footer h2,
@@ -681,16 +628,49 @@ a {
 }
 
 .editorial-footer__icon-row svg {
-  width: 15px;
+  width: 13px;
   flex: 0 0 auto;
+}
+
+.editorial-footer__company {
+  margin-top: 48px;
+  border-top: 1px solid #2b3e54;
+  padding-top: 20px;
+  color: #8492a3;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.editorial-footer__company-label {
+  margin: 0;
+  color: #9ba8b7;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.editorial-footer__company ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  margin-top: 10px;
+}
+
+.editorial-footer__company a {
+  text-decoration: none;
+}
+
+.editorial-footer__company a:hover {
+  color: #d5dce5;
 }
 
 .editorial-footer__bottom {
   display: flex;
   justify-content: space-between;
   gap: 24px;
-  margin-top: 52px;
-  border-top: 1px solid #33465c;
+  margin-top: 20px;
+  border-top: 1px solid #2b3e54;
   padding-block: 22px;
   color: #8492a3;
   font-size: 11px;
@@ -886,10 +866,7 @@ select.flex-shrink-0 {
   .editorial-section-heading--split,
   .editorial-scope__grid,
   .editorial-faq__grid { grid-template-columns: 1fr; gap: 40px; }
-  .editorial-trust__grid { grid-template-columns: 1fr; gap: 32px; }
-  .editorial-trust__contact { border-top: 1px solid var(--line); border-left: 0; padding: 26px 0 0; }
-  .editorial-footer__grid { grid-template-columns: 1.2fr 1fr; }
-  .editorial-footer__grid > div:last-child { grid-column: 1 / -1; }
+  .editorial-footer__grid { grid-template-columns: 1.2fr .8fr; }
   .editorial-section-heading--compact { align-items: flex-start; flex-direction: column; gap: 12px; }
   .editorial-section-heading--compact > p:last-child { text-align: left; }
   .editorial-process__layout { grid-template-columns: 1fr; }
@@ -923,8 +900,7 @@ select.flex-shrink-0 {
   .editorial-service,
   .editorial-process,
   .editorial-scope,
-  .editorial-faq,
-  .editorial-trust { padding-block: 68px; }
+  .editorial-faq { padding-block: 68px; }
   .editorial-service-grid,
   .editorial-process-grid { grid-template-columns: 1fr; }
   .editorial-service-item,
@@ -937,7 +913,8 @@ select.flex-shrink-0 {
   .editorial-cta__content,
   .editorial-footer__bottom { align-items: stretch; flex-direction: column; }
   .editorial-footer__grid { grid-template-columns: 1fr; gap: 38px; }
-  .editorial-footer__grid > div:last-child { grid-column: auto; }
+  .editorial-footer__company { margin-top: 36px; padding-top: 17px; }
+  .editorial-footer__company ul { display: grid; gap: 7px; }
   .application-page { padding: 38px 15px 70px; }
   .application-card { padding: 24px 18px; }
   .application-actions { align-items: stretch; flex-direction: column-reverse; }
