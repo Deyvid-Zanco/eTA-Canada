@@ -706,43 +706,6 @@ a {
   line-height: 1.7;
 }
 
-.application-notice {
-  display: flex;
-  gap: 15px;
-  margin-top: 30px;
-  border: 1px solid #cdd4dc;
-  border-left: 4px solid var(--red);
-  padding: 20px;
-  background: var(--white);
-}
-
-.application-notice svg {
-  width: 23px;
-  flex: 0 0 auto;
-  color: var(--navy);
-}
-
-.application-notice strong {
-  display: block;
-  color: var(--navy);
-}
-
-.application-notice p {
-  margin-top: 6px;
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.6;
-}
-
-.application-notice a {
-  display: inline-block;
-  margin-top: 8px;
-  color: #163f70;
-  font-size: 13px;
-  font-weight: 700;
-  text-underline-offset: 3px;
-}
-
 .application-progress {
   display: flex;
   align-items: center;

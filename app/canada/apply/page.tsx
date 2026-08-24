@@ -5,7 +5,7 @@ import { FormProvider, Resolver, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loadStripe } from "@stripe/stripe-js";
 import { InferType } from "yup";
-import { LoaderCircle, ShieldCheck } from "lucide-react";
+import { LoaderCircle } from "lucide-react";
 import { CanadaFooter } from "../../components/Footer";
 import { CanadaHeader } from "../../components/Header";
 import { Step1 } from "@/app/components/forms/Step1";
@@ -193,18 +193,6 @@ export default function ApplyPage() {
           <p className="editorial-eyebrow">Private Canada eTA assistance</p>
           <h1>{t.form.title}</h1>
           <p>{t.form.welcome}</p>
-          <div className="application-notice">
-            <ShieldCheck aria-hidden="true" />
-            <div>
-              <strong>Private paid assistance — not a government website</strong>
-              <p>
-                IMMI WORLD charges US$42 for its optional review and guidance service. The official Canada eTA fee is CAN$7 and is separate. We cannot issue an eTA, guarantee approval, or influence processing time.
-              </p>
-              <a href="https://www.canada.ca/en/immigration-refugees-citizenship/services/visit-canada/eta/apply.html" target="_blank" rel="noopener noreferrer">
-                Apply directly on the official Canada.ca website
-              </a>
-            </div>
-          </div>
         </div>
 
         <Suspense fallback={<div className="py-12 text-center">{t.common.loading}</div>}>
